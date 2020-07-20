@@ -1,14 +1,17 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
 import List from '../../components/List';
 import CategoryRedactor from '../../components/Redactors/CategoryRedactor';
-import {getCategories} from "../../redux/category/category.actions";
+import { getCategories } from "../../redux/category/category.actions";
 
 import './style.scss'
 
 const CategoriesPage = () => {
-    const categories = useSelector(({Categories}) => Categories.list)
+    const { categories, isLoading } = useSelector(({ Categories }) => ({
+        categories: Categories.list,
+        isLoading: Categories.loading
+    }))
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -18,10 +21,10 @@ const CategoriesPage = () => {
     return (
         <div className='page-container'>
             <div className='page-list'>
-                <List items={categories}/>
+                <List items={categories} isLoading={isLoading} />
             </div>
             <div className='page-item'>
-                <CategoryRedactor/>
+                <CategoryRedactor />
             </div>
         </div>
     )

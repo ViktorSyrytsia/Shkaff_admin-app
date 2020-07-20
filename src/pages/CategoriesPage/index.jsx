@@ -8,7 +8,10 @@ import {getCategories} from "../../redux/category/category.actions";
 import './style.scss'
 
 const CategoriesPage = () => {
-    const categories = useSelector(({Categories}) => Categories.list)
+    const {categories, isLoading} = useSelector(({Categories}) => ({
+        categories: Categories.list,
+        isLoading: Categories.loading
+    }))
     const dispatch = useDispatch();
 
     useEffect(() => {

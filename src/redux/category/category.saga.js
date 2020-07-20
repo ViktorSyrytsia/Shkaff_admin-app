@@ -1,48 +1,72 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
-import { setNews, hideLoader, showLoader } from './category.actions';
-import { getAllNews, deleteNewsItem, createNewsItem } from '../../utils/client';
-import { GET_NEWS, DELETE_NEWS_ITEM, ADD_NEWS_ITEM } from './category.types';
-import { config } from '../../configs';
+import {takeEvery, call, put} from 'redux-saga/effects';
+import {setCategory, setCategories} from './category.actions';
+import {
+    getCategory,
+    getCategories,
+    addCategory,
+    updateCategory,
+    deleteCategory
+} from '../../utils/category';
+import {
+    GET_CATEGORY,
+    GET_CATEGORIES,
+    ADD_CATEGORY,
+    UPDATE_CATEGORY,
+    DELETE_CATEGORY
+} from './category.types';
 
-const { SUCCESS_ADD_STATUS } = config.statuses;
-
-function* handleNewsLoad() {
+function* handleCategoryLoad({payload}) {
     try {
-        yield put(showLoader());
-        const news = yield call(getAllNews, null);
-        yield put(setNews(news.data.getAllNews));
-        yield put(hideLoader());
+        const categories = yield call(getCategory, payload);
+        yield put(setCategory(categories.data.getCategory));
     } catch (error) {
         console.log(error);
     }
 }
 
-function* handleAddNews({ payload }) {
+function* handleCategoriesLoad() {
     try {
-        yield call(createNewsItem, payload);
-        yield put(push('/'));
-        yield put(setSnackBarSeverity('success'));
-        yield put(setSnackBarMessage(SUCCESS_ADD_STATUS));
-        yield put(setSnackBarStatus(true));
+        const categories = yield call(getCategories);
+        yield put(setCategories(categories.data.getCategories));
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function* handleAddCategory({payload}) {
+    try {
+        yield call(addCategory, payload);
+        const categories = yield call(getCategories);
+        yield put(setCategories(categories.data.getCategories));
     } catch (err) {
         console.log(err);
     }
 }
 
-function* handleNewsDelete({ payload }) {
+function* handleUpdateCategory({payload}) {
     try {
-        yield put(showLoader());
-        yield call(deleteNewsItem, payload);
-        const news = yield call(getAllNews, null);
-        yield put(setNews(news.data.getAllNews));
-        yield put(hideLoader());
+        yield call(updateCategory, payload);
+        const categories = yield call(getCategories);
+        yield put(setCategories(categories.data.getCategories));
     } catch (error) {
         console.log(error);
     }
 }
 
-export default function* newsSaga() {
-    yield takeEvery(GET_NEWS, handleNewsLoad);
-    yield takeEvery(DELETE_NEWS_ITEM, handleNewsDelete);
-    yield takeEvery(ADD_NEWS_ITEM, handleAddNews);
+function* handleDeleteCategory({payload}) {
+    try {
+        yield call(deleteCategory, payload);
+        const categories = yield call(getCategories);
+        yield put(setCategories(categories.data.getCategories));
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+export default function* categorySaga() {
+    yield takeEvery(GET_CATEGORY, handleCategoryLoad);
+    yield takeEvery(GET_CATEGORIES, handleCategoriesLoad);
+    yield takeEvery(ADD_CATEGORY, handleAddCategory);
+    yield takeEvery(UPDATE_CATEGORY, handleUpdateCategory);
+    yield takeEvery(DELETE_CATEGORY, handleDeleteCategory);
 }

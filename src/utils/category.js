@@ -1,117 +1,91 @@
-const getAllNews = () =>
-client.query({
-    query: gql`
-        {
-            getAllNews {
-                _id
-                author {
-                    name {
-                        lang
-                        value
-                    }
-                    image {
-                        small
-                    }
-                }
-                title {
-                    lang
-                    value
-                }
-            }
-        }
-    `
-});
+import { gql } from 'apollo-boost'
 
-const getNewsItemById = (id) =>
-client.query({
-    variables: { id },
-    query: gql`
-        query($id: ID!) {
-            getNewsById(id: $id) {
-                title {
-                    lang
-                    value
-                }
-                text {
-                    lang
-                    value
-                }
-                images {
-                    primary {
-                        large
-                    }
-                    additional {
-                        large
-                    }
-                }
-                video
-                author {
-                    name {
-                        lang
-                        value
-                    }
-                    image {
-                        large
-                    }
-                }
-                date
-            }
-        }
-    `
-});
+import client from "./index";
 
-const deleteNewsItem = async (id) => {
-    await client.mutate({
-        variables: { id },
-        mutation: gql`
-            mutation($id: ID!) {
-                deleteNews(id: $id) {
-                    author {
-                        name {
-                            value
-                        }
-                    }
+const getCategories = () =>
+    client.query({
+        query: gql`
+            {
+                getCategories {
+                    id
+                    name
+                    image
                 }
             }
         `
-    });
-    client.resetStore();
-};
+});
 
-const createNewsItem = async (news) => {
-    await client.mutate({
-        mutation: gql`
-            mutation($news: NewsInput!) {
-                addNews(news: $news) {
-                    video
+const getCategory = ({id}) =>
+    client.query({
+        variables: {id},
+        query: gql`
+            query($id: ID!) {
+                getCategory(id: $id) {
+                    id
+                    name
+                    image
                 }
             }
-        `,
-        variables: { news }
-    });
-    client.resetStore();
-};
+        `
+});
 
-const updateNewsItem = (id, news) => {
-    client.mutate({
+const addCategory = async ({name, image}) => {
+    await client.mutate({
         variables: {
-            id,
-            news
+            name,
+            image
         },
         mutation: gql`
-            mutation($id: ID!, $news: NewsInput!) {
-                updateNews(id: $id, news: $news) {
-                    video
+            mutation($name: String!, $image: String!) {
+                addCategory(name: $name, image: $image) {
+                    name,
+                    image
                 }
             }
         `
     });
+    client.resetStore();
+};
+
+const updateCategory = async ({id, name, image}) => {
+    await client.mutate({
+        variables: {
+            id,
+            name,
+            image
+        },
+        mutation: gql`
+            mutation($id: ID!, $name: String!, $image: String!) {
+                updateCategory(id: $id, name: $name, image: $image) {
+                    name
+                    image
+                }
+            }
+        `
+    });
+    client.resetStore();
+};
+
+const deleteCategory = (id) => {
+    client.mutate({
+        variables: {
+            id
+        },
+        mutation: gql`
+            mutation($id: ID!) {
+                deleteCategory(id: $id) {
+                    name
+                }
+            }
+        `
+    });
+    client.resetStore();
 };
 
 export {
-    getAllNews,
-    deleteNewsItem,
-    getNewsItemById,
-    createNewsItem,
-    updateNewsItem
+    getCategories,
+    getCategory,
+    addCategory,
+    updateCategory,
+    deleteCategory
 };

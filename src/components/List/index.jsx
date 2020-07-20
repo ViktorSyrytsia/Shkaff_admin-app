@@ -10,7 +10,7 @@ const categories = [
         { name: "Для дому", id: "4", image: "https://hips.hearstapps.com/esq.h-cdn.co/assets/15/13/1427301596-mcdonalds-big-mac-apparel-jacket.jpg?resize=480:*" },
 ]
 
-const List = () => {
+const List = ({items}) => {
 
         const ItemContent = ({ name }) => (
                 <div className='list-item-content'>
@@ -26,8 +26,8 @@ const List = () => {
                 <>
                         <Button className='list-add-button' variant="primary">Додати</Button>
                         <ListGroup>
-                                {categories.length > 0 ?
-                                        categories.map(cat => <ListGroup.Item key={cat.id}><ItemContent name={cat.name} /></ListGroup.Item>)
+                                {items.length > 0 ?
+                                    items.map(item => <ListGroup.Item key={item.id}><ItemContent name={item.name} /></ListGroup.Item>)
                                         : 'Немає жодної категорії'}
                         </ListGroup>
                 </>

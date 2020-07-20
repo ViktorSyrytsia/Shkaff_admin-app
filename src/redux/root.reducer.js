@@ -1,10 +1,7 @@
 import { combineReducers } from 'redux';
 
-import Category from './category/category.reducer'
+import Categories from './category/category.reducer'
 
-const rootReducer = () =>
-    combineReducers({
-        Category,
-    });
-
-export default rootReducer;
+export default combineReducers({
+    Categories,
+});

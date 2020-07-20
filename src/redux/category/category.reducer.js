@@ -24,7 +24,7 @@ const categoryReducer = (state = initialState, {type, payload}) => {
         }
         default:
             return {
-                state
+                ...state
             }
     }
 }

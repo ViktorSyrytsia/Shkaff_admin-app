@@ -16,7 +16,7 @@ const CategoriesPage = () => {
 
     useEffect(() => {
         dispatch(getCategories())
-    })
+    }, [dispatch])
 
     return (
         <div className='page-container'>

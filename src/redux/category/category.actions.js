@@ -5,7 +5,9 @@ import {
     GET_CATEGORIES,
     ADD_CATEGORY,
     UPDATE_CATEGORY,
-    DELETE_CATEGORY
+    DELETE_CATEGORY,
+    SHOW_LOADING,
+    HIDE_LOADING
 } from './category.types'
 
 export const setCategory = (category) => ({
@@ -40,4 +42,12 @@ export const updateCategory = (payload) => ({
 export const deleteCategory = (payload) => ({
     type: DELETE_CATEGORY,
     payload
+})
+
+export const showLoading = () => ({
+    type: SHOW_LOADING
+})
+
+export const hideLoading = () => ({
+    type: HIDE_LOADING
 })

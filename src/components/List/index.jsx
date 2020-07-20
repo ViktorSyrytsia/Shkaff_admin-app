@@ -5,6 +5,7 @@ import Spinner from '../Spinner/';
 import './style.scss';
 
 const List = ({ items, isLoading }) => {
+    console.log(isLoading)
 
         const ItemContent = ({ name }) => (
                 <div className='list-item-content'>

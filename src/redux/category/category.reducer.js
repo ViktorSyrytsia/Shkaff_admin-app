@@ -1,12 +1,14 @@
 import {
     SET_CATEGORY,
     SET_CATEGORIES,
+    SHOW_LOADING,
+    HIDE_LOADING
 } from './category.types'
 
 const initialState = {
     list: [],
     category: {},
-    loading: true
+    loading: false
 }
 
 const categoryReducer = (state = initialState, {type, payload}) => {
@@ -21,7 +23,18 @@ const categoryReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 list: payload,
-                loading: false
+            }
+        }
+        case SHOW_LOADING: {
+            return {
+                ...state,
+                loading: true,
+            }
+        }
+        case HIDE_LOADING: {
+            return {
+                ...state,
+                loading: false,
             }
         }
         default:

@@ -5,7 +5,8 @@ import {
 
 const initialState = {
     list: [],
-    category: {}
+    category: {},
+    loading: true
 }
 
 const categoryReducer = (state = initialState, {type, payload}) => {
@@ -19,7 +20,8 @@ const categoryReducer = (state = initialState, {type, payload}) => {
         case SET_CATEGORIES: {
             return {
                 ...state,
-                list: payload
+                list: payload,
+                loading: false
             }
         }
         default:

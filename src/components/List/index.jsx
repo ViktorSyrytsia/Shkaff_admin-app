@@ -4,14 +4,14 @@ import Spinner from '../Spinner/';
 
 import './style.scss';
 
-const List = ({ items, isLoading, onSelectItem }) => {
+const List = ({ items, isLoading, onSelectItem, onDeleteCategory }) => {
 
         const ItemContent = ({ name, id }) => (
                 <div className='list-item-content'>
                         <div className='list-item-content-name'>{name}</div>
                         <div className='list-item-content-buttons'>
                                 <Button variant="outline-warning" onClick={() => onSelectItem(id)}>Редагувати</Button>
-                                <Button variant="outline-danger">Видалити</Button>
+                                <Button variant="outline-danger" onClick={() => onDeleteCategory(id)}>Видалити</Button>
                         </div>
                 </div >
         );
@@ -22,7 +22,12 @@ const List = ({ items, isLoading, onSelectItem }) => {
                                 <>
                                         <ListGroup>
                                                 {items.length > 0 ?
-                                                        items.map(item => <ListGroup.Item key={item.id}><ItemContent id={item.id} name={item.name} /></ListGroup.Item>)
+                                                        items.map(item =>
+                                                                <ListGroup.Item
+                                                                        key={item.id}><ItemContent
+                                                                                id={item.id}
+                                                                                name={item.name} />
+                                                                </ListGroup.Item>)
                                                         : 'Немає жодної категорії'}
                                         </ListGroup>
                                 </>

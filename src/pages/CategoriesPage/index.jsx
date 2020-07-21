@@ -21,31 +21,40 @@ const CategoriesPage = () => {
     }))
     const dispatch = useDispatch();
 
+    const [saveOptions, setSaveOptions] = useState('');
+
     const onSelectCategory = (id) => {
-        dispatch(selectCategory(id));
-        setShowRedactor(true);
+        console.log(id);
+        if (id === '') {
+            dispatch(selectCategory(id));
+            setShowRedactor(true);
+            setSaveOptions('add');
+        } else {
+            dispatch(selectCategory(id));
+            setShowRedactor(true);
+            setSaveOptions('edit')
+        }
+
+
+
     }
 
     useEffect(() => {
         dispatch(getCategories())
     }, [dispatch])
 
-    const category = {
-        id: "5f16176d292d054aa84d4392",
-        name: "Home interior",
-        image: "www.home-interior.com"
-    }
 
-    const onAddCategory = () => {
+
+    const onAddCategory = (category) => {
         dispatch(addCategory(category))
     }
 
-    const onEditCategory = () => {
+    const onEditCategory = (category) => {
         dispatch(updateCategory(category))
     }
 
-    const onDeleteCategory = () => {
-        dispatch(deleteCategory(category.id))
+    const onDeleteCategory = (id) => {
+        dispatch(deleteCategory(id))
     }
     const [showRedactor, setShowRedactor] = useState(false);
 
@@ -54,15 +63,20 @@ const CategoriesPage = () => {
             <div className='page-list'>
                 <Button className='list-add-button'
                     variant="primary"
-                    onClick={() => onAddCategory()}>Додати +</Button>
+                    onClick={() => onSelectCategory('')}> Додати +</Button>
                 <List
                     items={categories}
                     isLoading={isLoading}
                     onSelectItem={onSelectCategory}
+                    onDeleteCategory={onDeleteCategory}
                 />
             </div>
             <div className='page-item'>
-                {showRedactor ? <CategoryRedactor /> :
+                {showRedactor ? <CategoryRedactor
+                    onAddCategory={onAddCategory}
+                    onEditCategory={onEditCategory}
+                    saveOptions={saveOptions}
+                /> :
                     <div className='page-item-message'>Редагуйте елемет зі списку, або добавте новий</div>}
 
             </div>

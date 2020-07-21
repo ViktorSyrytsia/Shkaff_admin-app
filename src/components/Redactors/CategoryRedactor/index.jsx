@@ -5,20 +5,22 @@ import { Form, Button } from 'react-bootstrap';
 
 import './style.scss';
 
-const CategoryRedactor = () => {
+const CategoryRedactor = ({ onAddCategory, onEditCategory, saveOptions }) => {
+        console.log(saveOptions);
         const category = useSelector(({ Categories }) => Categories.category);
+        const [id, setId] = useState('')
         const [name, setName] = useState('');
         const [image, setImage] = useState('');
 
         useEffect(() => {
                 if (category) {
                         setName(category.name);
-                        setImage(category.image)
+                        setImage(category.image);
+                        setId(category.id);
                 } else {
                         setName('');
-                        setImage('')
+                        setImage('');
                 }
-
         }, [category]);
 
         const onInputChange = (e) => {
@@ -28,13 +30,37 @@ const CategoryRedactor = () => {
                         setImage(e.target.value)
                 }
         }
-        const addCategory = (e) => {
+
+        const onSubmitAction = (saveOptions) => {
+                console.log(saveOptions);
+                if (saveOptions === 'add') {
+                        const newCategory = {
+                                name,
+                                image
+                        }
+                        console.log(newCategory);
+                        onAddCategory(newCategory)
+                } else {
+                        const editedCategory = {
+                                id,
+                                name,
+                                image
+                        }
+                        onEditCategory(editedCategory)
+                }
+
 
         }
 
+        const onResetInputs = () => {
+                setName('');
+                setImage('')
+        }
+
+
         return (
                 <div className='category-redactor-container'>
-                        <Form onSubmit={addCategory}>
+                        <Form>
                                 <Form.Group controlId="categoryForm.nameInput">
                                         <Form.Label>Назва продукту:</Form.Label>
                                         <Form.Control
@@ -54,10 +80,10 @@ const CategoryRedactor = () => {
                                                 onChange={onInputChange} />
                                 </Form.Group>
                                 <div className='category-redactor-buttons'>
-                                        <Button variant="primary" type="submit">
+                                        <Button variant="primary" onClick={() => onSubmitAction(saveOptions)}>
                                                 Зберегти
   </Button>
-                                        <Button variant="dark" type="reset">
+                                        <Button variant="dark" onClick={onResetInputs}>
                                                 Відмінити
   </Button>
                                 </div>

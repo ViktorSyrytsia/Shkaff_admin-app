@@ -2,10 +2,15 @@ import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {Form, Button} from 'react-bootstrap';
 
+import DropdownBar from '../../DropdownBar'
 import './style.scss';
 
 const SubcategoryRedactor = ({onAddSubcategory, onEditSubcategory, saveOptions}) => {
-    const {subcategory} = useSelector(({Subcategories}) => Subcategories.subcategory);
+    const {subcategory, categories} = useSelector(({Subcategories, Categories}) => (
+        {
+            subcategory: Subcategories.subcategory,
+            categories: Categories.list,
+        }));
     const [id, setId] = useState('')
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
@@ -43,7 +48,7 @@ const SubcategoryRedactor = ({onAddSubcategory, onEditSubcategory, saveOptions})
     return (
         <div className='category-redactor-container'>
             <Form>
-                <Form.Group controlId="categoryForm.nameInput">
+                <Form.Group controlId="subcategoryForm.nameInput">
                     <Form.Label>Назва субкатегорії:</Form.Label>
                     <Form.Control
                         name='name'
@@ -52,14 +57,8 @@ const SubcategoryRedactor = ({onAddSubcategory, onEditSubcategory, saveOptions})
                         value={name || ''}
                         onChange={onInputChange}/>
                 </Form.Group>
-                <Form.Group controlId="categoryForm.imageInput">
-                    <Form.Label>Посилання на зоображення:</Form.Label>
-                    <Form.Control
-                        name='image'
-                        type="text"
-                        placeholder="Введіть посилання на зоображення"
-                        value={image || ''}
-                        onChange={onInputChange}/>
+                <Form.Group controlId="subcategoryForm.categorySelect">
+                    <DropdownBar items={categories}/>
                 </Form.Group>
                 <div className='category-redactor-buttons'>
                     <Button variant="primary" onClick={() => onSubmitAction(saveOptions)}>

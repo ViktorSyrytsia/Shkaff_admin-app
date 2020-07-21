@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import { Button } from 'react-bootstrap';
+import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {Button} from 'react-bootstrap';
 
 import List from '../../components/List';
 import ButtonsGroup from '../../components/ButtonsGroup';
-import CategoryRedactor from '../../components/Redactors/Category';
+import SubcategoryRedactor from '../../components/Redactors/Subcategory';
 import {
         addSubcategory,
         updateSubcategory,
@@ -27,12 +27,11 @@ const SubcategoriesPage = () => {
         const [filter, setFilter] = useState(false);
         const [saveOptions, setSaveOptions] = useState('');
 
-        const onSelectSubcategory = (id) => {
-                dispatch(setSubcategory(id));
-                setShowRedactor(true);
-
-                id === '' ? setSaveOptions('add') : setSaveOptions('edit')
-        }
+    const onSelectSubcategory = (id) => {
+        dispatch(setSubcategory(id));
+        setShowRedactor(true);
+        id === '' ? setSaveOptions('add') : setSaveOptions('edit')
+    }
 
         const onAddSubcategory = (subcategory) => {
                 dispatch(addSubcategory(subcategory))
@@ -71,7 +70,7 @@ const SubcategoriesPage = () => {
                                 />
                         </div>
                         <div className='page-item'>
-                                {showRedactor ? <CategoryRedactor
+                                {showRedactor ? <SubcategoryRedactor
                                         onAddSubcategory={onAddSubcategory}
                                         onEditSubcategory={onEditSubcategory}
                                         saveOptions={saveOptions}

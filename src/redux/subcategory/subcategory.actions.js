@@ -1,8 +1,7 @@
 import {
         SET_SUBCATEGORY,
-        GET_SUBCATEGORY,
         SET_SUBCATEGORIES,
-        GET__SUBCATEGORIES,
+        GET_SUBCATEGORIES,
         ADD_SUBCATEGORY,
         UPDATE_SUBCATEGORY,
         DELETE_SUBCATEGORY,
@@ -16,18 +15,13 @@ export const setSubcategory = (category) => ({
         payload: category
 })
 
-export const getSubcategory = (payload) => ({
-        type: GET_SUBCATEGORY,
-        payload
-})
-
 export const setSubcategories = (categories) => ({
         type: SET_SUBCATEGORIES,
         payload: categories
 })
 
 export const getSubcategories = () => ({
-        type: GET__SUBCATEGORIES
+        type: GET_SUBCATEGORIES
 })
 
 export const addSubcategory = (payload) => ({

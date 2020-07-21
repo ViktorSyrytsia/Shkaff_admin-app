@@ -69,8 +69,6 @@ const SubcategoryRedactor = ({onAddSubcategory, onEditSubcategory, saveOptions})
                         Відмінити
                     </Button>
                 </div>
-
-
             </Form>
         </div>
     )

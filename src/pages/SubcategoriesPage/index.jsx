@@ -29,6 +29,7 @@ const SubcategoriesPage = () => {
     }
 
     useEffect(() => {
+        console.log('22')
         dispatch(getSubcategories())
     }, [dispatch])
 

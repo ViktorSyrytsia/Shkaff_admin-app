@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from 'react-bootstrap';
 
 import List from '../../components/List';
+import ButtonsGroup from '../../components/ButtonsGroup';
 import CategoryRedactor from '../../components/Redactors/Category';
 import {
         addSubcategory,
@@ -14,15 +15,16 @@ import {
 import './style.scss';
 
 const SubcategoriesPage = () => {
-        const { subcategories, isLoading } = useSelector(({ Subcategories }) => ({
+        const { subcategories, isLoading, categories } = useSelector(({ Subcategories, Categories }) => ({
                 subcategories: Subcategories.list,
-                isLoading: Subcategories.loading
+                isLoading: Subcategories.loading,
+                categories: Categories.list
         }))
+
         const dispatch = useDispatch();
 
         const [showRedactor, setShowRedactor] = useState(false);
-        const [filter, setFilter] = useState('all');
-        console.log(filter);
+        const [filter, setFilter] = useState(false);
         const [saveOptions, setSaveOptions] = useState('');
 
         const onSelectSubcategory = (id) => {
@@ -46,20 +48,23 @@ const SubcategoriesPage = () => {
                 }
         }
 
+        const onCategoryChange = (e) => {
+                if (e.target.innerText === 'All') {
+                        setFilter(false);
+                } else {
+                        setFilter(e.target.innerText);
+                }
+        }
+
         return (
                 <div className='page-container'>
                         <div className='page-list'>
                                 <Button className='list-add-button'
                                         variant="primary"
                                         onClick={() => onSelectSubcategory('')}> Додати +</Button>
-                                <ButtonGroup className='list-filter-buttons' aria-label="Basic example">
-                                        <Button onClick={() => setFilter('mans')} variant="outline-dark">Чоловікам</Button>
-                                        <Button onClick={() => setFilter('women')} variant="outline-dark">Жінкам</Button>
-                                        <Button onClick={() => setFilter('children')} variant="outline-dark">Для дому</Button>
-                                        <Button onClick={() => setFilter('home')} variant="outline-dark">Дітям</Button>
-                                </ButtonGroup>
+                                <ButtonsGroup onChange={onCategoryChange} items={categories} />
                                 <List
-                                        items={subcategories}
+                                        items={filter ? subcategories.filter(subcategory => subcategory.category.name === filter) : subcategories}
                                         isLoading={isLoading}
                                         onSelectItem={onSelectSubcategory}
                                         onDeleteItem={onDeleteSubcategory}

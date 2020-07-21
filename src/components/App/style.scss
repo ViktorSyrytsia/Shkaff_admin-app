@@ -1,0 +1,24 @@
+.page-container {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  .page-list {
+    padding: 50px;
+    flex-basis: 45%;
+  }
+
+  .page-item {
+    padding: 50px;
+    height: 100%;
+    flex-basis: 55%;
+    background-color: #f8f8f8;
+  }
+}
+
+.page-item-message {
+  font-size: 30px;
+  font-weight: 600;
+  color: #343a40;
+}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import List from '../../components/List';
-import CategoryRedactor from '../../components/Redactors/CategoryRedactor';
+import CategoryRedactor from '../../components/Redactors/Category';
 import {
     getCategories,
     addCategory,
@@ -13,6 +13,7 @@ import {
 import { Button } from 'react-bootstrap';
 
 import './style.scss'
+import {setSubcategory} from "../../redux/subcategory/subcategory.actions";
 
 const CategoriesPage = () => {
     const { categories, isLoading } = useSelector(({ Categories }) => ({
@@ -24,19 +25,10 @@ const CategoriesPage = () => {
     const [saveOptions, setSaveOptions] = useState('');
 
     const onSelectCategory = (id) => {
-        console.log(id);
-        if (id === '') {
-            dispatch(selectCategory(id));
-            setShowRedactor(true);
-            setSaveOptions('add');
-        } else {
-            dispatch(selectCategory(id));
-            setShowRedactor(true);
-            setSaveOptions('edit')
-        }
+        dispatch(setSubcategory(id));
+        setShowRedactor(true);
 
-
-
+        id === '' ? setSaveOptions('add') : setSaveOptions('edit')
     }
 
     useEffect(() => {

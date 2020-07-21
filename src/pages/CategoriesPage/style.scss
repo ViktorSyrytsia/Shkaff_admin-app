@@ -1,7 +1,8 @@
 .page-container {
+  height: 100vh;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   .page-list {
     margin-left: 50px;
     margin-top: 20px;
@@ -9,6 +10,7 @@
   }
 
   .page-item {
+    margin-top: 35px;
     flex-basis: 45%;
     margin-right: 50px;
   }

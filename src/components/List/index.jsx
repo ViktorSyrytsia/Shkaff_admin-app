@@ -5,7 +5,7 @@ import Spinner from '../Spinner/';
 import './style.scss';
 
 const List = ({ items, isLoading }) => {
-    console.log(isLoading)
+        console.log(isLoading)
 
         const ItemContent = ({ name }) => (
                 <div className='list-item-content'>
@@ -18,17 +18,21 @@ const List = ({ items, isLoading }) => {
         );
 
         return (
-                <>
-                        <Button className='list-add-button' variant="primary">Додати</Button>
-                        {isLoading ?
-                                <Spinner /> :
-                                <ListGroup>
-                                        {items.length > 0 ?
-                                                items.map(item => <ListGroup.Item key={item.id}><ItemContent name={item.name} /></ListGroup.Item>)
-                                                : 'Немає жодної категорії'}
-                                </ListGroup>}
+                <div className='list-container'>      {
+                        isLoading ? <Spinner /> :
+                                <>
+                                        <Button className='list-add-button' variant="primary">Додати</Button>
+                                        <ListGroup>
+                                                {items.length > 0 ?
+                                                        items.map(item => <ListGroup.Item key={item.id}><ItemContent name={item.name} /></ListGroup.Item>)
+                                                        : 'Немає жодної категорії'}
+                                        </ListGroup>
+                                </>
 
-                </>
+
+                }
+
+                </div>
         )
 }
 

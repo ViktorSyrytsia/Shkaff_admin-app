@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import { Form, Button } from 'react-bootstrap';
 
 import './style.scss';
 
 const CategoryRedactor = ({ onAddCategory, onEditCategory, saveOptions }) => {
-        console.log(saveOptions);
+
         const category = useSelector(({ Categories }) => Categories.category);
         const [id, setId] = useState('')
         const [name, setName] = useState('');
@@ -24,39 +23,24 @@ const CategoryRedactor = ({ onAddCategory, onEditCategory, saveOptions }) => {
         }, [category]);
 
         const onInputChange = (e) => {
-                if (e.target.name === 'name') {
-                        setName(e.target.value);
-                } else if (e.target.name === 'image') {
-                        setImage(e.target.value)
-                }
+                e.target.name === 'name' ? setName(e.target.value) : setImage(e.target.value);
         }
 
         const onSubmitAction = (saveOptions) => {
-                console.log(saveOptions);
-                if (saveOptions === 'add') {
-                        const newCategory = {
-                                name,
-                                image
-                        }
-                        console.log(newCategory);
-                        onAddCategory(newCategory)
-                } else {
-                        const editedCategory = {
-                                id,
-                                name,
-                                image
-                        }
-                        onEditCategory(editedCategory)
+                if (name !== '' && image !== '') {
+                        saveOptions === 'add' ? onAddCategory({ name, image }) : onEditCategory({ id, name, image })
                 }
-
-
+                else {
+                        window.alert('Поле не можу бути пустим')
+                }
+                onResetInputs();
         }
+
 
         const onResetInputs = () => {
                 setName('');
                 setImage('')
         }
-
 
         return (
                 <div className='category-redactor-container'>

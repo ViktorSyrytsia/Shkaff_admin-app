@@ -1,40 +1,50 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-
 import { Form, Button } from 'react-bootstrap';
 
 import './style.scss';
 
-const CategoryRedactor = () => {
+const CategoryRedactor = ({ onAddCategory, onEditCategory, saveOptions }) => {
+
         const category = useSelector(({ Categories }) => Categories.category);
+        const [id, setId] = useState('')
         const [name, setName] = useState('');
         const [image, setImage] = useState('');
 
         useEffect(() => {
                 if (category) {
                         setName(category.name);
-                        setImage(category.image)
+                        setImage(category.image);
+                        setId(category.id);
                 } else {
                         setName('');
-                        setImage('')
+                        setImage('');
                 }
-
         }, [category]);
 
         const onInputChange = (e) => {
-                if (e.target.name === 'name') {
-                        setName(e.target.value);
-                } else if (e.target.name === 'image') {
-                        setImage(e.target.value)
-                }
+                e.target.name === 'name' ? setName(e.target.value) : setImage(e.target.value);
         }
-        const addCategory = (e) => {
 
+        const onSubmitAction = (saveOptions) => {
+                if (name !== '' && image !== '') {
+                        saveOptions === 'add' ? onAddCategory({ name, image }) : onEditCategory({ id, name, image })
+                }
+                else {
+                        window.alert('Поле не можу бути пустим')
+                }
+                onResetInputs();
+        }
+
+
+        const onResetInputs = () => {
+                setName('');
+                setImage('')
         }
 
         return (
                 <div className='category-redactor-container'>
-                        <Form onSubmit={addCategory}>
+                        <Form>
                                 <Form.Group controlId="categoryForm.nameInput">
                                         <Form.Label>Назва продукту:</Form.Label>
                                         <Form.Control
@@ -54,10 +64,10 @@ const CategoryRedactor = () => {
                                                 onChange={onInputChange} />
                                 </Form.Group>
                                 <div className='category-redactor-buttons'>
-                                        <Button variant="primary" type="submit">
+                                        <Button variant="primary" onClick={() => onSubmitAction(saveOptions)}>
                                                 Зберегти
   </Button>
-                                        <Button variant="dark" type="reset">
+                                        <Button variant="dark" onClick={onResetInputs}>
                                                 Відмінити
   </Button>
                                 </div>

@@ -4,6 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 
 import Header from '../Header';
 import { CategoriesPage, SubcategoriesPage, ProductsPage, PurchasesPage } from '../../pages';
+import Snackbar from "../Snackbar";
 
 import './style.scss';
 
@@ -27,6 +28,7 @@ const App = () => {
                                         <PurchasesPage />
                                 </Route>
                         </Switch>
+                        <Snackbar />
                 </>
         )
 }

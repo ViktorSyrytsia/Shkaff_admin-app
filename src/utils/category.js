@@ -78,7 +78,7 @@ const deleteCategory = async (id) => {
                 }
             }
         `
-    });
+    })
     await client.resetStore();
 };
 

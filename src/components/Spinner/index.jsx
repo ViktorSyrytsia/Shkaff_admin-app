@@ -1,12 +1,13 @@
 import React from 'react';
+import { Spinner as LoadingBar } from 'react-bootstrap';
 
 import './style.scss';
 
 const Spinner = () => {
         return (
-                <Spinner animation="border" role="status">
+                <LoadingBar animation="border" role="status">
                         <span className="sr-only">Loading...</span>
-                </Spinner>
+                </LoadingBar>
         )
 }
 

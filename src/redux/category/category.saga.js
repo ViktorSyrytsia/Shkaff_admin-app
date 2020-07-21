@@ -34,7 +34,8 @@ function* handleCategoryLoad({payload}) {
 function* handleCategoriesLoad() {
     try {
         yield put(showLoading());
-        const categories = yield call(getCategories);
+        const categories = yield call(getCategories, null);
+        console.log(categories)
         yield put(setCategories(categories.data.getCategories));
         yield put(hideLoading());
     } catch (error) {

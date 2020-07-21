@@ -4,14 +4,14 @@ import Spinner from '../Spinner/';
 
 import './style.scss';
 
-const List = ({ items, isLoading, onSelectItem, onDeleteCategory }) => {
+const List = ({ items, isLoading, onSelectItem, onDeleteItem }) => {
 
         const ItemContent = ({ name, id }) => (
                 <div className='list-item-content'>
                         <div className='list-item-content-name'>{name}</div>
                         <div className='list-item-content-buttons'>
                                 <Button variant="outline-warning" onClick={() => onSelectItem(id)}>Редагувати</Button>
-                                <Button variant="outline-danger" onClick={() => onDeleteCategory(id)}>Видалити</Button>
+                                <Button variant="outline-danger" onClick={() => onDeleteItem(id, name)}>Видалити</Button>
                         </div>
                 </div >
         );

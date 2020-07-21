@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Switch, Route } from 'react-router-dom';
+import {useDispatch} from "react-redux";
 
 
 import Header from '../Header';
 import { CategoriesPage, SubcategoriesPage, ProductsPage, PurchasesPage } from '../../pages';
+import {getCategories} from "../../redux/category/category.actions";
+import {getSubcategories} from "../../redux/subcategory/subcategory.actions";
 import Snackbar from "../Snackbar";
 
 import './style.scss';
 
 const App = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getCategories());
+        dispatch(getSubcategories());
+    }, [dispatch])
 
 
         return (

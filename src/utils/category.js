@@ -37,7 +37,7 @@ const addCategory = async ({name, image}) => {
         },
         mutation: gql`
             mutation($name: String!, $image: String!) {
-                addCategory(name: $name, image: $image) {
+                addCategoryy(name: $name, image: $image) {
                     name,
                     image
                 }

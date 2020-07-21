@@ -18,7 +18,7 @@ const Snackbar = () => {
     useEffect(() => {
         setTimeout(() => {
             dispatch(setSnackbarVisibility(false))
-        }, 2000)
+        }, 4000)
     }, [snackbarVisibility])
 
     return (

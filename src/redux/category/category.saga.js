@@ -54,14 +54,17 @@ function* handleAddCategory({payload}) {
     try {
         yield call(addCategory, payload);
         yield put(setSnackbarSeverity('success'));
-        yield put(setSnackbarMessage(SNACKBAR_MESSAGES.success));
+        yield put(setSnackbarMessage(SNACKBAR_MESSAGES.add.success));
         yield put(setSnackbarVisibility(true));
         yield put(showLoading());
         const categories = yield call(getCategories);
         yield put(setCategories(categories.data.getCategories));
         yield put(hideLoading());
     } catch (err) {
-        console.log(err);
+        yield put(setSnackbarSeverity('error'));
+        yield put(setSnackbarMessage(SNACKBAR_MESSAGES.add.error));
+        yield put(setSnackbarVisibility(true));
+        console.log('error:', err);
     }
 }
 

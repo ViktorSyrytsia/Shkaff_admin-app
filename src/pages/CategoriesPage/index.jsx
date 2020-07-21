@@ -54,7 +54,7 @@ const CategoriesPage = () => {
             <div className='page-list'>
                 <Button className='list-add-button'
                     variant="primary"
-                    onClick={() => onSelectCategory(null)}>Додати</Button>
+                    onClick={() => onAddCategory()}>Додати +</Button>
                 <List
                     items={categories}
                     isLoading={isLoading}

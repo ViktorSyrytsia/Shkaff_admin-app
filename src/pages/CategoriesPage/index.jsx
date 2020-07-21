@@ -3,8 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 
 import List from '../../components/List';
 import CategoryRedactor from '../../components/Redactors/CategoryRedactor';
+import {
+    getCategories,
+    addCategory,
+    updateCategory,
+    deleteCategory,
+    selectCategory
+} from "../../redux/category/category.actions";
 import { Button } from 'react-bootstrap';
-import { getCategories, selectCategory } from "../../redux/category/category.actions";
 
 import './style.scss'
 
@@ -15,15 +21,43 @@ const CategoriesPage = () => {
     }))
     const dispatch = useDispatch();
 
+    const [saveOptions, setSaveOptions] = useState('');
+
     const onSelectCategory = (id) => {
-        dispatch(selectCategory(id));
-        setShowRedactor(true);
+        console.log(id);
+        if (id === '') {
+            dispatch(selectCategory(id));
+            setShowRedactor(true);
+            setSaveOptions('add');
+        } else {
+            dispatch(selectCategory(id));
+            setShowRedactor(true);
+            setSaveOptions('edit')
+        }
+
+
+
     }
 
     useEffect(() => {
         dispatch(getCategories())
     }, [dispatch])
 
+
+
+    const onAddCategory = (category) => {
+        dispatch(addCategory(category))
+    }
+
+    const onEditCategory = (category) => {
+        dispatch(updateCategory(category))
+    }
+
+    const onDeleteCategory = (id, name) => {
+        if (window.confirm(`Видалити ${name}?`)) {
+            dispatch(deleteCategory(id))
+        }
+    }
     const [showRedactor, setShowRedactor] = useState(false);
 
     return (
@@ -31,15 +65,20 @@ const CategoriesPage = () => {
             <div className='page-list'>
                 <Button className='list-add-button'
                     variant="primary"
-                    onClick={() => onSelectCategory(null)}>Додати</Button>
+                    onClick={() => onSelectCategory('')}> Додати +</Button>
                 <List
                     items={categories}
                     isLoading={isLoading}
                     onSelectItem={onSelectCategory}
+                    onDeleteItem={onDeleteCategory}
                 />
             </div>
             <div className='page-item'>
-                {showRedactor ? <CategoryRedactor /> :
+                {showRedactor ? <CategoryRedactor
+                    onAddCategory={onAddCategory}
+                    onEditCategory={onEditCategory}
+                    saveOptions={saveOptions}
+                /> :
                     <div className='page-item-message'>Редагуйте елемет зі списку, або добавте новий</div>}
 
             </div>

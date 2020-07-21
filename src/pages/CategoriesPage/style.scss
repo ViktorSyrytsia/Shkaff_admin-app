@@ -3,16 +3,17 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+
   .page-list {
-    margin-left: 50px;
-    margin-top: 20px;
-    flex-basis: 40%;
+    padding: 50px;
+    flex-basis: 45%;
   }
 
   .page-item {
-    margin-top: 35px;
-    flex-basis: 45%;
-    margin-right: 50px;
+    padding: 50px;
+    height: 100%;
+    flex-basis: 55%;
+    background-color: #f8f8f8;
   }
 }
 

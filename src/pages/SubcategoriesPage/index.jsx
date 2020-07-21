@@ -70,7 +70,7 @@ const SubcategoriesPage = () => {
                                 />
                         </div>
                         <div className='page-item'>
-                                {showRedactor ? <CategoryRedactor
+                                {showRedactor ? <SubcategoryRedactor
                                         onAddSubcategory={onAddSubcategory}
                                         onEditSubcategory={onEditSubcategory}
                                         saveOptions={saveOptions}

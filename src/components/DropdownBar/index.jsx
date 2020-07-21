@@ -1,7 +1,13 @@
-import React from 'react'
-import { DropdownButton, ButtonGroup, Dropdown} from 'react-bootstrap'
+import React, {useState} from 'react'
+import {DropdownButton, ButtonGroup, Dropdown} from 'react-bootstrap'
 
 const DropdownBar = ({items}) => {
+    const [selectedValue, setSelectedValue] = useState('Виберіть опцію')
+
+   const selectItem = (key, event) => {
+        console.dir(event.target)
+       setSelectedValue(event.target.innerText)
+   }
 
     return (
         <>
@@ -9,11 +15,17 @@ const DropdownBar = ({items}) => {
                 as={ButtonGroup}
                 id={`dropdown-variants-${'Secondary'}`}
                 variant={'secondary'}
-                title={'Secondary'}
+                title={selectedValue}
             >
                 {
-                    items.map((item,i) => (
-                        <Dropdown.Item eventKey={i}>{item.name}</Dropdown.Item>
+                    items.map((item, i) => (
+                        <Dropdown.Item
+                            key={item.id}
+                            data-id={item.id}
+                            eventKey={i}
+                            onSelect={selectItem}>
+                            {item.name}
+                        </Dropdown.Item>
                     ))
                 }
             </DropdownButton>{' '}

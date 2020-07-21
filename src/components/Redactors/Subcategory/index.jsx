@@ -5,7 +5,7 @@ import {Form, Button} from 'react-bootstrap';
 import './style.scss';
 
 const SubcategoryRedactor = ({onAddSubcategory, onEditSubcategory, saveOptions}) => {
-    const subcategory = useSelector(({Subcategories}) => Subcategories.subcategory);
+    const {subcategory} = useSelector(({Subcategories}) => Subcategories.subcategory);
     const [id, setId] = useState('')
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
@@ -44,7 +44,7 @@ const SubcategoryRedactor = ({onAddSubcategory, onEditSubcategory, saveOptions})
         <div className='category-redactor-container'>
             <Form>
                 <Form.Group controlId="categoryForm.nameInput">
-                    <Form.Label>Назва продукту:</Form.Label>
+                    <Form.Label>Назва субкатегорії:</Form.Label>
                     <Form.Control
                         name='name'
                         type="text"

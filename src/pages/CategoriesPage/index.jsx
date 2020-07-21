@@ -27,23 +27,11 @@ const CategoriesPage = () => {
     const onSelectCategory = (id) => {
         dispatch(setSubcategory(id));
         setShowRedactor(true);
-
         id === '' ? setSaveOptions('add') : setSaveOptions('edit')
     }
 
-    useEffect(() => {
-        dispatch(getCategories())
-    }, [dispatch])
-
-
-
-    const onAddCategory = (category) => {
-        dispatch(addCategory(category))
-    }
-
-    const onEditCategory = (category) => {
-        dispatch(updateCategory(category))
-    }
+    const onAddCategory = (category) => dispatch(addCategory(category));
+    const onEditCategory = (category) => dispatch(updateCategory(category));
 
     const onDeleteCategory = (id, name) => {
         if (window.confirm(`Видалити ${name}?`)) {

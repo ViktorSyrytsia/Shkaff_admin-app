@@ -1,11 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from 'react-bootstrap';
 
 import List from '../../components/List';
 import CategoryRedactor from '../../components/Redactors/Category';
 import {
-    getSubcategories,
     addSubcategory,
     updateSubcategory,
     deleteSubcategory,
@@ -27,11 +26,6 @@ const SubcategoriesPage = () => {
 
         id === '' ? setSaveOptions('add') : setSaveOptions('edit')
     }
-
-    useEffect(() => {
-        console.log('22')
-        dispatch(getSubcategories())
-    }, [dispatch])
 
     const onAddSubcategory = (subcategory) => {
         dispatch(addSubcategory(subcategory))

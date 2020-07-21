@@ -40,7 +40,7 @@ const CategoriesPage = () => {
             </div>
             <div className='page-item'>
                 {showRedactor ? <CategoryRedactor /> :
-                    'Sorry'}
+                    <div className='page-item-message'>Редагуйте елемет зі списку, або добавте новий</div>}
 
             </div>
         </div>

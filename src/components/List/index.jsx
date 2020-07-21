@@ -4,27 +4,26 @@ import Spinner from '../Spinner/';
 
 import './style.scss';
 
-const List = ({ items, isLoading }) => {
-        console.log(isLoading)
+const List = ({ items, isLoading, onSelectItem }) => {
 
-        const ItemContent = ({ name }) => (
+
+        const ItemContent = ({ name, id }) => (
                 <div className='list-item-content'>
                         <div className='list-item-content-name'>{name}</div>
                         <div className='list-item-content-buttons'>
-                                <Button variant="outline-warning">Редагувати</Button>
+                                <Button variant="outline-warning" onClick={() => onSelectItem(id)}>Редагувати</Button>
                                 <Button variant="outline-danger">Видалити</Button>
                         </div>
-                </div>
+                </div >
         );
 
         return (
                 <div className='list-container'>      {
                         isLoading ? <Spinner /> :
                                 <>
-                                        <Button className='list-add-button' variant="primary">Додати</Button>
                                         <ListGroup>
                                                 {items.length > 0 ?
-                                                        items.map(item => <ListGroup.Item key={item.id}><ItemContent name={item.name} /></ListGroup.Item>)
+                                                        items.map(item => <ListGroup.Item key={item.id}><ItemContent id={item.id} name={item.name} /></ListGroup.Item>)
                                                         : 'Немає жодної категорії'}
                                         </ListGroup>
                                 </>

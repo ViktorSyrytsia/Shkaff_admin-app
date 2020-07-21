@@ -5,7 +5,7 @@ import './style.scss';
 
 const Spinner = () => {
         return (
-                <div classname='spinner'>
+                <div className='spinner'>
                         <LoadingBar animation="border" role="status" className='spinner'>
                                 <span className="sr-only">Loading...</span>
                         </LoadingBar>

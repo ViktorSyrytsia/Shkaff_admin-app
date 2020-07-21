@@ -2,7 +2,8 @@ import {
     SET_CATEGORY,
     SET_CATEGORIES,
     SHOW_LOADING,
-    HIDE_LOADING
+    HIDE_LOADING,
+    SELECT_CATEGORY
 } from './category.types'
 
 const initialState = {
@@ -11,7 +12,7 @@ const initialState = {
     loading: false
 }
 
-const categoryReducer = (state = initialState, {type, payload}) => {
+const categoryReducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case SET_CATEGORY: {
             return {
@@ -35,6 +36,12 @@ const categoryReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 loading: false,
+            }
+        }
+        case SELECT_CATEGORY: {
+            return {
+                ...state,
+                category: state.list.find(item => item.id === payload)
             }
         }
         default:

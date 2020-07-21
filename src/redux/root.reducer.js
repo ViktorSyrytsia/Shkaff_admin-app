@@ -6,6 +6,6 @@ import Snackbar from './snackbar/snackbar.reducer'
 
 export default combineReducers({
     Categories,
-    Subcategories,
-    Snackbar
+    Snackbar,
+    Subcategories
 });

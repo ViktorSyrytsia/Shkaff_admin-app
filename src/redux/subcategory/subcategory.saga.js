@@ -13,76 +13,75 @@ import {
         deleteSubcategory
 } from '../../utils/subcategory';
 import {
-        GET_CATEGORY,
-        GET_CATEGORIES,
-        ADD_CATEGORY,
-        UPDATE_CATEGORY,
-        DELETE_CATEGORY
-} from './category.types';
+        GET_SUBCATEGORY,
+        GET_SUBCATEGORIES,
+        ADD_SUBCATEGORY,
+        UPDATE_SUBCATEGORY,
+        DELETE_SUBCATEGORY,
+} from './subcategory.types';
 
-function* handleCategoryLoad({ payload }) {
+function* handleSubcategoryLoad({ payload }) {
         try {
                 yield put(showLoading());
-                const categories = yield call(getCategory, payload);
-                yield put(setCategory(categories.data.getCategory));
+                const subcategories = yield call(getSubcategory, payload);
+                yield put(setSubcategory(subcategories.data.getSubcategory));
                 yield put(hideLoading());
         } catch (error) {
                 console.log(error);
         }
 }
 
-function* handleCategoriesLoad() {
+function* handleSubcategoriesLoad() {
         try {
                 yield put(showLoading());
-                const categories = yield call(getCategories, null);
-                console.log(categories)
-                yield put(setCategories(categories.data.getCategories));
+                const subcategories = yield call(getSubcategories, null);
+                yield put(setSubcategories(subcategories.data.getSubcategories));
                 yield put(hideLoading());
         } catch (error) {
                 console.log(error);
         }
 }
 
-function* handleAddCategory({ payload }) {
+function* handleAddSubcategory({ payload }) {
         try {
-                yield call(addCategory, payload);
+                yield call(addSubcategory, payload);
                 yield put(showLoading());
-                const categories = yield call(getCategories);
-                yield put(setCategories(categories.data.getCategories));
+                const subcategories = yield call(getSubcategories);
+                yield put(setSubcategories(subcategories.data.getSubcategories));
                 yield put(hideLoading());
         } catch (err) {
                 console.log(err);
         }
 }
 
-function* handleUpdateCategory({ payload }) {
+function* handleUpdateSubcategory({ payload }) {
         try {
-                yield call(updateCategory, payload);
+                yield call(updateSubcategory, payload);
                 yield put(showLoading());
-                const categories = yield call(getCategories);
-                yield put(setCategories(categories.data.getCategories));
+                const subcategories = yield call(getSubcategories);
+                yield put(setSubcategories(subcategories.data.getSubcategories));
                 yield put(hideLoading());
         } catch (error) {
                 console.log(error);
         }
 }
 
-function* handleDeleteCategory({ payload }) {
+function* handleDeleteSubcategory({ payload }) {
         try {
-                yield call(deleteCategory, payload);
+                yield call(deleteSubcategory, payload);
                 yield put(showLoading());
-                const categories = yield call(getCategories);
-                yield put(setCategories(categories.data.getCategories));
+                const subcategories = yield call(getSubcategories);
+                yield put(setSubcategories(subcategories.data.getSubcategories));
                 yield put(hideLoading());
         } catch (error) {
                 console.log(error);
         }
 }
 
-export default function* categorySaga() {
-        yield takeEvery(GET_CATEGORY, handleCategoryLoad);
-        yield takeEvery(GET_CATEGORIES, handleCategoriesLoad);
-        yield takeEvery(ADD_CATEGORY, handleAddCategory);
-        yield takeEvery(UPDATE_CATEGORY, handleUpdateCategory);
-        yield takeEvery(DELETE_CATEGORY, handleDeleteCategory);
+export default function* subcategorySaga() {
+        yield takeEvery(GET_SUBCATEGORY, handleSubcategoryLoad);
+        yield takeEvery(GET_SUBCATEGORIES, handleSubcategoriesLoad);
+        yield takeEvery(ADD_SUBCATEGORY, handleAddSubcategory);
+        yield takeEvery(UPDATE_SUBCATEGORY, handleUpdateSubcategory);
+        yield takeEvery(DELETE_SUBCATEGORY, handleDeleteSubcategory);
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import List from '../../components/List';
@@ -7,8 +7,10 @@ import {
     getCategories,
     addCategory,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    selectCategory
 } from "../../redux/category/category.actions";
+import { Button } from 'react-bootstrap';
 
 import './style.scss'
 
@@ -18,6 +20,11 @@ const CategoriesPage = () => {
         isLoading: Categories.loading
     }))
     const dispatch = useDispatch();
+
+    const onSelectCategory = (id) => {
+        dispatch(selectCategory(id));
+        setShowRedactor(true);
+    }
 
     useEffect(() => {
         dispatch(getCategories())
@@ -40,19 +47,24 @@ const CategoriesPage = () => {
     const onDeleteCategory = () => {
         dispatch(deleteCategory(category.id))
     }
+    const [showRedactor, setShowRedactor] = useState(false);
 
     return (
         <div className='page-container'>
             <div className='page-list'>
-                <List items={categories}
-                      isLoading={isLoading}
-                      onAddItem={onAddCategory}
-                      onEditItem={onEditCategory}
-                      onDeleteItem={onDeleteCategory}
+                <Button className='list-add-button'
+                    variant="primary"
+                    onClick={() => onSelectCategory(null)}>Додати</Button>
+                <List
+                    items={categories}
+                    isLoading={isLoading}
+                    onSelectItem={onSelectCategory}
                 />
             </div>
             <div className='page-item'>
-                <CategoryRedactor />
+                {showRedactor ? <CategoryRedactor /> :
+                    <div className='page-item-message'>Редагуйте елемет зі списку, або добавте новий</div>}
+
             </div>
         </div>
     )

@@ -1,7 +1,8 @@
 .page-container {
+  height: 100vh;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   .page-list {
     margin-left: 50px;
     margin-top: 20px;
@@ -9,7 +10,14 @@
   }
 
   .page-item {
+    margin-top: 35px;
     flex-basis: 45%;
     margin-right: 50px;
   }
+}
+
+.page-item-message {
+  font-size: 30px;
+  font-weight: 600;
+  color: #343a40;
 }

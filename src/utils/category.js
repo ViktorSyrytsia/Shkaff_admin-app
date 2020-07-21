@@ -44,7 +44,7 @@ const addCategory = async ({name, image}) => {
             }
         `
     });
-    client.resetStore();
+    await client.resetStore();
 };
 
 const updateCategory = async ({id, name, image}) => {
@@ -63,11 +63,11 @@ const updateCategory = async ({id, name, image}) => {
             }
         `
     });
-    client.resetStore();
+    await client.resetStore();
 };
 
-const deleteCategory = (id) => {
-    client.mutate({
+const deleteCategory = async (id) => {
+    await client.mutate({
         variables: {
             id
         },
@@ -79,7 +79,7 @@ const deleteCategory = (id) => {
             }
         `
     });
-    client.resetStore();
+    await client.resetStore();
 };
 
 export {

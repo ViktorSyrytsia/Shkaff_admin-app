@@ -1,16 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
 const ButtonsGroup = ({ items, onChange }) => {
+
+        const onSelected = (e) => {
+                onChange(e);
+        }
+
         return (
                 <ButtonGroup className='list-filter-buttons' aria-label="Basic example">
-                        <Button variant='outline-dark' onClick={onChange}>All</Button>
+                        <Button variant='outline-dark' onClick={(e) => onSelected(e)}>All</Button>
                         {items && items.map(item =>
                                 <Button
                                         key={item.id}
-                                        variant='outline-dark'
-                                        onClick={onChange}>
+                                        variant={activeClass}
+                                        onClick={(e) => onSelected(e)}
+                                >
                                         {item.name}
+
 
                                 </Button>)}
                 </ButtonGroup>

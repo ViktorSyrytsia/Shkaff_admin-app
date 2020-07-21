@@ -38,7 +38,6 @@ const List = ({items, isLoading, onSelectItem, onDeleteItem}) => {
                             items.map(item => (
                                 <ListGroup.Item
                                     key={item.id}>
-                                    {console.log(item)}
                                     <ItemContent item={item}/>
                                 </ListGroup.Item>))
                             : 'Список порожній'}

@@ -22,7 +22,6 @@ import {SNACKBAR_MESSAGES} from "../../components/config";
 
 function* handleSubcategoriesLoad() {
         try {
-                console.log('saga')
                 yield put(showLoading());
                 const subcategories = yield call(getSubcategories);
                 yield put(setSubcategories(subcategories.data.getSubcategories));

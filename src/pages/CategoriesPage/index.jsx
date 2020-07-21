@@ -44,8 +44,10 @@ const CategoriesPage = () => {
         dispatch(updateCategory(category))
     }
 
-    const onDeleteCategory = () => {
-        dispatch(deleteCategory(category.id))
+    const onDeleteCategory = (id, name) => {
+        if (window.confirm(`Видалити ${name}?`)) {
+            dispatch(deleteCategory(id))
+        }
     }
     const [showRedactor, setShowRedactor] = useState(false);
 
@@ -54,11 +56,12 @@ const CategoriesPage = () => {
             <div className='page-list'>
                 <Button className='list-add-button'
                     variant="primary"
-                    onClick={() => onAddCategory()}>Додати +</Button>
+                    onClick={onAddCategory} >Додати +</Button>
                 <List
                     items={categories}
                     isLoading={isLoading}
                     onSelectItem={onSelectCategory}
+                    onDeleteItem={onDeleteCategory}
                 />
             </div>
             <div className='page-item'>

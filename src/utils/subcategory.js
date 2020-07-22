@@ -28,6 +28,7 @@ const addSubcategory = async ({name, categoryId}) => {
                 addSubcategory(name: $name, categoryId: $categoryId) {
                     name,
                     category {
+                        id
                         name
                     }
                 }
@@ -49,6 +50,7 @@ const updateSubcategory = async ({id, name, categoryId}) => {
                 updateSubcategory(id: $id, name: $name, categoryId: $categoryId) {
                     name
                     category {
+                        id
                         name
                     }
                 }

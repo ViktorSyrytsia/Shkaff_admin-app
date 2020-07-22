@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from 'react-bootstrap';
 
@@ -6,11 +6,12 @@ import List from '../../components/List';
 import ButtonsGroup from '../../components/ButtonsGroup';
 import SubcategoryRedactor from '../../components/Redactors/Subcategory';
 import {
-    deleteSubcategory,
+    deleteSubcategory, getSubcategories,
     setSubcategory
 } from "../../redux/subcategory/subcategory.actions";
 
 import './style.scss';
+import {getCategories} from "../../redux/category/category.actions";
 
 const SubcategoriesPage = () => {
     const dispatch = useDispatch();
@@ -19,6 +20,10 @@ const SubcategoriesPage = () => {
         isLoading: Subcategories.loading,
         categories: Categories.list
     }))
+
+    useEffect(() => {
+        dispatch(getSubcategories());
+    }, [dispatch])
 
     const [filter, setFilter] = useState(false);
     const [redactorState, setRedactorState] = useState('');

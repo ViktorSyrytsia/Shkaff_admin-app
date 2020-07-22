@@ -6,8 +6,7 @@ import {
         UPDATE_SUBCATEGORY,
         DELETE_SUBCATEGORY,
         SHOW_LOADING,
-        HIDE_LOADING,
-        SELECT_SUBCATEGORY
+        HIDE_LOADING
 } from './subcategory.types'
 
 export const setSubcategory = (subcategory) => ({

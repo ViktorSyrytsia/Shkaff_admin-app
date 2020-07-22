@@ -8,7 +8,6 @@ import {
     DELETE_CATEGORY,
     SHOW_LOADING,
     HIDE_LOADING,
-    SELECT_CATEGORY
 } from './category.types'
 
 export const setCategory = (category) => ({

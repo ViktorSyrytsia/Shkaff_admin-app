@@ -10,6 +10,7 @@ const getSubcategories = () =>
                     id
                     name
                     category {
+                        id
                         name
                     }
                 }

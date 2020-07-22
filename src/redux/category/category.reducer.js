@@ -3,7 +3,6 @@ import {
     SET_CATEGORIES,
     SHOW_LOADING,
     HIDE_LOADING,
-    SELECT_CATEGORY
 } from './category.types'
 
 const initialState = {

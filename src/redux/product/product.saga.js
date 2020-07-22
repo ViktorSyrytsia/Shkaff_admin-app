@@ -19,47 +19,48 @@ import {
         deleteProduct
 } from '../../utils/product';
 import {
-        GET_CATEGORY,
-        GET_CATEGORIES,
-        ADD_CATEGORY,
-        UPDATE_CATEGORY,
-        DELETE_CATEGORY
-} from './category.types';
+        GET_PRODUCT,
+        GET_PRODUCTS,
+        ADD_PRODUCT,
+        UPDATE_PRODUCT,
+        DELETE_PRODUCT
+} from './product.types';
+
 import { SNACKBAR_MESSAGES } from "../../components/config";
 
-function* handleCategoryLoad({ payload }) {
+function* handleProductLoad({ payload }) {
         try {
                 yield put(showLoading());
-                const categories = yield call(getCategory, payload);
-                yield put(setCategory(categories.data.getCategory));
+                const products = yield call(getProduct, payload);
+                yield put(setProduct(products.data.getProduct));
                 yield put(hideLoading());
         } catch (error) {
                 console.log(error);
         }
 }
 
-function* handleCategoriesLoad() {
+function* handleProductsLoad() {
         try {
                 yield put(showLoading());
-                const categories = yield call(getCategories);
-                yield put(setCategories(categories.data.getCategories));
+                const products = yield call(getProducts);
+                yield put(setProducts(products.data.getProducts));
                 yield put(hideLoading());
         } catch (error) {
                 console.log(error);
         }
 }
 
-function* handleAddCategory({ payload }) {
+function* handleAddProduct({ payload }) {
         try {
-                yield call(addCategory, payload);
+                yield call(addProduct, payload);
 
                 yield put(setSnackbarSeverity('success'));
                 yield put(setSnackbarMessage(SNACKBAR_MESSAGES.add.success));
                 yield put(setSnackbarVisibility(true));
 
                 yield put(showLoading());
-                const categories = yield call(getCategories);
-                yield put(setCategories(categories.data.getCategories));
+                const products = yield call(getProducts);
+                yield put(setProducts(products.data.getProducts));
                 yield put(hideLoading());
 
         } catch (err) {
@@ -70,17 +71,17 @@ function* handleAddCategory({ payload }) {
         }
 }
 
-function* handleUpdateCategory({ payload }) {
+function* handleUpdateProduct({ payload }) {
         try {
-                yield call(updateCategory, payload);
+                yield call(updateProduct, payload);
 
                 yield put(setSnackbarSeverity('success'));
                 yield put(setSnackbarMessage(SNACKBAR_MESSAGES.update.success));
                 yield put(setSnackbarVisibility(true));
 
                 yield put(showLoading());
-                const categories = yield call(getCategories);
-                yield put(setCategories(categories.data.getCategories));
+                const products = yield call(getProducts);
+                yield put(setProducts(products.data.getProducts));
                 yield put(hideLoading());
 
         } catch (error) {
@@ -91,17 +92,17 @@ function* handleUpdateCategory({ payload }) {
         }
 }
 
-function* handleDeleteCategory({ payload }) {
+function* handleDeleteProduct({ payload }) {
         try {
-                yield call(deleteCategory, payload);
+                yield call(deleteProduct, payload);
 
                 yield put(setSnackbarSeverity('success'));
                 yield put(setSnackbarMessage(SNACKBAR_MESSAGES.delete.success));
                 yield put(setSnackbarVisibility(true));
 
                 yield put(showLoading());
-                const categories = yield call(getCategories);
-                yield put(setCategories(categories.data.getCategories));
+                const products = yield call(getProducts);
+                yield put(setProducts(products.data.getCategories));
                 yield put(hideLoading());
 
         } catch (error) {
@@ -112,10 +113,10 @@ function* handleDeleteCategory({ payload }) {
         }
 }
 
-export default function* categorySaga() {
-        yield takeEvery(GET_CATEGORY, handleCategoryLoad);
-        yield takeEvery(GET_CATEGORIES, handleCategoriesLoad);
-        yield takeEvery(ADD_CATEGORY, handleAddCategory);
-        yield takeEvery(UPDATE_CATEGORY, handleUpdateCategory);
-        yield takeEvery(DELETE_CATEGORY, handleDeleteCategory);
+export default function* productSaga() {
+        yield takeEvery(GET_PRODUCT, handleProductLoad);
+        yield takeEvery(GET_PRODUCTS, handleProductsLoad);
+        yield takeEvery(ADD_PRODUCT, handleAddProduct);
+        yield takeEvery(UPDATE_PRODUCT, handleUpdateProduct);
+        yield takeEvery(DELETE_PRODUCT, handleDeleteProduct);
 }

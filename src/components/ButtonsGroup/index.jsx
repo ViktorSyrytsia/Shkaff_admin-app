@@ -4,7 +4,7 @@ import { ButtonGroup, Button } from 'react-bootstrap';
 import './style.scss';
 
 const ButtonsGroup = ({ items, onChange }) => {
-        const [radioValue, setRadioValue] = useState(null);
+        const [radioValue, setRadioValue] = useState('all');
         const onSelected = (e) => {
                 onChange(e);
                 setRadioValue(e.currentTarget.value)
@@ -12,7 +12,12 @@ const ButtonsGroup = ({ items, onChange }) => {
 
         return (
                 <ButtonGroup className='list-filter-buttons' toggle>
-                        <Button variant='outline-dark' onClick={(e) => onSelected(e)}>All</Button>
+                        <Button
+                                  value={'all'}
+                                variant={radioValue == 'all' ? "secondary" : "outline-secondary"}
+                                onClick={(e) => onSelected(e)}>All
+                                
+                        </Button>
                         {items.map((item, idx) => (
                                 <Button
                                         key={item.id}

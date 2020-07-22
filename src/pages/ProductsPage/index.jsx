@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from 'react-bootstrap';
 
 import List from '../../components/List';
 import ButtonsGroup from '../../components/ButtonsGroup';
@@ -9,7 +10,6 @@ import {
         setProduct,
         getProducts
 } from "../../redux/product/product.actions";
-import { Button } from 'react-bootstrap';
 
 import './style.scss'
 
@@ -55,7 +55,7 @@ const ProductsPage = () => {
                                 <Button className='list-add-button'
                                         variant="primary"
                                         onClick={onAddProduct}> Додати +</Button>
-                                <ButtonsGroup onChange={onCategoryChange} items={categories}></ButtonsGroup>
+                                <ButtonsGroup onChange={onCategoryChange} items={categories} />
                                 <List
 
                                         items={filter ? products.filter(product => product.category.name === filter) : products}

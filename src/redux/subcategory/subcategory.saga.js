@@ -18,7 +18,7 @@ import {
         DELETE_SUBCATEGORY,
 } from './subcategory.types';
 import {setSnackbarMessage, setSnackbarSeverity, setSnackbarVisibility} from "../snackbar/snackbar.actions";
-import {SNACKBAR_MESSAGES} from "../../components/config";
+import {SNACKBAR_MESSAGES} from "../../config";
 
 function* handleSubcategoriesLoad() {
         try {

@@ -27,6 +27,7 @@ const SubcategoryRedactor = ({redactorState}) => {
         if (subcategory) {
             setId(subcategory.id);
             setName(subcategory.name);
+            setCategoryId(subcategory.category.id);
             setDropdownBarValue(subcategory.category.name);
         } else {
             onResetInputs()
@@ -38,6 +39,7 @@ const SubcategoryRedactor = ({redactorState}) => {
     }
 
     const onSaveCategory = () => {
+        console.log(name, categoryId)
         if (name && categoryId ) {
             dispatch(redactorState === 'add' ?
                 addSubcategory({name, categoryId}) :

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import List from '../../components/List';
@@ -6,20 +6,24 @@ import ButtonsGroup from '../../components/ButtonsGroup';
 import ProductRedactor from '../../components/Redactors/Product';
 import {
         deleteProduct,
-        setProduct
+        setProduct,
+        getProducts
 } from "../../redux/product/product.actions";
 import { Button } from 'react-bootstrap';
 
 import './style.scss'
 
 const ProductsPage = () => {
+        const dispatch = useDispatch();
         const { categories, isLoading, products } = useSelector(({ Categories, Products }) => ({
                 categories: Categories.list,
                 isLoading: Products.loading,
                 products: Products.list
         }))
 
-        const dispatch = useDispatch();
+        useEffect(() => {
+                dispatch(getProducts());
+        }, [dispatch])
 
         const [redactorState, setRedactorState] = useState('');
         const [showRedactor, setShowRedactor] = useState(false);

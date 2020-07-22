@@ -11,7 +11,6 @@ import {
 } from "../../redux/subcategory/subcategory.actions";
 
 import './style.scss';
-import {getCategories} from "../../redux/category/category.actions";
 
 const SubcategoriesPage = () => {
     const dispatch = useDispatch();

@@ -3,7 +3,6 @@ import {
     SET_SUBCATEGORIES,
     SHOW_LOADING,
     HIDE_LOADING,
-    SELECT_SUBCATEGORY
 } from './subcategory.types'
 
 const initialState = {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {DropdownButton, ButtonGroup, Dropdown} from 'react-bootstrap'
 
 const DropdownBar = ({items, selectedValue, setSelectedValue}) => {

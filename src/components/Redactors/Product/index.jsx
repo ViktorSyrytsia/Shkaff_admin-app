@@ -8,40 +8,59 @@ import './style.scss';
 
 const ProductRedactor = ({ redactorState }) => {
         const dispatch = useDispatch()
-        const { subcategory, categories } = useSelector(({ Subcategories, Categories }) => ({
-                subcategory: Subcategories.subcategory,
+        const { subcategories, categories, product } = useSelector(({ Subcategories, Categories, Products }) => ({
+                subcategories: Subcategories.list,
                 categories: Categories.list,
+                product: Products.product
         }));
 
         const [id, setId] = useState('')
         const [name, setName] = useState('');
         const [categoryId, setCategoryId] = useState('')
-        const [dropdownBarValue, setDropdownBarValue] = useState(null)
+        const [subcategoryId, setSubcategoryId] = useState('')
+        const [size, setSize] = useState('')
+        const [description, setDescription] = useState('')
+        const [price, setPrice] = useState('')
+        const [image, setImages] = useState('')
+        const [rating, setRating] = useState('')
+        const [categoryDropdownBarValue, setCategoryDropdownBarValue] = useState(null)
+        const [subcategoryDropdownBarValue, setSubcategoryDropdownBarValue] = useState(null)
 
-        const onSelectDropdownBarItem = (key, e) => {
+
+        const onSelectCategoryDropdownBarItem = (key, e) => {
                 setCategoryId(e.target.dataset.id)
-                setDropdownBarValue(e.target.innerText)
+                setCategoryDropdownBarValue(e.target.innerText)
+        }
+        const onSelectSubcategoryDropdownBarItem = (key, e) => {
+                setSubcategoryId(e.target.dataset.id)
+                setSubcategoryDropdownBarValue(e.target.innerText)
         }
 
         useEffect(() => {
-                if (subcategory) {
-                        setId(subcategory.id);
-                        setName(subcategory.name);
-                        setDropdownBarValue(subcategory.category.name);
+                if (product) {
+                        setId(product.id);
+                        setName(product.name);
+                        setSize(product.size);
+                        setDescription(product.description);
+                        setPrice(product.price);
+                        setImages(product.images);
+                        setRating(product.rating);
+                        setCategoryDropdownBarValue(product.category.name);
+                        setSubcategoryDropdownBarValue(product.subcategory.name);
                 } else {
                         onResetInputs()
                 }
-        }, [subcategory]);
+        }, [product]);
 
         const onInputChange = (e) => {
-                setName(e.target.value);
+                console.log(e.target);
         }
 
-        const onSaveCategory = () => {
-                if (name && categoryId) {
+        const onSaveProduct = () => {
+                if (name && categoryId && subcategoryId) {
                         dispatch(redactorState === 'add' ?
-                                addSubcategory({ name, categoryId }) :
-                                updateSubcategory({ id, name, categoryId }))
+                                addProduct({ name, categoryId, subcategoryId }) :
+                                updateProduct({ id, name, categoryId, subcategoryId }))
                         onResetInputs();
                 } else {
                         window.alert('Всі поля повинні бути заповнені!')
@@ -49,16 +68,22 @@ const ProductRedactor = ({ redactorState }) => {
         }
 
         const onResetInputs = () => {
+                setId('');
                 setName('');
-                setCategoryId('')
-                setDropdownBarValue(null)
+                setSize('');
+                setDescription('');
+                setPrice('');
+                setImages('');
+                setRating('');
+                setCategoryDropdownBarValue(null);
+                setSubcategoryDropdownBarValue(null);
         }
 
         return (
                 <div className='subcategory-redactor-container'>
                         <Form>
-                                <Form.Group controlId="subcategoryForm.nameInput">
-                                        <Form.Label>Назва субкатегорії:</Form.Label>
+                                <Form.Group controlId="productForm.nameInput">
+                                        <Form.Label>Назва продукту:</Form.Label>
                                         <Form.Control
                                                 name='name'
                                                 type="text"
@@ -66,15 +91,72 @@ const ProductRedactor = ({ redactorState }) => {
                                                 value={name || ''}
                                                 onChange={onInputChange} />
                                 </Form.Group>
-                                <Form.Group controlId="subcategoryForm.categorySelect">
+                                <Form.Group controlId="productForm.priceInput">
+                                        <Form.Label>Ціна:</Form.Label>
+                                        <Form.Control
+                                                name='price'
+                                                type="text"
+                                                placeholder="Введіть ціну продукту"
+                                                value={price || ''}
+                                                onChange={onInputChange} />
+                                </Form.Group>
+
+                                <Form.Group controlId="productForm.categorySelect">
+                                        <Form.Label>Категорія:</Form.Label>
                                         <DropdownBar
                                                 items={categories}
-                                                selectedValue={dropdownBarValue}
-                                                setSelectedValue={onSelectDropdownBarItem}
+                                                selectedValue={categoryDropdownBarValue}
+                                                setSelectedValue={onSelectCategoryDropdownBarItem}
                                         />
                                 </Form.Group>
+                                <Form.Group controlId="productForm.subcategorySelect">
+                                        <Form.Label>Підкатегорія:</Form.Label>
+                                        <br />
+                                        <DropdownBar
+                                                items={subcategories}
+                                                selectedValue={subcategoryDropdownBarValue}
+                                                setSelectedValue={onSelectSubcategoryDropdownBarItem}
+                                        />
+                                </Form.Group>
+                                <Form.Group controlId="productForm.descriptionInput">
+                                        <Form.Label>Опис продукту:</Form.Label>
+                                        <Form.Control
+                                                name='description'
+                                                type="textarea"
+                                                placeholder="Введіть опис продукту"
+                                                value={description || ''}
+                                                onChange={onInputChange} />
+                                </Form.Group>
+
+                                <Form.Group controlId="productForm.imageInput">
+                                        <Form.Label>Назва продукту:</Form.Label>
+                                        <Form.Control
+                                                name='name'
+                                                type="text"
+                                                placeholder="Введіть посилання на зоображення"
+                                                value={image || ''}
+                                                onChange={onInputChange} />
+                                </Form.Group>
+                                <Form.Group controlId="productForm.ratingInput">
+                                        <Form.Label>Рейтинг продукту:</Form.Label>
+                                        <Form.Control
+                                                name='rating'
+                                                type="text"
+                                                placeholder="Введіть рейтинг товару (від 1 до 10)"
+                                                value={rating || ''}
+                                                onChange={onInputChange} />
+                                </Form.Group>
+                                <Form.Group controlId="productForm.sizeInput">
+                                        <Form.Label>Розміри:</Form.Label>
+                                        <Form.Control
+                                                name='size'
+                                                type="text"
+                                                placeholder="Введіть назву продукту"
+                                                value={size || ''}
+                                                onChange={onInputChange} />
+                                </Form.Group>
                                 <div className='category-redactor-buttons'>
-                                        <Button variant="primary" onClick={onSaveCategory}>
+                                        <Button variant="primary" onClick={onSaveProduct}>
                                                 Зберегти
                     </Button>
                                         <Button variant="dark" onClick={onResetInputs}>
@@ -86,4 +168,4 @@ const ProductRedactor = ({ redactorState }) => {
         )
 }
 
-export default SubcategoryRedactor;
+export default ProductRedactor;

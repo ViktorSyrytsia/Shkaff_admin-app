@@ -52,8 +52,3 @@ export const showLoading = () => ({
 export const hideLoading = () => ({
     type: HIDE_LOADING
 })
-
-export const selectCategory = (payload) => ({
-    type: SELECT_CATEGORY,
-    payload
-})

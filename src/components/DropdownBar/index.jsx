@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {DropdownButton, ButtonGroup, Dropdown} from 'react-bootstrap'
 
 const DropdownBar = ({items}) => {
-    const [selectedValue, setSelectedValue] = useState('Виберіть опцію')
+    const [selectedValue, setSelectedValue] = useState(null)
 
    const selectItem = (key, event) => {
         console.dir(event.target)
@@ -15,7 +15,7 @@ const DropdownBar = ({items}) => {
                 as={ButtonGroup}
                 id={`dropdown-variants-${'Secondary'}`}
                 variant={'secondary'}
-                title={selectedValue}
+                title={selectedValue || 'Виберіть опцію'}
             >
                 {
                     items.map((item, i) => (

@@ -5,10 +5,10 @@ import Spinner from '../Spinner/';
 import './style.scss';
 import {updateCategory} from "../../redux/category/category.actions";
 
-const List = ({items, isLoading, onSelectItem, onDeleteItem}) => {
+const List = ({items, isLoading, onEditItem, onDeleteItem}) => {
 
     const ItemContent = ({item}) => {
-        const {id, name, __typename} = item;
+        const {name, __typename} = item;
 
         return (
             <div className='list-item-content'>
@@ -22,8 +22,8 @@ const List = ({items, isLoading, onSelectItem, onDeleteItem}) => {
                     <div className='list-item-content-subName'>{item.subcategory.name}, {item.category.name}</div>
                 }
                 <div className='list-item-content-buttons'>
-                    <Button variant="outline-warning" onClick={() => onSelectItem(id)}>Редагувати</Button>
-                    <Button variant="outline-danger" onClick={() => onDeleteItem(id, name)}>Видалити</Button>
+                    <Button variant="outline-warning" onClick={() => onEditItem(item)}>Редагувати</Button>
+                    <Button variant="outline-danger" onClick={() => onDeleteItem(item)}>Видалити</Button>
                 </div>
             </div>
         )

@@ -1,40 +1,43 @@
 import React, {useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {Form, Button} from 'react-bootstrap';
 
+import {addCategory, updateCategory} from "../../../redux/category/category.actions";
 import './style.scss';
 
-const CategoryRedactor = ({onAddCategory, onEditCategory, saveOptions}) => {
-
+const CategoryRedactor = ({redactorState}) => {
     const category = useSelector(({Categories}) => Categories.category);
+    const dispatch = useDispatch()
+
     const [id, setId] = useState('')
     const [name, setName] = useState('');
     const [image, setImage] = useState('');
 
     useEffect(() => {
         if (category) {
+            setId(category.id);
             setName(category.name);
             setImage(category.image);
-            setId(category.id);
         } else {
             setName('');
             setImage('');
         }
-    }, [category]);
+    }, [category, redactorState]);
 
-    const onInputChange = (e) => {
-        e.target.name === 'name' ? setName(e.target.value) : setImage(e.target.value);
-    }
-
-    const onSubmitAction = (saveOptions) => {
-        if (name !== '' && image !== '') {
-            saveOptions === 'add' ? onAddCategory({name, image}) : onEditCategory({id, name, image})
+    const onSaveCategory = () => {
+        if (name && image ) {
+            dispatch(redactorState === 'add' ?
+                addCategory({name, image}) :
+                updateCategory({id, name, image}))
         } else {
             window.alert('Поле не можу бути пустим')
         }
         onResetInputs();
     }
 
+    const onInputChange = (e) => {
+        e.target.name === 'name' ? setName(e.target.value) : setImage(e.target.value);
+    }
 
     const onResetInputs = () => {
         setName('');
@@ -63,7 +66,7 @@ const CategoryRedactor = ({onAddCategory, onEditCategory, saveOptions}) => {
                         onChange={onInputChange}/>
                 </Form.Group>
                 <div className='category-redactor-buttons'>
-                    <Button variant="primary" onClick={() => onSubmitAction(saveOptions)}>
+                    <Button variant="primary" onClick={onSaveCategory}>
                         Зберегти
                     </Button>
                     <Button variant="dark" onClick={onResetInputs}>

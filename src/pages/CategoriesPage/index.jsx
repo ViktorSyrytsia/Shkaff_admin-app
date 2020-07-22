@@ -1,19 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import List from '../../components/List';
 import CategoryRedactor from '../../components/Redactors/Category';
 import {
-    getCategories,
-    addCategory,
-    updateCategory,
     deleteCategory,
-    selectCategory
+    setCategory
 } from "../../redux/category/category.actions";
 import { Button } from 'react-bootstrap';
 
 import './style.scss'
-import {setSubcategory} from "../../redux/subcategory/subcategory.actions";
 
 const CategoriesPage = () => {
     const { categories, isLoading } = useSelector(({ Categories }) => ({
@@ -22,48 +18,47 @@ const CategoriesPage = () => {
     }))
     const dispatch = useDispatch();
 
-    const [saveOptions, setSaveOptions] = useState('');
-
-    const onSelectCategory = (id) => {
-        dispatch(setSubcategory(id));
-        setShowRedactor(true);
-        id === '' ? setSaveOptions('add') : setSaveOptions('edit')
-    }
-
-    const onAddCategory = (category) => dispatch(addCategory(category));
-    const onEditCategory = (category) => dispatch(updateCategory(category));
-
-    const onDeleteCategory = (id, name) => {
-        if (window.confirm(`Видалити ${name}?`)) {
-            dispatch(deleteCategory(id))
-        }
-    }
+    const [redactorState, setRedactorState] = useState('');
     const [showRedactor, setShowRedactor] = useState(false);
+
+    const onAddCategory = () => {
+        setRedactorState('add')
+        setShowRedactor(true);
+        dispatch(setCategory(null))
+    }
+
+    const onEditCategory = (category) => {
+        setRedactorState('edit')
+        setShowRedactor(true);
+        dispatch(setCategory(category))
+    }
+
+    const onDeleteCategory = ({id, name}) => {
+        window.confirm(`Видалити ${name}?`) && dispatch(deleteCategory(id))
+    }
 
     return (
         <div className='page-container'>
             <div className='page-list'>
                 <Button className='list-add-button'
                     variant="primary"
-                    onClick={() => onSelectCategory('')}> Додати +</Button>
+                    onClick={onAddCategory}> Додати +</Button>
                 <List
                     items={categories}
                     isLoading={isLoading}
-                    onSelectItem={onSelectCategory}
+                    onEditItem={onEditCategory}
                     onDeleteItem={onDeleteCategory}
                 />
             </div>
             <div className='page-item'>
                 {showRedactor ? <CategoryRedactor
-                    onAddCategory={onAddCategory}
-                    onEditCategory={onEditCategory}
-                    saveOptions={saveOptions}
+                    redactorState={redactorState}
                 /> :
-                    <div className='page-item-message'>Редагуйте елемет зі списку, або добавте новий</div>}
+                    <div className='page-item-message'>Редагуйте елемет зі списку або добавте новий</div>}
 
             </div>
         </div>
     )
 }
 
-export default CategoriesPage
+export default CategoriesPage;

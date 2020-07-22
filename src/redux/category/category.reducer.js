@@ -38,12 +38,6 @@ const categoryReducer = (state = initialState, { type, payload }) => {
                 loading: false,
             }
         }
-        case SELECT_CATEGORY: {
-            return {
-                ...state,
-                category: state.list.find(item => item.id === payload)
-            }
-        }
         default:
             return state
     }

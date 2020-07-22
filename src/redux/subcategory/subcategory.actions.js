@@ -10,9 +10,9 @@ import {
         SELECT_SUBCATEGORY
 } from './subcategory.types'
 
-export const setSubcategory = (category) => ({
+export const setSubcategory = (subcategory) => ({
         type: SET_SUBCATEGORY,
-        payload: category
+        payload: subcategory
 })
 
 export const setSubcategories = (categories) => ({
@@ -45,9 +45,4 @@ export const showLoading = () => ({
 
 export const hideLoading = () => ({
         type: HIDE_LOADING
-})
-
-export const selectSubcategory = (payload) => ({
-        type: SELECT_SUBCATEGORY,
-        payload
 })

@@ -3,7 +3,6 @@ import {ListGroup, Button} from 'react-bootstrap'
 import Spinner from '../Spinner/';
 
 import './style.scss';
-import {updateCategory} from "../../redux/category/category.actions";
 
 const List = ({items, isLoading, onEditItem, onDeleteItem}) => {
 

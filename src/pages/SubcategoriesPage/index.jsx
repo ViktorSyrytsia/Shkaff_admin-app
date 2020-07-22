@@ -6,80 +6,67 @@ import List from '../../components/List';
 import ButtonsGroup from '../../components/ButtonsGroup';
 import SubcategoryRedactor from '../../components/Redactors/Subcategory';
 import {
-        addSubcategory,
-        updateSubcategory,
-        deleteSubcategory,
-        setSubcategory
+    deleteSubcategory,
+    setSubcategory
 } from "../../redux/subcategory/subcategory.actions";
 
 import './style.scss';
 
 const SubcategoriesPage = () => {
-        const { subcategories, isLoading, categories } = useSelector(({ Subcategories, Categories }) => ({
-                subcategories: Subcategories.list,
-                isLoading: Subcategories.loading,
-                categories: Categories.list
-        }))
+    const dispatch = useDispatch();
+    const {subcategories, isLoading, categories} = useSelector(({Subcategories, Categories}) => ({
+        subcategories: Subcategories.list,
+        isLoading: Subcategories.loading,
+        categories: Categories.list
+    }))
 
-        const dispatch = useDispatch();
+    const [filter, setFilter] = useState(false);
+    const [redactorState, setRedactorState] = useState('');
+    const [showRedactor, setShowRedactor] = useState(false);
 
-        const [showRedactor, setShowRedactor] = useState(false);
-        const [filter, setFilter] = useState(false);
-        const [saveOptions, setSaveOptions] = useState('');
-
-    const onSelectSubcategory = (id) => {
-        dispatch(setSubcategory(id));
+    const onAddSubcategory = () => {
+        setRedactorState('add')
         setShowRedactor(true);
-        id === '' ? setSaveOptions('add') : setSaveOptions('edit')
+        dispatch(setSubcategory(null))
     }
 
-        const onAddSubcategory = (subcategory) => {
-                dispatch(addSubcategory(subcategory))
-        }
+    const onEditSubcategory = (category) => {
+        setRedactorState('edit')
+        setShowRedactor(true);
+        dispatch(setSubcategory(category))
+    }
 
-        const onEditSubcategory = (subcategory) => {
-                dispatch(updateSubcategory(subcategory))
-        }
+    const onDeleteSubcategory = ({id, name}) => {
+        window.confirm(`Видалити ${name}?`) && dispatch(deleteSubcategory(id))
+    }
 
-        const onDeleteSubcategory = (id, name) => {
-                if (window.confirm(`Видалити ${name}?`)) {
-                        dispatch(deleteSubcategory(id))
-                }
-        }
+    const onCategoryChange = (e) => {
+        e.target.innerText === 'All' ? setFilter(false) : setFilter(e.target.innerText);
+    }
 
-        const onCategoryChange = (e) => {
-                if (e.target.innerText === 'All') {
-                        setFilter(false);
-                } else {
-                        setFilter(e.target.innerText);
-                }
-        }
+    return (
+        <div className='page-container'>
+            <div className='page-list'>
+                <Button className='list-add-button'
+                        variant="primary"
+                        onClick={onAddSubcategory}> Додати +</Button>
+                <ButtonsGroup onChange={onCategoryChange} items={categories}/>
+                <List
+                    items={filter ? subcategories.filter(subcategory => subcategory.category.name === filter) : subcategories}
+                    isLoading={isLoading}
+                    onEditItem={onEditSubcategory}
+                    onDeleteItem={onDeleteSubcategory}
+                />
+            </div>
+            <div className='page-item'>
+                {showRedactor ? <SubcategoryRedactor
+                        redactorState={redactorState}
+                    /> :
+                    <div className='page-item-message'>Редагуйте елемет зі списку або добавте новий</div>}
 
-        return (
-                <div className='page-container'>
-                        <div className='page-list'>
-                                <Button className='list-add-button'
-                                        variant="primary"
-                                        onClick={() => onSelectSubcategory('')}> Додати +</Button>
-                                <ButtonsGroup onChange={onCategoryChange} items={categories} />
-                                <List
-                                        items={filter ? subcategories.filter(subcategory => subcategory.category.name === filter) : subcategories}
-                                        isLoading={isLoading}
-                                        onSelectItem={onSelectSubcategory}
-                                        onDeleteItem={onDeleteSubcategory}
-                                />
-                        </div>
-                        <div className='page-item'>
-                                {showRedactor ? <SubcategoryRedactor
-                                        onAddSubcategory={onAddSubcategory}
-                                        onEditSubcategory={onEditSubcategory}
-                                        saveOptions={saveOptions}
-                                /> :
-                                        <div className='page-item-message'>Редагуйте елемет зі списку, або добавте новий</div>}
-
-                        </div>
-                </div>
-        )
+            </div>
+        </div>
+    )
 }
 
 export default SubcategoriesPage

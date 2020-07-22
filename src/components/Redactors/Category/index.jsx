@@ -19,8 +19,7 @@ const CategoryRedactor = ({redactorState}) => {
             setName(category.name);
             setImage(category.image);
         } else {
-            setName('');
-            setImage('');
+            onResetInputs();
         }
     }, [category, redactorState]);
 
@@ -29,10 +28,10 @@ const CategoryRedactor = ({redactorState}) => {
             dispatch(redactorState === 'add' ?
                 addCategory({name, image}) :
                 updateCategory({id, name, image}))
+            onResetInputs();
         } else {
-            window.alert('Поле не можу бути пустим')
+            window.alert('Всі поля повинні бути заповнені!')
         }
-        onResetInputs();
     }
 
     const onInputChange = (e) => {

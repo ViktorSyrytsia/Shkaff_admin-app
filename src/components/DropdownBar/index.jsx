@@ -1,13 +1,7 @@
 import React, {useState} from 'react'
 import {DropdownButton, ButtonGroup, Dropdown} from 'react-bootstrap'
 
-const DropdownBar = ({items}) => {
-    const [selectedValue, setSelectedValue] = useState(null)
-
-   const selectItem = (key, event) => {
-        console.dir(event.target)
-       setSelectedValue(event.target.innerText)
-   }
+const DropdownBar = ({items, selectedValue, setSelectedValue}) => {
 
     return (
         <>
@@ -23,7 +17,7 @@ const DropdownBar = ({items}) => {
                             key={item.id}
                             data-id={item.id}
                             eventKey={i}
-                            onSelect={selectItem}>
+                            onSelect={setSelectedValue}>
                             {item.name}
                         </Dropdown.Item>
                     ))

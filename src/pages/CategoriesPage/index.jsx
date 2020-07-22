@@ -12,11 +12,11 @@ import { Button } from 'react-bootstrap';
 import './style.scss'
 
 const CategoriesPage = () => {
+    const dispatch = useDispatch();
     const { categories, isLoading } = useSelector(({ Categories }) => ({
         categories: Categories.list,
         isLoading: Categories.loading
     }))
-    const dispatch = useDispatch();
 
     const [redactorState, setRedactorState] = useState('');
     const [showRedactor, setShowRedactor] = useState(false);

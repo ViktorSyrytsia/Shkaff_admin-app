@@ -17,7 +17,7 @@ const subcategoryReducer = (state = initialState, {type, payload}) => {
         case SET_SUBCATEGORY: {
             return {
                 ...state,
-                category: payload
+                subcategory: payload
             }
         }
         case SET_SUBCATEGORIES: {
@@ -36,12 +36,6 @@ const subcategoryReducer = (state = initialState, {type, payload}) => {
             return {
                 ...state,
                 loading: false,
-            }
-        }
-        case SELECT_SUBCATEGORY: {
-            return {
-                ...state,
-                category: state.list.find(item => item.id === payload)
             }
         }
         default:

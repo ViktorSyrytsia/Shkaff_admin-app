@@ -1,13 +1,13 @@
 import React from 'react'
-import {ListGroup, Button} from 'react-bootstrap'
+import { ListGroup, Button } from 'react-bootstrap'
 import Spinner from '../Spinner/';
 
 import './style.scss';
 
-const List = ({items, isLoading, onEditItem, onDeleteItem}) => {
+const List = ({ items, isLoading, onEditItem, onDeleteItem }) => {
 
-    const ItemContent = ({item}) => {
-        const {name, __typename} = item;
+    const ItemContent = ({ item }) => {
+        const { name, __typename } = item;
 
         return (
             <div className='list-item-content'>
@@ -18,7 +18,7 @@ const List = ({items, isLoading, onEditItem, onDeleteItem}) => {
                 }
                 {
                     __typename === 'Product' &&
-                    <div className='list-item-content-subName'>{item.subcategory.name}, {item.category.name}</div>
+                    <div className='list-item-content-subName'>{item.subcategory && item.subcategory.name}, {item.category && item.category.name}</div>
                 }
                 <div className='list-item-content-buttons'>
                     <Button variant="outline-warning" onClick={() => onEditItem(item)}>Редагувати</Button>
@@ -30,14 +30,14 @@ const List = ({items, isLoading, onEditItem, onDeleteItem}) => {
 
     return (
         <div className='list-container'>      {
-            isLoading ? <Spinner/> :
+            isLoading ? <Spinner /> :
                 <>
                     <ListGroup>
                         {items.length > 0 ?
                             items.map(item => (
                                 <ListGroup.Item
                                     key={item.id}>
-                                    <ItemContent item={item}/>
+                                    <ItemContent item={item} />
                                 </ListGroup.Item>))
                             : 'Список порожній'}
                     </ListGroup>

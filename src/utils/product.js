@@ -3,17 +3,19 @@ import { gql } from 'apollo-boost'
 import client from "./index";
 
 const getProducts = () =>
-        client.query({
-                query: gql`
+  client.query({
+    query: gql`
             {
                 getProducts {
                         id,
                         name,
                         category {
-                          id
+                          id,
+                          name
                         },
                         subcategory {
-                          id
+                          id,
+                          name
                         },
                         sizes {
                           s
@@ -33,21 +35,23 @@ const getProducts = () =>
                       }
             }
         `
-        });
+  });
 
 const getProduct = ({ id }) =>
-        client.query({
-                variables: { id },
-                query: gql`
+  client.query({
+    variables: { id },
+    query: gql`
             query($id: ID!) {
                 getProduct(id: $id) {
                         id,
                         name,
                         category {
-                          id
+                          id,
+                          name
                         },
                         subcategory {
-                          id
+                          id,
+                          name
                         },
                         sizes {
                           s
@@ -67,14 +71,14 @@ const getProduct = ({ id }) =>
                 }
             }
         `
-        });
+  });
 
 const addProduct = async ({ product }) => {
-        await client.mutate({
-                variables: {
-                        product
-                },
-                mutation: gql`
+  await client.mutate({
+    variables: {
+      product
+    },
+    mutation: gql`
             mutation($product: ProductInput) {
                 addProduct(product: $product) {
                         name,
@@ -104,17 +108,17 @@ const addProduct = async ({ product }) => {
                 }
             }
         `
-        });
-        await client.resetStore();
+  });
+  await client.resetStore();
 };
 
 const updateProduct = async ({ id, product }) => {
-        await client.mutate({
-                variables: {
-                        id,
-                        product
-                },
-                mutation: gql`
+  await client.mutate({
+    variables: {
+      id,
+      product
+    },
+    mutation: gql`
             mutation($id: ID!, $product: ProductInput) {
                 updateCategory(id: $id, product: $product) {
                         name,
@@ -144,30 +148,30 @@ const updateProduct = async ({ id, product }) => {
                 }
             }
         `
-        });
-        await client.resetStore();
+  });
+  await client.resetStore();
 };
 
 const deleteProduct = async (id) => {
-        await client.mutate({
-                variables: {
-                        id
-                },
-                mutation: gql`
+  await client.mutate({
+    variables: {
+      id
+    },
+    mutation: gql`
             mutation($id: ID!) {
                 deleteProduct(id: $id) {
                     name
                 }
             }
         `
-        })
-        await client.resetStore();
+  })
+  await client.resetStore();
 };
 
 export {
-        getProducts,
-        getProduct,
-        addProduct,
-        updateProduct,
-        deleteProduct
+  getProducts,
+  getProduct,
+  addProduct,
+  updateProduct,
+  deleteProduct
 };

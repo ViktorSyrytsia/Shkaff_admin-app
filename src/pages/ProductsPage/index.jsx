@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 import List from '../../components/List';
+import ButtonsGroup from '../../components/ButtonsGroup';
 import ProductRedactor from '../../components/Redactors/Product';
 import {
         deleteProduct,
@@ -17,10 +18,12 @@ const ProductsPage = () => {
                 isLoading: Products.loading,
                 products: Products.list
         }))
+
         const dispatch = useDispatch();
 
         const [redactorState, setRedactorState] = useState('');
         const [showRedactor, setShowRedactor] = useState(false);
+        const [filter, setFilter] = useState(false);
 
         const onAddProduct = () => {
                 setRedactorState('add')
@@ -38,14 +41,20 @@ const ProductsPage = () => {
                 window.confirm(`Видалити ${name}?`) && dispatch(deleteProduct(id))
         }
 
+        const onCategoryChange = (e) => {
+                e.target.innerText === 'All' ? setFilter(false) : setFilter(e.target.innerText);
+        }
+
         return (
                 <div className='page-container'>
                         <div className='page-list'>
                                 <Button className='list-add-button'
                                         variant="primary"
                                         onClick={onAddProduct}> Додати +</Button>
+                                <ButtonsGroup onChange={onCategoryChange} items={categories}></ButtonsGroup>
                                 <List
-                                        items={categories}
+
+                                        items={filter ? products.filter(product => product.category.name === filter) : products}
                                         isLoading={isLoading}
                                         onEditItem={onEditProduct}
                                         onDeleteItem={onDeleteProduct}

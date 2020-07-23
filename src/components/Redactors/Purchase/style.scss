@@ -1,0 +1,17 @@
+.input-group-text {
+  font-weight: 700;
+}
+
+.purchase {
+  &__header {
+    text-align: center;
+  }
+  &__status {
+    margin: 10px 0;
+  }
+
+  &__delete {
+    text-align: right;
+    width: 100%;
+  }
+}

@@ -1,28 +1,28 @@
 import {
-    SET_CATEGORY,
-    SET_CATEGORIES,
+    SET_PURCHASES,
     SHOW_LOADING,
     HIDE_LOADING,
-} from './category.types'
+    SET_PURCHASE,
+} from './purchase.types'
 
 const initialState = {
     list: [],
-    category: {},
+    purchase: {},
     loading: false
 }
 
-const categoryReducer = (state = initialState, { type, payload }) => {
+const purchaseReducer = (state = initialState, {type, payload}) => {
     switch (type) {
-        case SET_CATEGORY: {
+        case SET_PURCHASES: {
             return {
                 ...state,
-                category: payload
+                list: payload
             }
         }
-        case SET_CATEGORIES: {
+        case SET_PURCHASE: {
             return {
                 ...state,
-                list: payload,
+                purchase: payload,
             }
         }
         case SHOW_LOADING: {
@@ -38,8 +38,10 @@ const categoryReducer = (state = initialState, { type, payload }) => {
             }
         }
         default:
-            return state
+            return {
+                ...state
+            }
     }
 }
 
-export default categoryReducer;
+export default purchaseReducer;

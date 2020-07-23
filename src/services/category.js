@@ -44,7 +44,7 @@ const addCategory = async ({name, image}) => {
             }
         `
     });
-    await  client.resetStore();
+    await client.resetStore();
 };
 
 const updateCategory = async ({id, name, image}) => {

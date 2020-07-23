@@ -1,25 +1,25 @@
 import {
-    SET_CATEGORY,
-    SET_CATEGORIES,
+    SET_SUBCATEGORY,
+    SET_SUBCATEGORIES,
     SHOW_LOADING,
     HIDE_LOADING,
-} from './category.types'
+} from './subcategory.types'
 
 const initialState = {
     list: [],
-    category: {},
+    subcategory: {},
     loading: false
 }
 
-const categoryReducer = (state = initialState, { type, payload }) => {
+const subcategoryReducer = (state = initialState, {type, payload}) => {
     switch (type) {
-        case SET_CATEGORY: {
+        case SET_SUBCATEGORY: {
             return {
                 ...state,
-                category: payload
+                subcategory: payload
             }
         }
-        case SET_CATEGORIES: {
+        case SET_SUBCATEGORIES: {
             return {
                 ...state,
                 list: payload,
@@ -38,8 +38,10 @@ const categoryReducer = (state = initialState, { type, payload }) => {
             }
         }
         default:
-            return state
+            return {
+                ...state
+            }
     }
 }
 
-export default categoryReducer;
+export default subcategoryReducer;

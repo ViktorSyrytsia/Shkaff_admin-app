@@ -8,7 +8,6 @@ import {
     DELETE_CATEGORY,
     SHOW_LOADING,
     HIDE_LOADING,
-    SELECT_CATEGORY
 } from './category.types'
 
 export const setCategory = (category) => ({
@@ -51,9 +50,4 @@ export const showLoading = () => ({
 
 export const hideLoading = () => ({
     type: HIDE_LOADING
-})
-
-export const selectCategory = (payload) => ({
-    type: SELECT_CATEGORY,
-    payload
 })

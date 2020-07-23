@@ -29,10 +29,13 @@ export const getProducts = () => ({
         type: GET_PRODUCTS
 })
 
-export const addProduct = (payload) => ({
-        type: ADD_PRODUCT,
-        payload
-})
+export const addProduct = (payload) => {
+        console.log(payload);
+        return {
+                type: ADD_PRODUCT,
+                payload
+        }
+}
 
 export const updateProduct = (payload) => ({
         type: UPDATE_PRODUCT,

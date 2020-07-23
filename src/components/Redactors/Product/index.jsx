@@ -18,13 +18,18 @@ const ProductRedactor = ({ redactorState }) => {
         const [name, setName] = useState('');
         const [categoryId, setCategoryId] = useState('')
         const [subcategoryId, setSubcategoryId] = useState('')
-        const [size, setSize] = useState({ xs: '', s: '', m: '', l: '', xl: '', xxl: '' })
+        const [sizeXs, setSizeXs] = useState('');
+        const [sizeS, setSizeS] = useState('');
+        const [sizeM, setSizeM] = useState('');
+        const [sizeL, setSizeL] = useState('');
+        const [sizeXl, setSizeXl] = useState('');
+        const [sizeXxl, setSizeXxl] = useState('');
         const [description, setDescription] = useState('')
         const [price, setPrice] = useState('')
         const [image, setImages] = useState([])
-        const [rating, setRating] = useState([{ value: 0 }])
         const [categoryDropdownBarValue, setCategoryDropdownBarValue] = useState(null)
         const [subcategoryDropdownBarValue, setSubcategoryDropdownBarValue] = useState(null)
+        const [valueObj, setValueObj] = useState({ name: '', price: '', description: '', image: [{ link: '' }], sizes: { xs: '', s: '', m: '', l: '', xl: '', xxl: '' } })
 
 
         const onSelectCategoryDropdownBarItem = (key, e) => {
@@ -38,14 +43,18 @@ const ProductRedactor = ({ redactorState }) => {
 
         useEffect(() => {
                 if (product) {
-
+                        console.log(product);
                         setId(product.id);
                         setName(product.name);
-                        setSize(product.size);
+                        setSizeXs(product.sizes.xs);
+                        setSizeS(product.sizes.s);
+                        setSizeM(product.sizes.m);
+                        setSizeL(product.sizes.l);
+                        setSizeXl(product.sizes.xl);
+                        setSizeXxl(product.sizes.xxl);
                         setDescription(product.description);
                         setPrice(product.price);
                         setImages(product.images);
-                        setRating(product.rating);
                         setCategoryDropdownBarValue(product.category.name);
                         setSubcategoryDropdownBarValue(product.subcategory.name);
                 } else {
@@ -54,40 +63,35 @@ const ProductRedactor = ({ redactorState }) => {
         }, [product]);
 
         const onInputChange = (e) => {
-
-                switch (e.target.name) {
-                        case 'name':
-                                setName(e.target.value);
-                                break;
-                        case 'price':
-                                setPrice(e.target.value);
-                                break;
-                        case 'description':
-                                setDescription(e.target.value);
-                                break;
-                        case 'image':
-                                const imageString = e.target.value;
-                                setImages(imageString.split(','))
-                                break;
-
-                        case 'rating':
-                                const newRating = [];
-                                newRating.push({ value: +e.target.value });
-                                setRating(newRating);
-                                break;
-                        case 'size':
-                                setSize(e.target.value);
-                                break;
-                        default:
-                                break;
+                const formArray = e.target.form;
+                const valueArray = [];
+                for (const input of formArray) {
+                        if (input.id == 'productForm') {
+                                valueArray.push(input.value);
+                        }
                 }
+                setValueObj({
+                        name: valueArray[0],
+                        price: valueArray[1],
+                        description: valueArray[2],
+                        images: valueArray[3],
+                        sizes: {
+                                xs: valueArray[4],
+                                s: valueArray[5],
+                                m: valueArray[6],
+                                l: valueArray[7],
+                                xl: valueArray[8],
+                                xxl: valueArray[9],
+                        }
+                })
+                console.log(valueObj);
         }
 
         const onSaveProduct = () => {
                 if (name && categoryId && subcategoryId) {
-                        console.log({ name, categoryId, subcategoryId, price, image, rating, description, size });
+                        const imageArray = image.map(image => ({ link: image }))
                         dispatch(redactorState === 'add' ?
-                                addProduct({ name, categoryId, subcategoryId }) :
+                                addProduct({ name, categoryId, subcategoryId, price: +price, images: imageArray, description, sizes: { xs: +sizeXs, s: +sizeS, m: +sizeM, l: +sizeL, xl: +sizeXl, xxl: +sizeXxl } }) :
                                 updateProduct({ id, name, categoryId, subcategoryId }))
                         onResetInputs();
                 } else {
@@ -98,11 +102,15 @@ const ProductRedactor = ({ redactorState }) => {
         const onResetInputs = () => {
                 setId('');
                 setName('');
-                setSize('');
+                setSizeXs('');
+                setSizeS('');
+                setSizeM('');
+                setSizeL('');
+                setSizeXl('');
+                setSizeXxl('');
                 setDescription('');
                 setPrice('');
                 setImages('');
-                setRating([{ value: 0 }]);
                 setCategoryDropdownBarValue(null);
                 setSubcategoryDropdownBarValue(null);
         }
@@ -112,22 +120,22 @@ const ProductRedactor = ({ redactorState }) => {
                         <Form>
                                 <div className='prodcut-redactor-flex'>
                                         <div className='prodcut-redactor-flex-left'>
-                                                <Form.Group controlId="productForm.nameInput">
+                                                <Form.Group controlId="productForm">
                                                         <Form.Label>Назва продукту:</Form.Label>
                                                         <Form.Control
                                                                 name='name'
                                                                 type="text"
                                                                 placeholder="Введіть назву продукту"
-                                                                value={name || ''}
+                                                                value={valueObj.name || ''}
                                                                 onChange={onInputChange} />
                                                 </Form.Group>
-                                                <Form.Group controlId="productForm.priceInput">
+                                                <Form.Group controlId="productForm">
                                                         <Form.Label>Ціна:</Form.Label>
                                                         <Form.Control
                                                                 name='price'
                                                                 type="text"
                                                                 placeholder="Введіть ціну продукту"
-                                                                value={price || ''}
+                                                                value={valueObj.price || ''}
                                                                 onChange={onInputChange} />
                                                 </Form.Group>
 
@@ -149,74 +157,63 @@ const ProductRedactor = ({ redactorState }) => {
                                                                 setSelectedValue={onSelectSubcategoryDropdownBarItem}
                                                         />
                                                 </Form.Group>
-                                                <Form.Group controlId="productForm.descriptionInput">
+                                                <Form.Group controlId="productForm">
                                                         <Form.Label>Опис продукту:</Form.Label>
                                                         <Form.Control
                                                                 name='description'
                                                                 type="textarea"
                                                                 placeholder="Введіть опис продукту"
-                                                                value={description || ''}
-                                                                onChange={onInputChange} />
-                                                </Form.Group>
-                                                <Form.Group controlId="productForm.ratingInput">
-                                                        <Form.Label>Рейтинг продукту:</Form.Label>
-                                                        <Form.Control
-                                                                name='rating'
-                                                                type="text"
-                                                                placeholder="Введіть рейтинг товару (від 1 до 10)"
-                                                                value={Math.round(rating.reduce((a, b) =>
-                                                                        a + b.value
-                                                                        , 0) / product.rating.length) || ''}
+                                                                value={valueObj.description || ''}
                                                                 onChange={onInputChange} />
                                                 </Form.Group>
                                         </div>
                                         <div className='prodcut-redactor-flex-right'>
-                                                <Form.Group controlId="productForm.imageInput">
+                                                <Form.Group controlId="productForm">
                                                         <Form.Label>Посилання на зоображення:</Form.Label>
                                                         <Form.Control
                                                                 name='image'
                                                                 type="text"
                                                                 placeholder="Введіть посилання на зоображення"
-                                                                value={image || ''}
+                                                                value={valueObj.image ? valueObj.image.map(img => img.link) : ''}
                                                                 onChange={onInputChange} />
                                                 </Form.Group>
-                                                <Form.Group controlId="productForm.sizeInput">
+                                                <Form.Group controlId="productForm">
                                                         <Form.Label>Розміри:</Form.Label>
                                                         <Form.Control
-                                                                name='size'
+                                                                name='sizeXs'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів xs"
-                                                                value={size.xs || ''}
+                                                                value={valueObj.sizes.xs || ''}
                                                                 onChange={onInputChange} />
                                                         <Form.Control
-                                                                name='size'
+                                                                name='sizeS'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів s"
-                                                                value={size.s || ''}
+                                                                value={valueObj.sizes.s || ''}
                                                                 onChange={onInputChange} />
                                                         <Form.Control
-                                                                name='size'
+                                                                name='sizeM'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів m"
-                                                                value={size.m || ''}
+                                                                value={valueObj.sizes.m || ''}
                                                                 onChange={onInputChange} />
                                                         <Form.Control
-                                                                name='size'
+                                                                name='sizeL'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів l"
-                                                                value={size.l || ''}
+                                                                value={valueObj.sizes.l || ''}
                                                                 onChange={onInputChange} />
                                                         <Form.Control
-                                                                name='size'
+                                                                name='sizeXl'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів xl"
-                                                                value={size.xl || ''}
+                                                                value={valueObj.sizes.xl || ''}
                                                                 onChange={onInputChange} />
                                                         <Form.Control
-                                                                name='size'
+                                                                name='sizeXxl'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів xxl"
-                                                                value={size.xxl || ''}
+                                                                value={valueObj.sizes.xxl || ''}
                                                                 onChange={onInputChange} />
                                                 </Form.Group>
                                         </div>
@@ -236,3 +233,5 @@ const ProductRedactor = ({ redactorState }) => {
 }
 
 export default ProductRedactor;
+
+

@@ -18,6 +18,7 @@ const getProducts = () =>
                           name
                         },
                         sizes {
+                          xs
                           s
                           m
                           l
@@ -54,6 +55,7 @@ const getProduct = ({ id }) =>
                           name
                         },
                         sizes {
+                          xs
                           s
                           m
                           l
@@ -73,7 +75,8 @@ const getProduct = ({ id }) =>
         `
   });
 
-const addProduct = async ({ product }) => {
+const addProduct = async (product) => {
+  console.log(product);
   await client.mutate({
     variables: {
       product
@@ -91,6 +94,7 @@ const addProduct = async ({ product }) => {
                           name
                         },
                         sizes {
+                          xs
                           s
                           m
                           l
@@ -131,6 +135,7 @@ const updateProduct = async ({ id, product }) => {
                           name
                         },
                         sizes {
+                          xs
                           s
                           m
                           l

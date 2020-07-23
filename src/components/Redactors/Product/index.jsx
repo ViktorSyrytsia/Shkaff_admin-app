@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 
 import DropdownBar from '../../DropdownBar'
 import { addProduct, updateProduct } from "../../../redux/product/product.actions";
+
 import './style.scss';
 
 const ProductRedactor = ({ redactorState }) => {
@@ -36,8 +37,12 @@ const ProductRedactor = ({ redactorState }) => {
         useEffect(() => {
                 if (product) {
                         setId(product.id);
-                        setProductObj({ name: product.name, price: product.price, description: product.description, sizes: product.sizes });
-                        setImages(product.images);
+                        setProductObj({ name: product.name, price: product.price, description: product.description, sizes: {xs: 2, s: 2, m: 3, l: 4, xl: 5, xxl: 6}});
+                        setImages(product.images.map( x => {
+                              return {link: x.link}
+                        }));
+                        setCategoryId(product.category.id)
+                        setSubcategoryId(product.subcategory.id)
                         setCategoryDropdownBarValue(product.category.name);
                         setSubcategoryDropdownBarValue(product.subcategory.name);
                 } else {
@@ -74,15 +79,11 @@ const ProductRedactor = ({ redactorState }) => {
                 setImages(newZalupa);
         }
 
-
-
         const onSaveProduct = () => {
-                const imageSet = [];
-                imageSet.push({ link: images })
                 if (productObj.name && categoryId && subcategoryId) {
                         dispatch(redactorState === 'add' ?
-                                addProduct({ ...productObj, images: imageSet, categoryId, subcategoryId }) :
-                                updateProduct({ id, product: { ...productObj, images: imageSet, categoryId, subcategoryId } }))
+                                addProduct({ ...productObj, images, categoryId, subcategoryId }) :
+                                updateProduct({ id, product: { ...productObj, images, categoryId, subcategoryId } }))
                         onResetInputs();
                 } else {
                         window.alert('Всі поля повинні бути заповнені!')
@@ -164,10 +165,10 @@ const ProductRedactor = ({ redactorState }) => {
                                         <div className='prodcut-redactor-flex-right'>
                                                 <Form.Group controlId="productFormImages">
                                                         <Form.Label>Посилання на зоображення:</Form.Label>
-                                                        {product && images.map((img, idx) => {
-                                                                console.log('====================================');
-                                                                console.log(images, '---', img.link);
-                                                                console.log('====================================');
+                                                        {product && product.images.map((img, idx) => {
+                                                                // console.log('====================================');
+                                                                // console.log(images, '---', img.link);
+                                                                // console.log('====================================');
                                                                 return (
                                                                         <Form.Control
                                                                                 key={idx + img.link}

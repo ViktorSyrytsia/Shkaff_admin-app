@@ -73,6 +73,7 @@ function* handleAddProduct({ payload }) {
 }
 
 function* handleUpdateProduct({ payload }) {
+        console.log(payload)
         try {
                 yield call(updateProduct, payload);
 
@@ -103,7 +104,7 @@ function* handleDeleteProduct({ payload }) {
 
                 yield put(showLoading());
                 const products = yield call(getProducts);
-                yield put(setProducts(products.data.getCategories));
+                yield put(setProducts(products.data.getProducts));
                 yield put(hideLoading());
 
         } catch (error) {

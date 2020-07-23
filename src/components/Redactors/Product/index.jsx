@@ -19,7 +19,8 @@ const ProductRedactor = ({ redactorState }) => {
         const [subcategoryId, setSubcategoryId] = useState('');
         const [categoryDropdownBarValue, setCategoryDropdownBarValue] = useState(null);
         const [subcategoryDropdownBarValue, setSubcategoryDropdownBarValue] = useState(null);
-        const [images, setImages] = useState([{ link: '' }]);
+        const [images, setImages] = useState([]);
+
         const [productObj, setProductObj] = useState({ name: '', price: 0, description: '', sizes: { xs: 0, s: 0, m: 0, l: 0, xl: 0, xxl: 0 } })
 
 
@@ -34,7 +35,6 @@ const ProductRedactor = ({ redactorState }) => {
 
         useEffect(() => {
                 if (product) {
-                        console.log(product);
                         setId(product.id);
                         setProductObj({ name: product.name, price: product.price, description: product.description, sizes: product.sizes });
                         setImages(product.images);
@@ -68,8 +68,13 @@ const ProductRedactor = ({ redactorState }) => {
         }
 
         const onImageInputChange = (e) => {
-                setImages(e.target.value);
+                const numb = e.target.name.split('-')[1];
+                const newZalupa = images;
+                newZalupa.splice(numb, 1, { link: e.target.value })
+                setImages(newZalupa);
         }
+
+
 
         const onSaveProduct = () => {
                 const imageSet = [];
@@ -159,12 +164,20 @@ const ProductRedactor = ({ redactorState }) => {
                                         <div className='prodcut-redactor-flex-right'>
                                                 <Form.Group controlId="productFormImages">
                                                         <Form.Label>Посилання на зоображення:</Form.Label>
-                                                        <Form.Control
-                                                                name='image'
-                                                                type="text"
-                                                                placeholder="Введіть посилання на зоображення"
-                                                                value={images || ''}
-                                                                onChange={onImageInputChange} />
+                                                        {product && images.map((img, idx) => {
+                                                                console.log('====================================');
+                                                                console.log(images, '---', img.link);
+                                                                console.log('====================================');
+                                                                return (
+                                                                        <Form.Control
+                                                                                key={idx + img.link}
+                                                                                name={`image-${idx}`}
+                                                                                type="textarea"
+                                                                                placeholder="Введіть силку на зоображення"
+                                                                                value={img.link || ''}
+                                                                                onChange={onImageInputChange} />
+                                                                )
+                                                        })}
                                                 </Form.Group>
                                                 <Form.Group controlId="productForm">
                                                         <Form.Label>Розміри:</Form.Label>

@@ -16,13 +16,13 @@ const purchaseReducer = (state = initialState, {type, payload}) => {
         case SET_PURCHASES: {
             return {
                 ...state,
-                purchase: payload
+                list: payload
             }
         }
         case SET_PURCHASE: {
             return {
                 ...state,
-                list: payload,
+                purchase: payload,
             }
         }
         case SHOW_LOADING: {

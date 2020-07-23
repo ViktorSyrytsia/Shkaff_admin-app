@@ -17,7 +17,7 @@ import {
         addProduct,
         updateProduct,
         deleteProduct
-} from '../../utils/product';
+} from '../../services/product';
 import {
         GET_PRODUCT,
         GET_PRODUCTS,

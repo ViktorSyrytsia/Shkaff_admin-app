@@ -10,7 +10,7 @@ import {
         addSubcategory,
         updateSubcategory,
         deleteSubcategory
-} from '../../utils/subcategory';
+} from '../../services/subcategory';
 import {
         GET_SUBCATEGORIES,
         ADD_SUBCATEGORY,

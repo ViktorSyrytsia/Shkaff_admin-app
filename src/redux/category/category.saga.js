@@ -17,7 +17,7 @@ import {
     addCategory,
     updateCategory,
     deleteCategory
-} from '../../utils/category';
+} from '../../services/category';
 import {
     GET_CATEGORY,
     GET_CATEGORIES,

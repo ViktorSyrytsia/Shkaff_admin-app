@@ -1,7 +1,7 @@
 import React from 'react'
 import {DropdownButton, ButtonGroup, Dropdown} from 'react-bootstrap'
 
-const DropdownBar = ({items, selectedValue, setSelectedValue}) => {
+const DropdownBar = ({items, selectedValue, setSelectedValue, size}) => {
 
     return (
         <>
@@ -9,13 +9,15 @@ const DropdownBar = ({items, selectedValue, setSelectedValue}) => {
                 as={ButtonGroup}
                 id={`dropdown-variants-${'Secondary'}`}
                 variant={'secondary'}
+                size={size && 'sm'}
                 title={selectedValue || 'Виберіть опцію'}
             >
                 {
                     items.map((item, i) => (
                         <Dropdown.Item
-                            key={item.id}
+                            key={item.id || i}
                             data-id={item.id}
+                            data-status={item.status}
                             eventKey={i}
                             onSelect={setSelectedValue}>
                             {item.name}

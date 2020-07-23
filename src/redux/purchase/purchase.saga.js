@@ -9,7 +9,7 @@ import {
         getPurchases,
         updatePurchaseStatus,
         deletePurchase,
-} from '../../utils/purchase';
+} from '../../services/purchase';
 import {
         GET_PURCHASES,
         UPDATE_PURCHASE_STATUS,

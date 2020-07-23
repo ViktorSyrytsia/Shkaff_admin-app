@@ -12,3 +12,15 @@ export const SNACKBAR_MESSAGES = {
         error: 'Не вдалось видалити',
     },
 }
+
+export const PURCHASE_STATUSES = {
+    done: {name: 'Виконані', status: 'done'},
+    processing: {name: 'Обробляються', status: 'processing'},
+    canceled: {name: 'Скасовано', status: 'canceled'},
+}
+
+export const PURCHASE_STATUSES_NAMES = {
+    done: 'Виконано',
+    processing: 'Обробляється',
+    canceled: 'Скасовано',
+}

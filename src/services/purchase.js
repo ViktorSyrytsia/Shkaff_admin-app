@@ -14,13 +14,25 @@ client.query({
                     email
                     phone
                 }
-                deliveryMethod {
+                delivery {
                     method
                     city
                     postOffice
-                    address
+                    address {
+                        street
+                        built
+                        apartment
+                    }
                 }
-                connectionmethod
+                products {                  
+                    name
+                    category
+                    subcategory
+                    price
+                    quantity
+                    size
+                }
+                connectionMethod
                 status
                 createdAt
             }
@@ -36,7 +48,7 @@ const updatePurchaseStatus = async ({id, status}) => {
         },
         mutation: gql`
             mutation($id: ID!, $status: String) {
-                updateCategory(id: $id, status: $status) {
+                updatePurchaseStatus(id: $id, status: $status) {
                    status
                 }
             }
@@ -53,7 +65,9 @@ const deletePurchase = async (id) => {
         mutation: gql`
             mutation($id: ID!) {
                 deletePurchase(id: $id) {
-                    name
+                    user {
+                        name
+                    }
                 }
             }
         `

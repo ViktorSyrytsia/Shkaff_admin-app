@@ -76,7 +76,6 @@ const getProduct = ({ id }) =>
   });
 
 const addProduct = async (product) => {
-  console.log(product);
   await client.mutate({
     variables: {
       product
@@ -124,7 +123,7 @@ const updateProduct = async ({ id, product }) => {
     },
     mutation: gql`
             mutation($id: ID!, $product: ProductInput) {
-                updateCategory(id: $id, product: $product) {
+                updateProduct(id: $id, product: $product) {
                         name,
                         category {
                           id,

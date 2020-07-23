@@ -1,6 +1,7 @@
 import React from 'react'
 import { ListGroup, Button } from 'react-bootstrap'
-import Spinner from '../Spinner/';
+
+import {Spinner} from '../';
 
 import './style.scss';
 

@@ -2,9 +2,7 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import {getPurchases, setPurchase} from "../../redux/purchase/purchase.actions";
-import ButtonsGroup from "../../components/ButtonsGroup";
-import PurchaseList from "../../components/PurchaseList";
-import PurchaseRedactor from "../../components/Redactors/Purchase";
+import {ButtonsGroup, PurchaseList, PurchaseRedactor} from "../../components";
 import {PURCHASE_STATUSES} from "../../config";
 
 import './style.scss'

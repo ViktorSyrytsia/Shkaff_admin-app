@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Table, Button, InputGroup, FormControl, Badge} from 'react-bootstrap';
 
-import DropdownBar from '../../DropdownBar';
-import Time from '../../Time'
+import {DropdownBar, Time} from '../../';
 import {deletePurchase, setPurchase, updatePurchaseStatus} from "../../../redux/purchase/purchase.actions";
 import {purchaseSumCounter, purchaseStatusVariant} from "../../../utils";
 import {PURCHASE_STATUSES} from '../../../config'
@@ -13,13 +12,13 @@ import './style.scss';
 const PurchaseRedactor = ({setRedactorState}) => {
     const dispatch = useDispatch()
     const purchase = useSelector(({Purchases}) => Purchases.purchase);
+
     const {user, delivery, status, createdAt, connectionMethod, products} = purchase
 
     const [newStatus, setNewStatus] = useState(null)
     const [dropdownBarValue, setDropdownBarValue] = useState(null)
 
     const onSelectDropdownBarItem = (key, e) => {
-        console.log(e.target.dataset.status)
         setNewStatus(e.target.dataset.status)
         setDropdownBarValue(e.target.innerText)
     }
@@ -54,6 +53,30 @@ const PurchaseRedactor = ({setRedactorState}) => {
                 </InputGroup.Prepend>
                 <FormControl id="basic-url" aria-describedby="basic-addon3"
                              value={`${user.name} ${user.surname}`}
+                             disabled
+                />
+            </InputGroup>
+
+            <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon3">
+                        Email:
+                    </InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl id="basic-url" aria-describedby="basic-addon3"
+                             value={user.email}
+                             disabled
+                />
+            </InputGroup>
+
+            <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                    <InputGroup.Text id="basic-addon3">
+                        Телефон:
+                    </InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl id="basic-url" aria-describedby="basic-addon3"
+                             value={user.phone}
                              disabled
                 />
             </InputGroup>

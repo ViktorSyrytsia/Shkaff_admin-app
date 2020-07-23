@@ -2,9 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from 'react-bootstrap';
 
-import List from '../../components/List';
-import ButtonsGroup from '../../components/ButtonsGroup';
-import ProductRedactor from '../../components/Redactors/Product';
+import {List, ButtonsGroup, ProductRedactor} from '../../components';
 import {
         deleteProduct,
         setProduct,

@@ -51,6 +51,7 @@ function* handleProductsLoad() {
 }
 
 function* handleAddProduct({ payload }) {
+        console.log(payload);
         try {
                 yield call(addProduct, payload);
 

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from 'react-bootstrap';
 
-import List from '../../components/List';
-import CategoryRedactor from '../../components/Redactors/Category';
+import {CategoryRedactor, List} from '../../components';
 import {
     deleteCategory,
     setCategory
 } from "../../redux/category/category.actions";
-import { Button } from 'react-bootstrap';
 
 import './style.scss'
 

@@ -13,17 +13,18 @@ const ButtonsGroup = ({ items, onChange }) => {
         return (
                 <ButtonGroup className='list-filter-buttons' toggle>
                         <Button
-                                  value={'all'}
+                                value={'all'}
                                 variant={radioValue === 'all' ? "secondary" : "outline-secondary"}
-                                onClick={(e) => onSelected(e)}>All
-
+                                onClick={(e) => onSelected(e)}>
+                            Всі
                         </Button>
                         {items.map((item, idx) => (
                                 <Button
-                                        key={item.id}
+                                        key={item.id || idx}
                                         variant={radioValue === idx ? "secondary" : "outline-secondary"}
                                         value={idx}
                                         onClick={(e) => onSelected(e)}
+                                        data-status={item.status}
                                 >
                                         {item.name}
                                 </Button>

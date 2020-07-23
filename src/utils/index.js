@@ -1,7 +1,2 @@
-import ApolloClient from 'apollo-boost';
-
-const client = new ApolloClient({
-    uri: process.env.REACT_APP_API_URL
-});
-
-export default client;
+export {default as purchaseSumCounter} from './purchaseSumCounter'
+export {default as purchaseStatusVariant} from './purchaseStatusVariant'

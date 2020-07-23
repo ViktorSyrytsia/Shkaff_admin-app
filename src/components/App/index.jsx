@@ -8,10 +8,10 @@ import { CategoriesPage, SubcategoriesPage, ProductsPage, PurchasesPage } from '
 import { getCategories } from "../../redux/category/category.actions";
 import { getSubcategories } from "../../redux/subcategory/subcategory.actions";
 import { getProducts } from "../../redux/product/product.actions";
+import {getPurchases} from "../../redux/purchase/purchase.actions";
 import Snackbar from "../Snackbar";
 
 import './style.scss';
-
 
 const App = () => {
         const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const App = () => {
                 dispatch(getCategories());
                 dispatch(getSubcategories());
                 dispatch(getProducts());
+                dispatch(getPurchases());
         }, [dispatch])
 
 

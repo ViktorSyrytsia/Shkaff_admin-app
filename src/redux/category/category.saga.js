@@ -17,7 +17,7 @@ import {
     addCategory,
     updateCategory,
     deleteCategory
-} from '../../utils/category';
+} from '../../services/category';
 import {
     GET_CATEGORY,
     GET_CATEGORIES,
@@ -25,7 +25,7 @@ import {
     UPDATE_CATEGORY,
     DELETE_CATEGORY
 } from './category.types';
-import {SNACKBAR_MESSAGES} from "../../components/config";
+import {SNACKBAR_MESSAGES} from "../../config";
 
 function* handleCategoryLoad({payload}) {
     try {

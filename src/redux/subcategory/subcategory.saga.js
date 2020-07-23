@@ -10,7 +10,7 @@ import {
         addSubcategory,
         updateSubcategory,
         deleteSubcategory
-} from '../../utils/subcategory';
+} from '../../services/subcategory';
 import {
         GET_SUBCATEGORIES,
         ADD_SUBCATEGORY,
@@ -18,7 +18,7 @@ import {
         DELETE_SUBCATEGORY,
 } from './subcategory.types';
 import {setSnackbarMessage, setSnackbarSeverity, setSnackbarVisibility} from "../snackbar/snackbar.actions";
-import {SNACKBAR_MESSAGES} from "../../components/config";
+import {SNACKBAR_MESSAGES} from "../../config";
 
 function* handleSubcategoriesLoad() {
         try {

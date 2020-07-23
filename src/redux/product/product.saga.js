@@ -17,7 +17,7 @@ import {
         addProduct,
         updateProduct,
         deleteProduct
-} from '../../utils/product';
+} from '../../services/product';
 import {
         GET_PRODUCT,
         GET_PRODUCTS,
@@ -26,7 +26,7 @@ import {
         DELETE_PRODUCT
 } from './product.types';
 
-import { SNACKBAR_MESSAGES } from "../../components/config";
+import { SNACKBAR_MESSAGES } from "../../config";
 
 function* handleProductLoad({ payload }) {
         try {

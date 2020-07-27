@@ -1,28 +1,28 @@
 import {
-    SET_PURCHASES,
+    SET_ORDERS,
     SHOW_LOADING,
     HIDE_LOADING,
-    SET_PURCHASE,
-} from './purchase.types'
+    SET_ORDER,
+} from './order.types'
 
 const initialState = {
     list: [],
-    purchase: {},
+    order: {},
     loading: false
 }
 
-const purchaseReducer = (state = initialState, {type, payload}) => {
+const orderReducer = (state = initialState, {type, payload}) => {
     switch (type) {
-        case SET_PURCHASES: {
+        case SET_ORDERS: {
             return {
                 ...state,
                 list: payload
             }
         }
-        case SET_PURCHASE: {
+        case SET_ORDER: {
             return {
                 ...state,
-                purchase: payload,
+                order: payload,
             }
         }
         case SHOW_LOADING: {
@@ -44,4 +44,4 @@ const purchaseReducer = (state = initialState, {type, payload}) => {
     }
 }
 
-export default purchaseReducer;
+export default orderReducer;

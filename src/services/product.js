@@ -33,44 +33,8 @@ const getProducts = () =>
                         rating {
                           value
                         }
+                        createdAt
                       }
-            }
-        `
-  });
-
-const getProduct = ({ id }) =>
-  client.query({
-    variables: { id },
-    query: gql`
-            query($id: ID!) {
-                getProduct(id: $id) {
-                        id,
-                        name,
-                        category {
-                          id,
-                          name
-                        },
-                        subcategory {
-                          id,
-                          name
-                        },
-                        sizes {
-                          xs
-                          s
-                          m
-                          l
-                          xl
-                          xxl
-                        },
-                        description,
-                        price,
-                        images {
-                          link
-                        },
-                        rating {
-                          value
-                        }
-                }
             }
         `
   });
@@ -81,7 +45,7 @@ const addProduct = async (product) => {
       product
     },
     mutation: gql`
-            mutation($product: ProductInput) {
+            mutation($product: ProductInput!) {
                 addProduct(product: $product) {
                         name,
                         category {
@@ -122,7 +86,7 @@ const updateProduct = async ({ id, product }) => {
       product
     },
     mutation: gql`
-            mutation($id: ID!, $product: ProductInput) {
+            mutation($id: ID!, $product: ProductInput!) {
                 updateProduct(id: $id, product: $product) {
                         name,
                         category {
@@ -174,7 +138,6 @@ const deleteProduct = async (id) => {
 
 export {
   getProducts,
-  getProduct,
   addProduct,
   updateProduct,
   deleteProduct

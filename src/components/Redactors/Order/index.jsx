@@ -3,17 +3,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Table, Button, InputGroup, FormControl, Badge} from 'react-bootstrap';
 
 import {DropdownBar, Time} from '../../';
-import {deletePurchase, setPurchase, updatePurchaseStatus} from "../../../redux/purchase/purchase.actions";
-import {purchaseSumCounter, purchaseStatusVariant} from "../../../utils";
-import {PURCHASE_STATUSES} from '../../../config'
+import {deleteOrder, setOrder, updateOrderStatus} from "../../../redux/order/order.actions";
+import {orderSumCounter, orderStatusVariant} from "../../../utils";
+import {ORDER_STATUSES} from '../../../config'
 
 import './style.scss';
 
-const PurchaseRedactor = ({setRedactorState}) => {
+const OrderRedactor = ({setRedactorState}) => {
     const dispatch = useDispatch()
-    const purchase = useSelector(({Purchases}) => Purchases.purchase);
+    const order = useSelector(({Orders}) => Orders.order);
 
-    const {user, delivery, status, createdAt, connectionMethod, products} = purchase
+    const {user, delivery, status, createdAt, connectionMethod, products} = order
 
     const [newStatus, setNewStatus] = useState(null)
     const [dropdownBarValue, setDropdownBarValue] = useState(null)
@@ -25,8 +25,8 @@ const PurchaseRedactor = ({setRedactorState}) => {
 
     const onChangeStatus = () => {
         if (dropdownBarValue) {
-            dispatch(setPurchase({...purchase, status: newStatus}))
-            dispatch(updatePurchaseStatus({id: purchase.id, status: newStatus}))
+            dispatch(setOrder({...order, status: newStatus}))
+            dispatch(updateOrderStatus({id: order.id, status: newStatus}))
             setDropdownBarValue(null)
         } else {
             window.alert('Всі поля повинні бути заповнені!')
@@ -35,14 +35,14 @@ const PurchaseRedactor = ({setRedactorState}) => {
 
     const onDeletePurchase = () => {
         if (window.confirm('Видалити замовлення?')) {
-            dispatch(deletePurchase(purchase.id))
+            dispatch(deleteOrder(order.id))
             setRedactorState(false)
         }
     }
 
     return (
         <div className='purchase'>
-            <h3 className={'purchase__header'}>Замовлення {purchase.id.slice(0, 6)}</h3>
+            <h3 className={'purchase__header'}>Замовлення #{order.id.slice(order.id.length - 6, order.id.length)}</h3>
             <h6>Створено: <Time date={createdAt}/></h6>
 
             <InputGroup className="mb-3">
@@ -145,13 +145,13 @@ const PurchaseRedactor = ({setRedactorState}) => {
                 }
                 </tbody>
             </Table>
-            <h6>На суму: {purchaseSumCounter(products)} UAH</h6>
+            <h6>На суму: {orderSumCounter(products)} UAH</h6>
             <hr/>
 
             <div className='purchase__status'>
-                <h6>Статус: <Badge variant={purchaseStatusVariant(status)}>{PURCHASE_STATUSES[status].name}</Badge></h6>
+                <h6>Статус: <Badge variant={orderStatusVariant(status)}>{ORDER_STATUSES[status].name}</Badge></h6>
                 <DropdownBar
-                    items={Object.values(PURCHASE_STATUSES)}
+                    items={Object.values(ORDER_STATUSES)}
                     selectedValue={dropdownBarValue}
                     setSelectedValue={onSelectDropdownBarItem}
                     size
@@ -170,4 +170,4 @@ const PurchaseRedactor = ({setRedactorState}) => {
     )
 }
 
-export default PurchaseRedactor;
+export default OrderRedactor;

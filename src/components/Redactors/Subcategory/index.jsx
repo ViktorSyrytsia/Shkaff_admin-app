@@ -39,11 +39,10 @@ const SubcategoryRedactor = ({redactorState}) => {
     }
 
     const onSaveCategory = () => {
-        console.log(name, categoryId)
         if (name && categoryId ) {
             dispatch(redactorState === 'add' ?
                 addSubcategory({name, categoryId}) :
-                updateSubcategory({id, name, categoryId}))
+                updateSubcategory({id, subcategory: {name, categoryId}}))
             onResetInputs();
         } else {
             window.alert('Всі поля повинні бути заповнені!')

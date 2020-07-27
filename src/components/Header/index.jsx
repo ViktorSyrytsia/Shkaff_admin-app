@@ -19,7 +19,7 @@ const Header = () => {
                                         <Link className='nav-link' to='/products'>Products</Link>
                                 </Navbar.Text>
                                 <Navbar.Text className='nav-item'>
-                                        <Link className='nav-link' to='/purchases'>Purchases</Link>
+                                        <Link className='nav-link' to='/orders'>Orders</Link>
                                 </Navbar.Text>
                         </Nav>
 

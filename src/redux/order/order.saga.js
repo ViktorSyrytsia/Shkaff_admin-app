@@ -1,45 +1,45 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
 import {
-        setPurchases,
+        setOrders,
         showLoading,
         hideLoading
-} from './purchase.actions';
+} from './order.actions';
 import {
-        getPurchases,
-        updatePurchaseStatus,
-        deletePurchase,
-} from '../../services/purchase';
+        getOrders,
+        updateOrderStatus,
+        deleteOrder,
+} from '../../services/order';
 import {
-        GET_PURCHASES,
-        UPDATE_PURCHASE_STATUS,
-        DELETE_PURCHASE,
-} from './purchase.types';
+        GET_ORDERS,
+        UPDATE_ORDER_STATUS,
+        DELETE_ORDER,
+} from './order.types';
 import {setSnackbarMessage, setSnackbarSeverity, setSnackbarVisibility} from '../snackbar/snackbar.actions';
 import {SNACKBAR_MESSAGES} from '../../config';
 
-function* handlePurchasesLoad() {
+function* handleOrdersLoad() {
         try {
                 yield put(showLoading());
-                const purchases = yield call(getPurchases);
-                yield put(setPurchases(purchases.data.getPurchases));
+                const orders = yield call(getOrders);
+                yield put(setOrders(orders.data.getOrders));
                 yield put(hideLoading());
         } catch (error) {
                 console.log(error);
         }
 }
 
-function* handleUpdatePurchaseStatus({ payload }) {
+function* handleUpdateOrderStatus({ payload }) {
         try {
-                yield call(updatePurchaseStatus, payload);
+                yield call(updateOrderStatus, payload);
 
                 yield put(setSnackbarSeverity('success'));
                 yield put(setSnackbarMessage(SNACKBAR_MESSAGES.update.success));
                 yield put(setSnackbarVisibility(true));
 
                 yield put(showLoading());
-                const purchases = yield call(getPurchases);
-                yield put(setPurchases(purchases.data.getPurchases));
+                const purchases = yield call(getOrders);
+                yield put(setOrders(purchases.data.getOrders));
                 yield put(hideLoading());
 
         } catch (error) {
@@ -50,9 +50,9 @@ function* handleUpdatePurchaseStatus({ payload }) {
         }
 }
 
-function* handleDeletePurchase({ payload }) {
+function* handleDeleteOrder({ payload }) {
         try {
-                yield call(deletePurchase, payload);
+                yield call(deleteOrder, payload);
 
                 yield put(setSnackbarSeverity('success'));
                 yield put(setSnackbarMessage(SNACKBAR_MESSAGES.delete.success));
@@ -60,8 +60,8 @@ function* handleDeletePurchase({ payload }) {
 
 
                 yield put(showLoading());
-                const purchases = yield call(getPurchases);
-                yield put(setPurchases(purchases.data.getPurchases));
+                const purchases = yield call(getOrders);
+                yield put(setOrders(purchases.data.getOrders));
                 yield put(hideLoading());
 
         } catch (error) {
@@ -72,8 +72,8 @@ function* handleDeletePurchase({ payload }) {
         }
 }
 
-export default function* purchaseSaga() {
-        yield takeEvery(GET_PURCHASES, handlePurchasesLoad);
-        yield takeEvery(UPDATE_PURCHASE_STATUS, handleUpdatePurchaseStatus);
-        yield takeEvery(DELETE_PURCHASE, handleDeletePurchase);
+export default function* orderSaga() {
+        yield takeEvery(GET_ORDERS, handleOrdersLoad);
+        yield takeEvery(UPDATE_ORDER_STATUS, handleUpdateOrderStatus);
+        yield takeEvery(DELETE_ORDER, handleDeleteOrder)
 }

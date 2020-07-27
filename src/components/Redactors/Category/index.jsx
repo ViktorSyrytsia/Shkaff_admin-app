@@ -27,7 +27,7 @@ const CategoryRedactor = ({redactorState}) => {
         if (name && image ) {
             dispatch(redactorState === 'add' ?
                 addCategory({name, image}) :
-                updateCategory({id, name, image}))
+                updateCategory({id, category: {name, image}}))
             onResetInputs();
         } else {
             window.alert('Всі поля повинні бути заповнені!')

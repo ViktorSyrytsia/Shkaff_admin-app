@@ -1,11 +1,11 @@
 import CategoriesPage from './CategoriesPage';
 import SubcategoriesPage from './SubcategoriesPage';
 import ProductsPage from './ProductsPage';
-import PurchasesPage from './PurchasesPage';
+import OrdersPage from './OrdersPage';
 
 export {
         SubcategoriesPage,
         ProductsPage,
-        PurchasesPage,
+        OrdersPage,
         CategoriesPage
 }

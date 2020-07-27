@@ -1,7 +1,6 @@
 import {takeEvery, call, put} from 'redux-saga/effects';
 
 import {
-    setCategory,
     setCategories,
     showLoading,
     hideLoading
@@ -12,31 +11,18 @@ import {
     setSnackbarVisibility,
 } from '../snackbar/snackbar.actions';
 import {
-    getCategory,
     getCategories,
     addCategory,
     updateCategory,
     deleteCategory
 } from '../../services/category';
 import {
-    GET_CATEGORY,
     GET_CATEGORIES,
     ADD_CATEGORY,
     UPDATE_CATEGORY,
     DELETE_CATEGORY
 } from './category.types';
 import {SNACKBAR_MESSAGES} from "../../config";
-
-function* handleCategoryLoad({payload}) {
-    try {
-        yield put(showLoading());
-        const categories = yield call(getCategory, payload);
-        yield put(setCategory(categories.data.getCategory));
-        yield put(hideLoading());
-    } catch (error) {
-        console.log(error);
-    }
-}
 
 function* handleCategoriesLoad() {
     try {
@@ -113,7 +99,6 @@ function* handleDeleteCategory({payload}) {
 }
 
 export default function* categorySaga() {
-    yield takeEvery(GET_CATEGORY, handleCategoryLoad);
     yield takeEvery(GET_CATEGORIES, handleCategoriesLoad);
     yield takeEvery(ADD_CATEGORY, handleAddCategory);
     yield takeEvery(UPDATE_CATEGORY, handleUpdateCategory);

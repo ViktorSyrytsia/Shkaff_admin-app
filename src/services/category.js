@@ -33,7 +33,6 @@ const addCategory = async (category) => {
 };
 
 const updateCategory = async (payload) => {
-    console.log(payload.category)
     await client.mutate({
         variables: {
             id: payload.id,

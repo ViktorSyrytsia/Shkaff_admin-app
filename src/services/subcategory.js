@@ -18,15 +18,14 @@ const getSubcategories = () =>
         `
 });
 
-const addSubcategory = async ({name, categoryId}) => {
+const addSubcategory = async (subcategory) => {
     await client.mutate({
         variables: {
-            name,
-            categoryId
+            subcategory
         },
         mutation: gql`
-            mutation($name: String!, $categoryId: ID!) {
-                addSubcategory(name: $name, categoryId: $categoryId) {
+            mutation($subcategory: SubcategoryInput!) {
+                addSubcategory(subcategory: $subcategory) {
                     name,
                     category {
                         id
@@ -39,16 +38,15 @@ const addSubcategory = async ({name, categoryId}) => {
     await client.resetStore();
 };
 
-const updateSubcategory = async ({id, name, categoryId}) => {
+const updateSubcategory = async (payload) => {
     await client.mutate({
         variables: {
-            id,
-            name,
-            categoryId
+            id: payload.id,
+            subcategory: payload.subcategory
         },
         mutation: gql`
-            mutation($id: ID!, $name: String!, $categoryId: ID!) {
-                updateSubcategory(id: $id, name: $name, categoryId: $categoryId) {
+            mutation($id: ID!, $subcategory: SubcategoryInput!) {
+                updateSubcategory(id: $id, subcategory: $subcategory) {
                     name
                     category {
                         id

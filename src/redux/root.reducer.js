@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import Categories from './category/category.reducer'
 import Subcategories from './subcategory/subcategory.reducer'
 import Products from './product/product.reducer'
-import Purchases from './purchase/purchase.reducer'
+import Orders from './order/order.reducer'
 import Snackbar from './snackbar/snackbar.reducer'
 
 export default combineReducers({
@@ -11,5 +11,5 @@ export default combineReducers({
     Snackbar,
     Subcategories,
     Products,
-    Purchases
+    Orders
 });

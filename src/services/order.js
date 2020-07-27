@@ -2,11 +2,11 @@ import {gql} from 'apollo-boost'
 
 import client from "./index";
 
-const getPurchases = () =>
+const getOrders = () =>
 client.query({
     query: gql`
         {
-            getPurchases {
+            getOrders {
                 id,
                 user {
                     name
@@ -40,7 +40,7 @@ client.query({
     `
 });
 
-const updatePurchaseStatus = async ({id, status}) => {
+const updateOrderStatus = async ({id, status}) => {
     await client.mutate({
         variables: {
             id,
@@ -48,7 +48,7 @@ const updatePurchaseStatus = async ({id, status}) => {
         },
         mutation: gql`
             mutation($id: ID!, $status: String) {
-                updatePurchaseStatus(id: $id, status: $status) {
+                updateOrderStatus(id: $id, status: $status) {
                    status
                 }
             }
@@ -57,14 +57,14 @@ const updatePurchaseStatus = async ({id, status}) => {
     await client.resetStore();
 };
 
-const deletePurchase = async (id) => {
+const deleteOrder = async (id) => {
     await client.mutate({
         variables: {
             id
         },
         mutation: gql`
             mutation($id: ID!) {
-                deletePurchase(id: $id) {
+                deleteOrder(id: $id) {
                     user {
                         name
                     }
@@ -76,7 +76,7 @@ const deletePurchase = async (id) => {
 };
 
 export {
-    getPurchases,
-    updatePurchaseStatus,
-    deletePurchase,
+    getOrders,
+    updateOrderStatus,
+    deleteOrder,
 };

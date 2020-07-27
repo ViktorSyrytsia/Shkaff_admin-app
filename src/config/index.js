@@ -13,7 +13,7 @@ export const SNACKBAR_MESSAGES = {
     },
 }
 
-export const PURCHASE_STATUSES = {
+export const ORDER_STATUSES = {
     done: {name: 'Виконані', status: 'done'},
     processing: {name: 'Обробляються', status: 'processing'},
     canceled: {name: 'Скасовано', status: 'canceled'},

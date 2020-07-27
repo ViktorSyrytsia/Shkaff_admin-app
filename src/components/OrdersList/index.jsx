@@ -3,16 +3,15 @@ import { ListGroup} from 'react-bootstrap'
 import orderBy from 'lodash/orderBy';
 
 import {Spinner, Time} from '../index';
-import {purchaseSumCounter, purchaseStatusVariant} from "../../utils";
-
+import {orderSumCounter, orderStatusVariant} from "../../utils";
 
 import './style.scss';
 
-const PurchaseList = ({ items, isLoading, onSelectItem }) => {
+const OrdersList = ({ items, isLoading, onSelectItem }) => {
 
     const ItemContent = ({ item, index }) => {
         const { user, createdAt, products } = item;
-        const totalSum = purchaseSumCounter(products)
+        const totalSum = orderSumCounter(products)
 
         return (
             <div className='list-item-content'>
@@ -33,7 +32,7 @@ const PurchaseList = ({ items, isLoading, onSelectItem }) => {
                             orderBy(items, ['createdAt'], 'desc').map((item, index) => (
                                 <ListGroup.Item
                                     key={item.id}
-                                    action variant={purchaseStatusVariant(item.status)}
+                                    action variant={orderStatusVariant(item.status)}
                                     onClick={() => onSelectItem(item)}
                                 >
                                     <ItemContent item={item} index={index} />
@@ -46,4 +45,4 @@ const PurchaseList = ({ items, isLoading, onSelectItem }) => {
     )
 }
 
-export default PurchaseList
+export default OrdersList

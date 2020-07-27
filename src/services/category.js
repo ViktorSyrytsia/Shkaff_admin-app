@@ -15,29 +15,14 @@ const getCategories = () =>
         `
 });
 
-const getCategory = ({id}) =>
-    client.query({
-        variables: {id},
-        query: gql`
-            query($id: ID!) {
-                getCategory(id: $id) {
-                    id
-                    name
-                    image
-                }
-            }
-        `
-});
-
-const addCategory = async ({name, image}) => {
+const addCategory = async (category) => {
     await client.mutate({
         variables: {
-            name,
-            image
+            category
         },
         mutation: gql`
-            mutation($name: String!, $image: String!) {
-                addCategory(name: $name, image: $image) {
+            mutation($category: CategoryInput!) {
+                addCategory(category: $category) {
                     name,
                     image
                 }
@@ -47,16 +32,16 @@ const addCategory = async ({name, image}) => {
     await client.resetStore();
 };
 
-const updateCategory = async ({id, name, image}) => {
+const updateCategory = async (payload) => {
+    console.log(payload.category)
     await client.mutate({
         variables: {
-            id,
-            name,
-            image
+            id: payload.id,
+            category: payload.category
         },
         mutation: gql`
-            mutation($id: ID!, $name: String!, $image: String!) {
-                updateCategory(id: $id, name: $name, image: $image) {
+            mutation($id: ID!, $category: CategoryInput!) {
+                updateCategory(id: $id, category: $category) {
                     name
                     image
                 }
@@ -84,7 +69,6 @@ const deleteCategory = async (id) => {
 
 export {
     getCategories,
-    getCategory,
     addCategory,
     updateCategory,
     deleteCategory

@@ -1,6 +1,5 @@
 import {
     SET_CATEGORY,
-    GET_CATEGORY,
     SET_CATEGORIES,
     GET_CATEGORIES,
     ADD_CATEGORY,
@@ -13,11 +12,6 @@ import {
 export const setCategory = (category) => ({
     type: SET_CATEGORY,
     payload: category
-})
-
-export const getCategory = (payload) => ({
-    type: GET_CATEGORY,
-    payload
 })
 
 export const setCategories = (categories) => ({

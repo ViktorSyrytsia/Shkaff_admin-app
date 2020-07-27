@@ -1,7 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
 import {
-        setProduct,
         setProducts,
         showLoading,
         hideLoading
@@ -12,14 +11,12 @@ import {
         setSnackbarVisibility,
 } from '../snackbar/snackbar.actions';
 import {
-        getProduct,
         getProducts,
         addProduct,
         updateProduct,
         deleteProduct
 } from '../../services/product';
 import {
-        GET_PRODUCT,
         GET_PRODUCTS,
         ADD_PRODUCT,
         UPDATE_PRODUCT,
@@ -27,17 +24,6 @@ import {
 } from './product.types';
 
 import { SNACKBAR_MESSAGES } from "../../config";
-
-function* handleProductLoad({ payload }) {
-        try {
-                yield put(showLoading());
-                const products = yield call(getProduct, payload);
-                yield put(setProduct(products.data.getProduct));
-                yield put(hideLoading());
-        } catch (error) {
-                console.log(error);
-        }
-}
 
 function* handleProductsLoad() {
         try {
@@ -116,7 +102,6 @@ function* handleDeleteProduct({ payload }) {
 }
 
 export default function* productSaga() {
-        yield takeEvery(GET_PRODUCT, handleProductLoad);
         yield takeEvery(GET_PRODUCTS, handleProductsLoad);
         yield takeEvery(ADD_PRODUCT, handleAddProduct);
         yield takeEvery(UPDATE_PRODUCT, handleUpdateProduct);

@@ -28,6 +28,7 @@ const ProductRedactor = ({ redactorState }) => {
         const onSelectCategoryDropdownBarItem = (key, e) => {
                 setCategoryId(e.target.dataset.id)
                 setCategoryDropdownBarValue(e.target.innerText)
+                setSubcategoryDropdownBarValue(null)
         }
         const onSelectSubcategoryDropdownBarItem = (key, e) => {
                 setSubcategoryId(e.target.dataset.id)
@@ -80,9 +81,10 @@ const ProductRedactor = ({ redactorState }) => {
         }
 
         const onSaveProduct = () => {
+
                 if (productObj.name && categoryId && subcategoryId) {
                         dispatch(redactorState === 'add' ?
-                                addProduct({ ...productObj, images, categoryId, subcategoryId }) :
+                                addProduct({ ...productObj, images: images || [], categoryId, subcategoryId }) :
                                 updateProduct({ id, product: { ...productObj, images, categoryId, subcategoryId } }))
                         onResetInputs();
                 } else {
@@ -147,7 +149,7 @@ const ProductRedactor = ({ redactorState }) => {
                                                         <Form.Label>Підкатегорія:</Form.Label>
                                                         <br />
                                                         <DropdownBar
-                                                                items={subcategories}
+                                                                items={subcategories.filter(item => item.category.id === categoryId)}
                                                                 selectedValue={subcategoryDropdownBarValue}
                                                                 setSelectedValue={onSelectSubcategoryDropdownBarItem}
                                                         />
@@ -166,9 +168,6 @@ const ProductRedactor = ({ redactorState }) => {
                                                 <Form.Group controlId="productFormImages">
                                                         <Form.Label>Посилання на зоображення:</Form.Label>
                                                         {product && product.images.map((img, idx) => {
-                                                                // console.log('====================================');
-                                                                // console.log(images, '---', img.link);
-                                                                // console.log('====================================');
                                                                 return (
                                                                         <Form.Control
                                                                                 key={idx + img.link}

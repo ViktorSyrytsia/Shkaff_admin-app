@@ -1,6 +1,5 @@
 import {
         SET_PRODUCT,
-        GET_PRODUCT,
         SET_PRODUCTS,
         GET_PRODUCTS,
         ADD_PRODUCT,
@@ -15,11 +14,6 @@ export const setProduct = (product) => ({
         payload: product
 })
 
-export const getProduct = (payload) => ({
-        type: GET_PRODUCT,
-        payload
-})
-
 export const setProducts = (products) => ({
         type: SET_PRODUCTS,
         payload: products
@@ -29,13 +23,10 @@ export const getProducts = () => ({
         type: GET_PRODUCTS
 })
 
-export const addProduct = (payload) => {
-        console.log(payload);
-        return {
-                type: ADD_PRODUCT,
-                payload
-        }
-}
+export const addProduct = (payload) => ({
+        type: ADD_PRODUCT,
+        payload
+})
 
 export const updateProduct = (payload) => ({
         type: UPDATE_PRODUCT,

@@ -1,5 +1,4 @@
 const SET_PRODUCT = 'SET_PRODUCT';
-const GET_PRODUCT = 'GET_PRODUCT';
 const SET_PRODUCTS = 'SET_PRODUCTS';
 const GET_PRODUCTS = 'GET_PRODUCTS';
 const ADD_PRODUCT = 'ADD_PRODUCT';
@@ -10,7 +9,6 @@ const HIDE_LOADING = 'HIDE_LOADING';
 
 export {
         SET_PRODUCT,
-        GET_PRODUCT,
         SET_PRODUCTS,
         GET_PRODUCTS,
         ADD_PRODUCT,

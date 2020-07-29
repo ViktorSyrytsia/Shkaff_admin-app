@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Form, Button} from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Form, Button } from 'react-bootstrap';
 
 import DropdownBar from '../../DropdownBar'
-import {addSubcategory, updateSubcategory} from "../../../redux/subcategory/subcategory.actions";
+import { addSubcategory, updateSubcategory } from "../../../redux/subcategory/subcategory.actions";
 import './style.scss';
 
-const SubcategoryRedactor = ({redactorState}) => {
+const SubcategoryRedactor = ({ redactorState }) => {
     const dispatch = useDispatch()
-    const {subcategory, categories} = useSelector(({Subcategories, Categories}) => ({
-            subcategory: Subcategories.subcategory,
-            categories: Categories.list,
-        }));
+    const { subcategory, categories } = useSelector(({ Subcategories, Categories }) => ({
+        subcategory: Subcategories.subcategory,
+        categories: Categories.list,
+    }));
 
     const [id, setId] = useState('')
     const [name, setName] = useState('');
@@ -35,14 +35,14 @@ const SubcategoryRedactor = ({redactorState}) => {
     }, [subcategory]);
 
     const onInputChange = (e) => {
-       setName(e.target.value);
+        setName(e.target.value);
     }
 
     const onSaveCategory = () => {
-        if (name && categoryId ) {
+        if (name && categoryId) {
             dispatch(redactorState === 'add' ?
-                addSubcategory({name, categoryId}) :
-                updateSubcategory({id, subcategory: {name, categoryId}}))
+                addSubcategory({ name, categoryId }) :
+                updateSubcategory({ id, subcategory: { name, categoryId } }))
             onResetInputs();
         } else {
             window.alert('Всі поля повинні бути заповнені!')
@@ -65,9 +65,10 @@ const SubcategoryRedactor = ({redactorState}) => {
                         type="text"
                         placeholder="Введіть назву продукту"
                         value={name || ''}
-                        onChange={onInputChange}/>
+                        onChange={onInputChange} />
                 </Form.Group>
                 <Form.Group controlId="subcategoryForm.categorySelect">
+                    <Form.Label>Назва категорії:</Form.Label>
                     <DropdownBar
                         items={categories}
                         selectedValue={dropdownBarValue}

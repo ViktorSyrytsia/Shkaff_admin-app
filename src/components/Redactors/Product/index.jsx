@@ -72,7 +72,15 @@ const ProductRedactor = ({ redactorState }) => {
                 })
         }
 
-        const onImageInputChange = (e) => {
+        const onImageInputChange = (idx, e) => {
+                const values = [...images];
+                values[idx].link = e.target.value;
+                setImages(values);
+        }
+        const onAddImageInput = (e) => {
+                const newArr = [...images]
+                newArr.push({ link: "" });
+                setImages(newArr);
         }
 
         const onSaveProduct = () => {
@@ -89,7 +97,7 @@ const ProductRedactor = ({ redactorState }) => {
 
         const onResetInputs = () => {
                 setId('');
-                setImages('')
+                setImages([{ link: "" }])
                 setProductObj({
                         name: '',
                         price: 0,
@@ -145,27 +153,41 @@ const ProductRedactor = ({ redactorState }) => {
                                                 <Form.Group controlId="productForm">
                                                         <Form.Label>Опис продукту:</Form.Label>
                                                         <Form.Control
+                                                                as="textarea"
+                                                                rows="8"
                                                                 name='description'
                                                                 type="textarea"
                                                                 placeholder="Введіть опис продукту"
                                                                 value={productObj.description || ''}
-                                                                onChange={onInputChange} />
+                                                                onChange={onInputChange}
+                                                        />
+
                                                 </Form.Group>
                                         </div>
                                         <div className='prodcut-redactor-flex-right'>
                                                 <Form.Group controlId="productFormImages">
                                                         <Form.Label>Посилання на зоображення:</Form.Label>
-                                                        {product && product.images.map((img, idx) => {
+                                                        {images.map((img, idx) => {
                                                                 return (
-                                                                        <Form.Control
-                                                                                key={idx + img.link}
-                                                                                name={`image-${idx}`}
-                                                                                type="textarea"
-                                                                                placeholder="Введіть силку на зоображення"
-                                                                                value={img.link || ''}
-                                                                                onChange={onImageInputChange} />
+                                                                        <>
+                                                                                <Form.Control
+                                                                                        key={idx + img.link}
+                                                                                        name={`image-${idx}`}
+                                                                                        type="textarea"
+                                                                                        placeholder="Введіть силку на зоображення"
+                                                                                        value={img.link || ''}
+                                                                                        onChange={e => onImageInputChange(idx, e)} />
+
+                                                                        </>
+
                                                                 )
                                                         })}
+                                                        <div className="addImageInput-btn">
+                                                                <Button
+                                                                        onClick={onAddImageInput}>Add input</Button>
+                                                        </div>
+
+
                                                 </Form.Group>
                                                 <Form.Group>
                                                         <Form.Label>Розміри:</Form.Label>
@@ -186,24 +208,28 @@ const ProductRedactor = ({ redactorState }) => {
                                                                 placeholder="Введіть кількість розмірів s"
                                                                 value={productObj.sizes.s || 0}
                                                                 onChange={onInputChange} />
+                                                        <Form.Label>m:</Form.Label>
                                                         <Form.Control
                                                                 name='sizeM'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів m"
                                                                 value={productObj.sizes.m || 0}
                                                                 onChange={onInputChange} />
+                                                        <Form.Label>l:</Form.Label>
                                                         <Form.Control
                                                                 name='sizeL'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів l"
                                                                 value={productObj.sizes.l || 0}
                                                                 onChange={onInputChange} />
+                                                        <Form.Label>xl:</Form.Label>
                                                         <Form.Control
                                                                 name='sizeXl'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів xl"
                                                                 value={productObj.sizes.xl || 0}
                                                                 onChange={onInputChange} />
+                                                        <Form.Label>xxl:</Form.Label>
                                                         <Form.Control
                                                                 name='sizeXxl'
                                                                 type="text"

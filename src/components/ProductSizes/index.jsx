@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {FormControl, InputGroup} from 'react-bootstrap'
 
-const Sizes = ({sizes, setSizes}) => {
+const Index = ({sizes, setSizes}) => {
     const [inputFields, setInputFields] = useState([])
 
     useEffect(() => {
@@ -43,4 +43,4 @@ const Sizes = ({sizes, setSizes}) => {
     )
 }
 
-export default Sizes
+export default Index

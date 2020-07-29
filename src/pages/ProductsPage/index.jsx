@@ -44,7 +44,7 @@ const ProductsPage = () => {
     }
 
     const onCategoryChange = (e) => {
-        e.target.innerText === 'All' ? setFilter(false) : setFilter(e.target.innerText);
+        e.target.innerText === 'Всі' ? setFilter(false) : setFilter(e.target.innerText);
     }
 
     return (

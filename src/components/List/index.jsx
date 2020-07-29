@@ -12,7 +12,7 @@ const List = ({ items, isLoading, onEditItem, onDeleteItem }) => {
 
         return (
             <div className='list-item-content'>
-                <div className='list-item-content-name'>{name}</div>
+                <div className='list-item-content-name' >{name}</div>
                 {
                     __typename === 'Subcategory' &&
                     <div className='list-item-content-subName'>{item.category.name}</div>

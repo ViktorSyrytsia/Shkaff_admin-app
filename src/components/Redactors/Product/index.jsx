@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 
 import DropdownBar from '../../DropdownBar'
 import { addProduct, updateProduct } from "../../../redux/product/product.actions";
+import Sizes from "./sizes";
 
 import './style.scss';
 
@@ -15,14 +16,17 @@ const ProductRedactor = ({ redactorState }) => {
                 product: Products.product
         }));
 
+        const sizesDefault = { xs: 0, s: 0, m: 0, l: 0, xl: 0, xxl: 0 };
+
         const [id, setId] = useState('');
         const [categoryId, setCategoryId] = useState('');
         const [subcategoryId, setSubcategoryId] = useState('');
         const [categoryDropdownBarValue, setCategoryDropdownBarValue] = useState(null);
         const [subcategoryDropdownBarValue, setSubcategoryDropdownBarValue] = useState(null);
-        const [images, setImages] = useState([]);
+        const [images, setImages] = useState([{link: ''}]);
+        const [sizes, setSizes] = useState(sizesDefault);
 
-        const [productObj, setProductObj] = useState({ name: '', price: 0, description: '', sizes: { xs: 0, s: 0, m: 0, l: 0, xl: 0, xxl: 0 } })
+        const [productObj, setProductObj] = useState({ name: '', price: 0, description: ''})
 
 
         const onSelectCategoryDropdownBarItem = (key, e) => {
@@ -38,7 +42,7 @@ const ProductRedactor = ({ redactorState }) => {
         useEffect(() => {
                 if (product) {
                         setId(product.id);
-                        setProductObj({ name: product.name, price: product.price, description: product.description, sizes: {xs: 2, s: 2, m: 3, l: 4, xl: 5, xxl: 6}});
+                        setProductObj({ name: product.name, price: product.price, description: product.description});
                         setImages(product.images.map( x => {
                               return {link: x.link}
                         }));
@@ -46,6 +50,9 @@ const ProductRedactor = ({ redactorState }) => {
                         setSubcategoryId(product.subcategory.id)
                         setCategoryDropdownBarValue(product.category.name);
                         setSubcategoryDropdownBarValue(product.subcategory.name);
+                        const sizes = Object.entries(product.sizes)
+                        sizes.pop()
+                        setSizes(Object.fromEntries(sizes))
                 } else {
                         onResetInputs()
                 }
@@ -62,30 +69,18 @@ const ProductRedactor = ({ redactorState }) => {
                         name: valueArray[0],
                         price: +valueArray[1],
                         description: valueArray[2],
-                        sizes: {
-                                xs: +valueArray[3],
-                                s: +valueArray[4],
-                                m: +valueArray[5],
-                                l: +valueArray[6],
-                                xl: +valueArray[7],
-                                xxl: +valueArray[8],
-                        }
                 })
         }
 
         const onImageInputChange = (e) => {
-                const numb = e.target.name.split('-')[1];
-                const newZalupa = images;
-                newZalupa.splice(numb, 1, { link: e.target.value })
-                setImages(newZalupa);
         }
 
         const onSaveProduct = () => {
 
                 if (productObj.name && categoryId && subcategoryId) {
                         dispatch(redactorState === 'add' ?
-                                addProduct({ ...productObj, images: images || [], categoryId, subcategoryId }) :
-                                updateProduct({ id, product: { ...productObj, images, categoryId, subcategoryId } }))
+                                addProduct({ ...productObj, sizes, images: images || [], categoryId, subcategoryId }) :
+                                updateProduct({ id, product: { ...productObj, sizes, images, categoryId, subcategoryId } }))
                         onResetInputs();
                 } else {
                         window.alert('Всі поля повинні бути заповнені!')
@@ -98,16 +93,9 @@ const ProductRedactor = ({ redactorState }) => {
                 setProductObj({
                         name: '',
                         price: 0,
-                        description: '',
-                        sizes: {
-                                xs: 0,
-                                s: 0,
-                                m: 0,
-                                l: 0,
-                                xl: 0,
-                                xxl: 0,
-                        }
+                        description: ''
                 })
+                setSizes(sizesDefault)
                 setCategoryDropdownBarValue(null);
                 setSubcategoryDropdownBarValue(null);
         }
@@ -179,9 +167,14 @@ const ProductRedactor = ({ redactorState }) => {
                                                                 )
                                                         })}
                                                 </Form.Group>
-                                                <Form.Group controlId="productForm">
+                                                <Form.Group>
                                                         <Form.Label>Розміри:</Form.Label>
-                                                        <Form.Control
+                                                        <Sizes sizes={sizes}
+                                                               setSizes={setSizes}
+
+                                                        />
+
+                                                 {/*       <Form.Control
                                                                 name='sizeXs'
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів xs"
@@ -216,7 +209,7 @@ const ProductRedactor = ({ redactorState }) => {
                                                                 type="text"
                                                                 placeholder="Введіть кількість розмірів xxl"
                                                                 value={productObj.sizes.xxl || 0}
-                                                                onChange={onInputChange} />
+                                                                onChange={onInputChange} />*/}
                                                 </Form.Group>
                                         </div>
 

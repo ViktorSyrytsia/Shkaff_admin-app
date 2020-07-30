@@ -16,18 +16,19 @@ const ProductRedactor = ({redactorState}) => {
         product: Products.product
     }));
 
+    const productDefault = {name: '', price: 0, description: ''};
     const sizesDefault = {xs: 0, s: 0, m: 0, l: 0, xl: 0, xxl: 0};
+    const imageDefault = {link: ''};
+
 
     const [id, setId] = useState('');
     const [categoryId, setCategoryId] = useState('');
     const [subcategoryId, setSubcategoryId] = useState('');
     const [categoryDropdownBarValue, setCategoryDropdownBarValue] = useState(null);
     const [subcategoryDropdownBarValue, setSubcategoryDropdownBarValue] = useState(null);
-    const [images, setImages] = useState([{link: ''}]);
+    const [images, setImages] = useState([imageDefault]);
     const [sizes, setSizes] = useState(sizesDefault);
-
-    const [productObj, setProductObj] = useState({name: '', price: 0, description: ''})
-
+    const [productObj, setProductObj] = useState(productDefault)
 
     const onSelectCategoryDropdownBarItem = (key, e) => {
         setCategoryId(e.target.dataset.id)
@@ -41,14 +42,18 @@ const ProductRedactor = ({redactorState}) => {
 
     useEffect(() => {
         if (product) {
-            setId(product.id);
-            setProductObj({name: product.name, price: product.price, description: product.description});
-            setImages(product.images.map(x => ({link: x.link})));
-            setCategoryId(product.category.id)
-            setSubcategoryId(product.subcategory.id)
-            setCategoryDropdownBarValue(product.category.name);
-            setSubcategoryDropdownBarValue(product.subcategory.name);
+            const {price, name, description, id, subcategory, category, images} = product
             const sizes = Object.entries(product.sizes)
+
+            setId(id);
+            setProductObj({price, name, description});
+            setImages(images.map(img => ({link: img.link})));
+            setCategoryId(category.id)
+            setSubcategoryId(subcategory.id)
+
+            setCategoryDropdownBarValue(category.name);
+            setSubcategoryDropdownBarValue(subcategory.name);
+
             sizes.pop()
             setSizes(Object.fromEntries(sizes))
         } else {
@@ -57,17 +62,11 @@ const ProductRedactor = ({redactorState}) => {
     }, [product]);
 
     const onInputChange = (e) => {
-        const valueArray = [];
-        for (const input of e.target.form) {
-            if (input.id === 'productForm') {
-                valueArray.push(input.value);
-            }
-        }
-        setProductObj({
-            name: valueArray[0],
-            price: +valueArray[1],
-            description: valueArray[2],
-        })
+        const value = isFinite(e.target.value) ? +e.target.value : e.target.value
+        const newObj = {...productObj};
+
+        newObj[e.target.name] = value
+        setProductObj(newObj)
     }
 
     const onImageInputChange = (idx, e) => {
@@ -75,32 +74,28 @@ const ProductRedactor = ({redactorState}) => {
         values[idx].link = e.target.value;
         setImages(values);
     }
-    const onAddImageInput = (e) => {
+
+    const onAddImageInput = () => {
         const newArr = [...images]
-        newArr.push({link: ""});
+        newArr.push(imageDefault);
         setImages(newArr);
     }
 
     const onSaveProduct = () => {
-
         if (productObj.name && categoryId && subcategoryId) {
             dispatch(redactorState === 'add' ?
-                addProduct({...productObj, sizes, images: images || [], categoryId, subcategoryId}) :
+                addProduct({...productObj, sizes, images, categoryId, subcategoryId}) :
                 updateProduct({id, product: {...productObj, sizes, images, categoryId, subcategoryId}}))
             onResetInputs();
         } else {
-            window.alert('Всі поля повинні бути заповнені!')
+            window.alert('Всі поля із "*" повинні бути заповнені!')
         }
     }
 
     const onResetInputs = () => {
         setId('');
-        setImages([{link: ""}])
-        setProductObj({
-            name: '',
-            price: 0,
-            description: ''
-        })
+        setImages([imageDefault])
+        setProductObj(productDefault)
         setSizes(sizesDefault)
         setCategoryDropdownBarValue(null);
         setSubcategoryDropdownBarValue(null);
@@ -111,8 +106,8 @@ const ProductRedactor = ({redactorState}) => {
             <Form>
                 <div className='prodcut-redactor-flex'>
                     <div className='prodcut-redactor-flex-left'>
-                        <Form.Group controlId="productForm">
-                            <Form.Label>Назва продукту:</Form.Label>
+                        <Form.Group>
+                            <Form.Label>*Назва продукту:</Form.Label>
                             <Form.Control
                                 name='name'
                                 type="text"
@@ -120,8 +115,8 @@ const ProductRedactor = ({redactorState}) => {
                                 value={productObj.name || ''}
                                 onChange={onInputChange}/>
                         </Form.Group>
-                        <Form.Group controlId="productForm">
-                            <Form.Label>Ціна:</Form.Label>
+                        <Form.Group >
+                            <Form.Label>*Ціна:</Form.Label>
                             <Form.Control
                                 name='price'
                                 type="text"
@@ -130,8 +125,8 @@ const ProductRedactor = ({redactorState}) => {
                                 onChange={onInputChange}/>
                         </Form.Group>
 
-                        <Form.Group controlId="productForm.categorySelect">
-                            <Form.Label>Категорія:</Form.Label>
+                        <Form.Group >
+                            <Form.Label>*Категорія:</Form.Label>
                             <br/>
                             <DropdownBar
                                 items={categories}
@@ -139,8 +134,8 @@ const ProductRedactor = ({redactorState}) => {
                                 setSelectedValue={onSelectCategoryDropdownBarItem}
                             />
                         </Form.Group>
-                        <Form.Group controlId="productForm.subcategorySelect">
-                            <Form.Label>Підкатегорія:</Form.Label>
+                        <Form.Group >
+                            <Form.Label>*Підкатегорія:</Form.Label>
                             <br/>
                             <DropdownBar
                                 items={subcategories.filter(item => item.category.id === categoryId)}
@@ -148,7 +143,7 @@ const ProductRedactor = ({redactorState}) => {
                                 setSelectedValue={onSelectSubcategoryDropdownBarItem}
                             />
                         </Form.Group>
-                        <Form.Group controlId="productForm">
+                        <Form.Group >
                             <Form.Label>Опис продукту:</Form.Label>
                             <Form.Control
                                 as="textarea"
@@ -163,7 +158,7 @@ const ProductRedactor = ({redactorState}) => {
                         </Form.Group>
                     </div>
                     <div className='prodcut-redactor-flex-right'>
-                        <Form.Group controlId="productFormImages">
+                        <Form.Group>
                             <Form.Label>Посилання на зоображення:</Form.Label>
                             {images.map((img, idx) => {
                                 return (
@@ -171,14 +166,14 @@ const ProductRedactor = ({redactorState}) => {
                                         key={idx + img.link}
                                         name={`image-${idx}`}
                                         type="textarea"
-                                        placeholder="Введіть силку на зоображення"
+                                        placeholder="Введіть посилання на зоображення"
                                         value={img.link || ''}
                                         onChange={e => onImageInputChange(idx, e)}/>
                                 )
                             })}
                             <div className="addImageInput-btn">
-                                <Button
-                                    onClick={onAddImageInput}>Add input</Button>
+                                <Button variant="outline-dark"
+                                    onClick={onAddImageInput}>Додати зображення</Button>
                             </div>
 
 

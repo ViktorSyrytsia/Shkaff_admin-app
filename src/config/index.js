@@ -19,8 +19,9 @@ export const ORDER_STATUSES = {
     canceled: {name: 'Скасовано', status: 'canceled'},
 }
 
-export const PURCHASE_STATUSES_NAMES = {
-    done: 'Виконано',
-    processing: 'Обробляється',
-    canceled: 'Скасовано',
-}
+export const NAV_BAR = [
+    {link: 'categories', name: 'Categories'},
+    {link: 'subcategories', name: 'Subcategories'},
+    {link: 'products', name: 'Products'},
+    {link: 'orders', name: 'Orders'},
+]

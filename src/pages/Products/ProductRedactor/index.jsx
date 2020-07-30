@@ -88,7 +88,7 @@ const ProductRedactor = ({redactorState}) => {
                 updateProduct({id, product: {...productObj, sizes, images, categoryId, subcategoryId}}))
             onResetInputs();
         } else {
-            window.alert('Всі поля із "*" повинні бути заповнені!')
+            window.alert('Всі поля з "*" повинні бути заповнені!')
         }
     }
 

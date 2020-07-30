@@ -23,7 +23,7 @@ const Index = ({sizes, setSizes}) => {
         <div className='list-container'>
             {
                 Object.keys(sizes).map((item, i) => {
-                    if (item === '__typename') return
+                    if (item === '__typename') return null
                     return (
                         <InputGroup key={item} size='sm' className="mb-3" style={{width: 130}}>
                             <InputGroup.Prepend>

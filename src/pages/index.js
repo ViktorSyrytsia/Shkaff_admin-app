@@ -1,7 +1,7 @@
-import CategoriesPage from './CategoriesPage';
-import SubcategoriesPage from './SubcategoriesPage';
-import ProductsPage from './ProductsPage';
-import OrdersPage from './OrdersPage';
+import CategoriesPage from './Categories';
+import SubcategoriesPage from './Subcategories';
+import ProductsPage from './Products';
+import OrdersPage from './Orders';
 
 export {
         SubcategoriesPage,

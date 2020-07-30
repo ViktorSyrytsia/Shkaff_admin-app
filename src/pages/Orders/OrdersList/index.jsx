@@ -2,8 +2,8 @@ import React from 'react'
 import { ListGroup} from 'react-bootstrap'
 import orderBy from 'lodash/orderBy';
 
-import {Spinner, Time} from '../index';
-import {orderSumCounter, orderStatusVariant} from "../../utils";
+import {Spinner, Time} from '../../../components';
+import {orderSumCounter, orderStatusVariant} from "../../../utils";
 
 import './style.scss';
 

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Table, Button, InputGroup, FormControl, Badge} from 'react-bootstrap';
 
-import {DropdownBar, Time} from '../../';
+import {DropdownBar, Time} from '../../../components';
 import {deleteOrder, setOrder, updateOrderStatus} from "../../../redux/order/order.actions";
 import {orderSumCounter, orderStatusVariant} from "../../../utils";
 import {ORDER_STATUSES} from '../../../config'

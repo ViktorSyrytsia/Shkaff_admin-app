@@ -2,9 +2,9 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Form, Button} from 'react-bootstrap';
 
-import DropdownBar from '../../DropdownBar'
+import DropdownBar from '../../../components/DropdownBar'
 import {addProduct, updateProduct} from "../../../redux/product/product.actions";
-import Sizes from "../../ProductSizes";
+import Sizes from "../ProductSizes";
 
 import './style.scss';
 

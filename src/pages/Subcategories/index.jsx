@@ -2,7 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from 'react-bootstrap';
 
-import {List, ButtonsGroup, SubcategoryRedactor} from '../../components';
+import {List, ButtonsGroup} from '../../components';
+import SubcategoryRedactor from './SubcategoryRedactor'
 import {
     deleteSubcategory, getSubcategories,
     setSubcategory

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button } from 'react-bootstrap';
 
-import DropdownBar from '../../DropdownBar'
+import DropdownBar from '../../../components/DropdownBar'
 import { addSubcategory, updateSubcategory } from "../../../redux/subcategory/subcategory.actions";
 import './style.scss';
 

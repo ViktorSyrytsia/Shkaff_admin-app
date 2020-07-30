@@ -2,7 +2,9 @@ import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import {getOrders, setOrder} from "../../redux/order/order.actions";
-import {ButtonsGroup, OrdersList, OrderRedactor} from "../../components";
+import {ButtonsGroup} from "../../components";
+import OrderRedactor from './OrderRedactor'
+import OrdersList from './OrdersList'
 import {ORDER_STATUSES} from "../../config";
 
 import './style.scss'

@@ -8,7 +8,7 @@ client.query({
         {
             getOrders {
                 id,
-                user {
+                customer {
                     name
                     surname
                     email
@@ -65,7 +65,7 @@ const deleteOrder = async (id) => {
         mutation: gql`
             mutation($id: ID!) {
                 deleteOrder(id: $id) {
-                    user {
+                    customer {
                         name
                     }
                 }

@@ -1,3 +1,11 @@
+export const routes = {
+    pathToLogin: '/',
+    pathToCategories: '/categories',
+    pathToSubcategories: '/subcategories',
+    pathToProducts: '/products',
+    pathToOrders: '/orders'
+};
+
 export const SNACKBAR_MESSAGES = {
     add: {
         success: 'Додано успішно',
@@ -11,6 +19,9 @@ export const SNACKBAR_MESSAGES = {
         success: 'Видалено успішно',
         error: 'Не вдалось видалити',
     },
+    login: {
+        success: 'Вітаємо! Вхід успішний'
+    }
 }
 
 export const ORDER_STATUSES = {

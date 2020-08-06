@@ -10,13 +10,15 @@ import './style.scss';
 const OrdersList = ({ items, isLoading, onSelectItem }) => {
 
     const ItemContent = ({ item, index }) => {
-        const { user, createdAt, products } = item;
+        const { customer, createdAt, products } = item;
         const totalSum = orderSumCounter(products)
+        console.log(customer)
+        console.log(items)
 
         return (
             <div className='list-item-content'>
                 <div className='list-item-content__index'>{index+1}.</div>
-                <div className='list-item-content__name'>{user.name} {user.surname}</div>
+                <div className='list-item-content__name'>{customer.name} {customer.surname}</div>
                 <div className='list-item-content__sum'>{totalSum} UAH</div>
                 <Time date={createdAt}/>
             </div>

@@ -1,48 +1,40 @@
 import React, {useEffect} from 'react';
-import {Switch, Route} from 'react-router-dom';
-import {useDispatch} from "react-redux";
-
+import {useDispatch, useSelector} from "react-redux";
+import {ConnectedRouter} from "connected-react-router";
 
 import Header from '../Header';
-import {CategoriesPage, SubcategoriesPage, ProductsPage, OrdersPage} from '../../pages';
 import {getCategories} from "../../redux/category/category.actions";
 import {getSubcategories} from "../../redux/subcategory/subcategory.actions";
 import {getProducts} from "../../redux/product/product.actions";
 import {getOrders} from "../../redux/order/order.actions";
+import {checkUserByToken} from "../../redux/user/user.actions";
 import Snackbar from "../Snackbar";
+import Routes from '../../routes'
+import {history} from "../../store/store";
 
 import './style.scss';
 
 const App = () => {
+    const isAuth = useSelector(({User}) => User.isAuth)
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(getCategories());
-        dispatch(getSubcategories());
-        dispatch(getProducts());
-        dispatch(getOrders());
-    }, [dispatch])
+        dispatch(checkUserByToken());
 
+        if (isAuth) {
+            dispatch(getCategories())
+            dispatch(getSubcategories());
+            dispatch(getProducts());
+            dispatch(getOrders());
+        }
+    }, [dispatch, isAuth])
 
     return (
-        <>
+        <ConnectedRouter history={history}>
             <Header/>
-            <Switch>
-                <Route exact path='/categories'>
-                    <CategoriesPage/>
-                </Route>
-                <Route exact path='/subcategories'>
-                    <SubcategoriesPage/>
-                </Route>
-                <Route exact path='/products'>
-                    <ProductsPage/>
-                </Route>
-                <Route exact path='/orders'>
-                    <OrdersPage/>
-                </Route>
-            </Switch>
+            <Routes/>
             <Snackbar/>
-        </>
+        </ConnectedRouter>
     )
 }
 

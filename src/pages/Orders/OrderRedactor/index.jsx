@@ -13,7 +13,7 @@ const OrderRedactor = ({setRedactorState}) => {
     const dispatch = useDispatch()
     const order = useSelector(({Orders}) => Orders.order);
 
-    const {user, delivery, status, createdAt, connectionMethod, products} = order
+    const {customer, delivery, status, createdAt, connectionMethod, products} = order
 
     const [newStatus, setNewStatus] = useState(null)
     const [dropdownBarValue, setDropdownBarValue] = useState(null)
@@ -52,7 +52,7 @@ const OrderRedactor = ({setRedactorState}) => {
                     </InputGroup.Text>
                 </InputGroup.Prepend>
                 <FormControl id="basic-url" aria-describedby="basic-addon3"
-                             value={`${user.name} ${user.surname}`}
+                             value={`${customer.name} ${customer.surname}`}
                              disabled
                 />
             </InputGroup>
@@ -64,7 +64,7 @@ const OrderRedactor = ({setRedactorState}) => {
                     </InputGroup.Text>
                 </InputGroup.Prepend>
                 <FormControl id="basic-url" aria-describedby="basic-addon3"
-                             value={user.email}
+                             value={customer.email}
                              disabled
                 />
             </InputGroup>
@@ -76,7 +76,7 @@ const OrderRedactor = ({setRedactorState}) => {
                     </InputGroup.Text>
                 </InputGroup.Prepend>
                 <FormControl id="basic-url" aria-describedby="basic-addon3"
-                             value={user.phone}
+                             value={customer.phone}
                              disabled
                 />
             </InputGroup>

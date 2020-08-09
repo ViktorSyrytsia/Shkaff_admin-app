@@ -30,9 +30,10 @@ export const ORDER_STATUSES = {
     canceled: {name: 'Скасовано', status: 'canceled'},
 }
 
-export const NAV_BAR = [
-    {link: 'categories', name: 'Categories'},
-    {link: 'subcategories', name: 'Subcategories'},
-    {link: 'products', name: 'Products'},
-    {link: 'orders', name: 'Orders'},
+export const MENU_ITEMS = [
+    {name: 'Categories', link: '/categories', color: '#ea3f34'},
+    {name: 'Subcategories', link: '/subcategories', color: '#f2982c'},
+    {name: 'Products', link: '/products', color: '#52a360'},
+    {name: 'Orders', link: '/orders', color: '#674794'},
+    {name: 'Settings', link: '/settings', color: '#212529'},
 ]

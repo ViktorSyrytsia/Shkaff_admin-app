@@ -1,40 +1,40 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {Link} from 'react-router-dom';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Navbar, Nav} from 'react-bootstrap';
 
-import {NAV_BAR} from '../../config'
-
+import {logoutUser} from  '../../redux/user/user.actions'
+import {MENU_ITEMS} from "../../config";
 import './style.scss';
 
 const Header = () => {
-    const {isAuth, userName} = useSelector(({User}) => ({
+    const {isAuth, userName, location} = useSelector(({User, router}) => ({
         isAuth: User.isAuth,
         userName: User.userName,
+        location: router.location.pathname,
     }))
-    const [location, setLocation] = useState(window.location.href.split('/').pop())
+    const dispatch = useDispatch()
+
+    const onLogOut = () => window.confirm('Дійсно бажаєте вийти?') && dispatch(logoutUser())
 
     return (
         <Navbar bg="dark" variant="dark">
-            <Link to='/'>
+            <Link to={isAuth ? '/' : '/login'}>
                 <Navbar.Brand>Shkaff-admin</Navbar.Brand>
             </Link>
             {isAuth && <Nav className="mr-space nav-flex">
                 {
-                    NAV_BAR.map((item, i) => (
+                    MENU_ITEMS.map((item, i) => (
                         <Navbar.Text className='nav-item' key={item.link}>
                             <Link className={`nav-link ${location === item.link && 'active'}`}
-                                  to={`/${item.link}`}
-                                  onClick={() => setLocation(item.link)}>
-                                {item.name}
+                                  to={`${item.link}`}>
+                                {i ===4 && userName ? userName : item.name}
                             </Link>
                         </Navbar.Text>
                     ))
                 }
             </Nav>}
-            <div className='navbar-user'>
-                {userName || 'Not logged'}
-            </div>
+            {isAuth && <span className='nav-item' onClick={onLogOut}>Вийти</span>}
         </Navbar>
     )
 }

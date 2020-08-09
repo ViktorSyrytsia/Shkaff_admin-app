@@ -1,38 +1,50 @@
 import React from "react";
+import {useSelector} from "react-redux";
 import {Route, Switch} from "react-router-dom";
-import {ConnectedRouter} from "connected-react-router";
 
 import {
     CategoriesPage,
     LoginPage,
     OrdersPage,
     ProductsPage,
-    SubcategoriesPage
+    SubcategoriesPage,
+    MenuPage
 } from "../pages";
-import {history} from "../store/store";
 
 const Routes = () => {
+    const {isAuth} = useSelector(({User, router}) => ({
+        isAuth: User.isAuth,
+        userName: User.userName,
+        location: router.location.pathname,
+    }))
 
-    return (
-        <ConnectedRouter history={history}>
+    if (!isAuth) {
+        return (
             <Switch>
-                <Route exact path='/'>
+                <Route exact path='/login'>
                     <LoginPage/>
                 </Route>
-                <Route exact path='/categories'>
-                    <CategoriesPage/>
-                </Route>
-                <Route exact path='/subcategories'>
-                    <SubcategoriesPage/>
-                </Route>
-                <Route exact path='/products'>
-                    <ProductsPage/>
-                </Route>
-                <Route exact path='/orders'>
-                    <OrdersPage/>
-                </Route>
             </Switch>
-        </ConnectedRouter>
+    )}
+
+    return (
+        <Switch>
+            <Route exact path='/'>
+                <MenuPage/>
+            </Route>
+            <Route exact path='/categories'>
+                <CategoriesPage/>
+            </Route>
+            <Route exact path='/subcategories'>
+                <SubcategoriesPage/>
+            </Route>
+            <Route exact path='/products'>
+                <ProductsPage/>
+            </Route>
+            <Route exact path='/orders'>
+                <OrdersPage/>
+            </Route>
+        </Switch>
     )
 }
 

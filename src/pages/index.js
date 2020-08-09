@@ -3,6 +3,7 @@ import SubcategoriesPage from './Subcategories';
 import ProductsPage from './Products';
 import OrdersPage from './Orders';
 import LoginPage from './Login';
+import MenuPage from './Menu';
 
 export {
         SubcategoriesPage,
@@ -10,4 +11,5 @@ export {
         OrdersPage,
         CategoriesPage,
         LoginPage,
+        MenuPage,
 }

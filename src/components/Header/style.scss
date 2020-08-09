@@ -1,6 +1,23 @@
+.navbar-expand .navbar-nav {
+  display: contents;
+}
+
 .nav-item {
-  margin-left: 100px;
-  font-size: 16px;
+  font-size: 1.05em;
+  padding: 0 30px;
+
+  &:nth-child(5) {
+    margin-left: auto;
+    padding-right: 10px;
+  }
+
+  &:last-child {
+    color: rgba(255,255,255,.5);
+    cursor: pointer;
+    &:hover {
+      color: rgba(255,255,255,.75);
+    }
+  }
 }
 
 .nav-link {
@@ -11,9 +28,4 @@ tbody {
   tr {
     text-align: center;
   }
-}
-
-.navbar-user {
-  margin-left: auto;
-  color: white;
 }

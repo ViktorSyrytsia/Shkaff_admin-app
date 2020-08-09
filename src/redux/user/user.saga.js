@@ -13,7 +13,8 @@ import {
 } from '../snackbar/snackbar.actions';
 import {
     CHECK_USER_BY_TOKEN,
-    LOGIN_USER
+    LOGIN_USER,
+    LOGOUT_USER
 } from './user.types';
 import {
     loginUser,
@@ -34,7 +35,7 @@ function* handleUserLoad({ payload }) {
         yield put(setAuth({auth: true, userName: admin.name}));
 
         yield put(setLoading(false));
-        yield put(push('/categories'));
+        yield put(push('/'));
 
     } catch (error) {
         yield put(setLoading(false));
@@ -47,29 +48,33 @@ function* handleUserLoad({ payload }) {
 
 function* handleCheckUserByToken() {
     try {
-        console.log('wtf')
         const authToken = localStorage.getItem('AUTH_TOKEN');
         yield put(setLoading(true));
 
         if (!authToken) {
             yield put(setLoading(false));
             yield put(setAuth({auth: false, userName: null}));
-            yield put(push('/'));
+            yield put(push('/login'));
             return;
         }
         const user = yield call(getUserByToken, authToken);
         yield put(setAuth({auth: true, userName: user.name}));
         yield put(setLoading(false));
-        yield put(push('/categories'));
     } catch (error) {
         yield put(setLoading(false));
         yield put(setAuth(false));
         localStorage.removeItem('AUTH_TOKEN');
-        yield put(push('/'));
+        yield put(push('/login'));
     }
 }
 
-function* handleUpdateCategory({payload}) {
+function* handleUserLogout() {
+    localStorage.removeItem('AUTH_TOKEN');
+    yield put(setAuth({auth: false, userName: null}));
+    yield put(push('/login'));
+}
+
+/*function* handleUpdateCategory({payload}) {
     try {
 
     } catch (error) {
@@ -90,9 +95,10 @@ function* handleDeleteCategory({payload}) {
         yield put(setSnackbarVisibility(true));
         console.log(error);
     }
-}
+}*/
 
 export default function* userSaga() {
     yield takeEvery(LOGIN_USER, handleUserLoad)
     yield takeEvery(CHECK_USER_BY_TOKEN, handleCheckUserByToken)
+    yield takeEvery(LOGOUT_USER, handleUserLogout)
 }

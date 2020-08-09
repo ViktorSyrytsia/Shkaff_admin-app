@@ -7,8 +7,7 @@ const loginUser = async (user) => {
         mutation: gql`
             mutation($user: UserInput!) {
                 loginUser(user: $user) {
-                    name
-                    id
+                    name                    
                     role
                     token
                 }
@@ -22,11 +21,10 @@ const loginUser = async (user) => {
 };
 
 const getUserByToken = async (token) => {
-    console.log(token)
     const result = await client.query({
         query: gql`
             query {
-                getUserByToken {
+                getUserByToken {                    
                     email
                     name
                     role
@@ -44,7 +42,30 @@ const getUserByToken = async (token) => {
     return data.getUserByToken;
 };
 
+const updateUserByToken = async ({value, key, token}) => {
+    const result = await client.mutate({
+        variables: {
+            value,
+            key,
+            token
+        },
+        mutation: gql`
+            mutation($value: String!, $key: String!, $token: String!) {
+                updateUserByToken(value: $value, key: $key, token: $token) {
+                    name
+                    email
+                    token
+                }
+            }
+        `
+    });
+    const { data } = result;
+
+    return data.updateUserByToken;
+};
+
 export {
     loginUser,
-    getUserByToken
+    getUserByToken,
+    updateUserByToken
 };

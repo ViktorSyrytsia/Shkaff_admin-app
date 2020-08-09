@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListGroup} from 'react-bootstrap'
+import {ListGroup} from 'react-bootstrap'
 import orderBy from 'lodash/orderBy';
 
 import {Spinner, Time} from '../../../components';
@@ -7,17 +7,15 @@ import {orderSumCounter, orderStatusVariant} from "../../../utils";
 
 import './style.scss';
 
-const OrdersList = ({ items, isLoading, onSelectItem }) => {
+const OrdersList = ({items, isLoading, onSelectItem}) => {
 
-    const ItemContent = ({ item, index }) => {
-        const { customer, createdAt, products } = item;
+    const ItemContent = ({item, index}) => {
+        const {customer, createdAt, products} = item;
         const totalSum = orderSumCounter(products)
-        console.log(customer)
-        console.log(items)
 
         return (
             <div className='list-item-content'>
-                <div className='list-item-content__index'>{index+1}.</div>
+                <div className='list-item-content__index'>{index + 1}.</div>
                 <div className='list-item-content__name'>{customer.name} {customer.surname}</div>
                 <div className='list-item-content__sum'>{totalSum} UAH</div>
                 <Time date={createdAt}/>
@@ -27,7 +25,7 @@ const OrdersList = ({ items, isLoading, onSelectItem }) => {
 
     return (
         <div className='list-container'>      {
-            isLoading ? <Spinner /> :
+            isLoading ? <Spinner/> :
                 <>
                     <ListGroup>
                         {items.length > 0 ?
@@ -37,7 +35,7 @@ const OrdersList = ({ items, isLoading, onSelectItem }) => {
                                     action variant={orderStatusVariant(item.status)}
                                     onClick={() => onSelectItem(item)}
                                 >
-                                    <ItemContent item={item} index={index} />
+                                    <ItemContent item={item} index={index}/>
                                 </ListGroup.Item>))
                             : 'Список порожній'}
                     </ListGroup>

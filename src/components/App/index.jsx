@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {ConnectedRouter} from "connected-react-router";
 
 import Header from '../Header';
@@ -15,15 +15,19 @@ import {history} from "../../store/store";
 import './style.scss';
 
 const App = () => {
+    const isAuth = useSelector(({User}) => User.isAuth)
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(checkUserByToken());
-        dispatch(getCategories())
-        dispatch(getSubcategories());
-        dispatch(getProducts());
-        dispatch(getOrders());
-    }, [dispatch])
+
+        if (isAuth) {
+            dispatch(getCategories())
+            dispatch(getSubcategories());
+            dispatch(getProducts());
+            dispatch(getOrders());
+        }
+    }, [dispatch, isAuth])
 
     return (
         <ConnectedRouter history={history}>

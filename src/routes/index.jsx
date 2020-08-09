@@ -8,7 +8,8 @@ import {
     OrdersPage,
     ProductsPage,
     SubcategoriesPage,
-    MenuPage
+    MenuPage,
+    SettingsPage,
 } from "../pages";
 
 const Routes = () => {
@@ -21,29 +22,18 @@ const Routes = () => {
     if (!isAuth) {
         return (
             <Switch>
-                <Route exact path='/login'>
-                    <LoginPage/>
-                </Route>
+                <Route exact path='/login'component={LoginPage}/>
             </Switch>
     )}
 
     return (
         <Switch>
-            <Route exact path='/'>
-                <MenuPage/>
-            </Route>
-            <Route exact path='/categories'>
-                <CategoriesPage/>
-            </Route>
-            <Route exact path='/subcategories'>
-                <SubcategoriesPage/>
-            </Route>
-            <Route exact path='/products'>
-                <ProductsPage/>
-            </Route>
-            <Route exact path='/orders'>
-                <OrdersPage/>
-            </Route>
+            <Route exact path='/' component={MenuPage}/>
+            <Route exact path='/categories' component={CategoriesPage}/>
+            <Route exact path='/subcategories' component={SubcategoriesPage}/>
+            <Route exact path='/products' component={ProductsPage}/>
+            <Route exact path='/orders' component={OrdersPage}/>
+            <Route exact path='/settings' component={SettingsPage}/>
         </Switch>
     )
 }

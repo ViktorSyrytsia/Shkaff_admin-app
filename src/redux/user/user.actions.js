@@ -2,6 +2,7 @@ import {
     LOGIN_USER,
     SET_AUTH,
     LOGOUT_USER,
+    UPDATE_USER_BY_TOKEN,
     CHECK_USER_BY_TOKEN,
     SET_AUTH_ERROR,
     SET_LOADING,
@@ -14,6 +15,11 @@ export const setAuth = (user) => ({
 
 export const loginUser = (payload) => ({
     type: LOGIN_USER,
+    payload
+})
+
+export const updateUserByToken = (payload) => ({
+    type: UPDATE_USER_BY_TOKEN,
     payload
 })
 

@@ -17,11 +17,34 @@ const loginUser = async (user) => {
         variables: { user }
     });
     const { data } = result;
-    console.log(result)
 
     return data.loginUser;
 };
 
+const getUserByToken = async (token) => {
+    console.log(token)
+    const result = await client.query({
+        query: gql`
+            query {
+                getUserByToken {
+                    email
+                    name
+                    role
+                }
+            }
+        `,
+        context: {
+            headers: {
+                token
+            }
+        }
+    });
+    const { data } = result;
+
+    return data.getUserByToken;
+};
+
 export {
     loginUser,
+    getUserByToken
 };

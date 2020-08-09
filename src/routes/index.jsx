@@ -12,7 +12,6 @@ import {
 import {history} from "../store/store";
 
 const Routes = () => {
-    console.log(history)
 
     return (
         <ConnectedRouter history={history}>

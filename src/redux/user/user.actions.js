@@ -21,9 +21,8 @@ export const logoutUser = () => ({
     type: LOGOUT_USER
 });
 
-export const checkUserByToken = (token) => ({
-    type: CHECK_USER_BY_TOKEN,
-    payload: token
+export const checkUserByToken = () => ({
+    type: CHECK_USER_BY_TOKEN
 });
 
 export const setAuthError = (error) => ({

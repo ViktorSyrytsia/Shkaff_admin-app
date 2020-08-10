@@ -17,7 +17,7 @@ const ProductRedactor = ({redactorState}) => {
     }));
 
     const productDefault = {name: '', price: 0, description: ''};
-    const sizesDefault = {xs: 0, s: 0, m: 0, l: 0, xl: 0, xxl: 0};
+    const sizesDefault = {xs: 0, s: 0, m: 0, l: 0, xl: 0, xxl: 0, oneSize: 0};
     const imageDefault = {link: ''};
 
 
@@ -82,6 +82,7 @@ const ProductRedactor = ({redactorState}) => {
     }
 
     const onSaveProduct = () => {
+        console.log(sizes)
         if (productObj.name && categoryId && subcategoryId) {
             dispatch(redactorState === 'add' ?
                 addProduct({...productObj, sizes, images, categoryId, subcategoryId}) :

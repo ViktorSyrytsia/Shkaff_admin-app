@@ -24,6 +24,7 @@ const getProducts = () =>
                           l
                           xl
                           xxl
+                          oneSize
                         },
                         description,
                         price,
@@ -63,6 +64,7 @@ const addProduct = async (product) => {
                           l
                           xl
                           xxl
+                          oneSize
                         },
                         description,
                         price,
@@ -104,6 +106,7 @@ const updateProduct = async ({ id, product }) => {
                           l
                           xl
                           xxl
+                          oneSize
                         },
                         description,
                         price,

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Table, Button, InputGroup, FormControl, Badge} from 'react-bootstrap';
 
@@ -17,6 +17,16 @@ const OrderRedactor = ({setRedactorState}) => {
 
     const [newStatus, setNewStatus] = useState(null)
     const [dropdownBarValue, setDropdownBarValue] = useState(null)
+    const [addressToShow, setAddressToShow] = useState(null)
+
+    useEffect(() => {
+        if (delivery.method === "кур‘єром") {
+            setAddressToShow(`м. ${delivery.city}, вул. ${delivery.address.street}, ${delivery.address.built} ${delivery.address.apartment ? `, кв. ${delivery.address.apartment}` : ''}`)
+        } else if (delivery.method === 'на відділення Нової Пошти') {
+            setAddressToShow(`м. ${delivery.city}, відділення. ${delivery.postOffice}`)
+        }
+    }, [order])
+
 
     const onSelectDropdownBarItem = (key, e) => {
         setNewStatus(e.target.dataset.status)
@@ -42,7 +52,7 @@ const OrderRedactor = ({setRedactorState}) => {
 
     return (
         <div className='purchase'>
-            <h3 className={'purchase__header'}>Замовлення #{order.orderId}</h3>
+            <h3 className={'purchase__header'}>Замовлення {order.orderId}</h3>
             <h6>Створено: <Time date={createdAt}/></h6>
 
             <InputGroup className="mb-3">
@@ -100,20 +110,20 @@ const OrderRedactor = ({setRedactorState}) => {
                     </InputGroup.Text>
                 </InputGroup.Prepend>
                 <FormControl id="basic-url" aria-describedby="basic-addon3"
-                             value={`${delivery.method}, ${delivery.city} ${delivery.postOffice}`}
+                             value={`${delivery.method}`}
                              disabled
                 />
             </InputGroup>
 
             {
-                delivery.address && <InputGroup className="mb-3">
+                delivery.method !== 'самовивіз' && <InputGroup className="mb-3">
                     <InputGroup.Prepend>
                         <InputGroup.Text id="basic-addon3">
                             Адреса:
                         </InputGroup.Text>
                     </InputGroup.Prepend>
                     <FormControl id="basic-url" aria-describedby="basic-addon3"
-                                 value={`${delivery.address.street}, ${delivery.address.built} ${delivery.address.apartment}`}
+                                 value={addressToShow}
                                  disabled
                     />
                 </InputGroup>

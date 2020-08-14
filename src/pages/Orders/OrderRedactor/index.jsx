@@ -42,7 +42,7 @@ const OrderRedactor = ({setRedactorState}) => {
 
     return (
         <div className='purchase'>
-            <h3 className={'purchase__header'}>Замовлення #{order.id.slice(order.id.length - 6, order.id.length)}</h3>
+            <h3 className={'purchase__header'}>Замовлення #{order.orderId}</h3>
             <h6>Створено: <Time date={createdAt}/></h6>
 
             <InputGroup className="mb-3">

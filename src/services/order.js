@@ -33,6 +33,7 @@ client.query({
                     size
                 }
                 connectionMethod
+                orderId
                 status
                 createdAt
             }
